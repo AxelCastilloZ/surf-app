@@ -1,0 +1,124 @@
+@import "tailwindcss";
+
+@theme {
+  /* Ocean palette */
+  --color-ocean-50: #f0f9ff;
+  --color-ocean-100: #e0f2fe;
+  --color-ocean-200: #bae6fd;
+  --color-ocean-300: #7dd3fc;
+  --color-ocean-400: #38bdf8;
+  --color-ocean-500: #0ea5e9;
+  --color-ocean-600: #0284c7;
+  --color-ocean-700: #0369a1;
+  --color-ocean-800: #075985;
+  --color-ocean-900: #0c4a6e;
+  --color-ocean-950: #082f49;
+
+  /* Sand palette */
+  --color-sand-50: #fdf8f0;
+  --color-sand-100: #faefd9;
+  --color-sand-200: #f4dbb0;
+  --color-sand-300: #ecc17e;
+  --color-sand-400: #e3a24b;
+  --color-sand-500: #db882a;
+  --color-sand-600: #cc6f1f;
+  --color-sand-700: #a9561b;
+  --color-sand-800: #88451d;
+  --color-sand-900: #6f3a1b;
+  --color-sand-950: #3c1c0c;
+
+  /* Coral palette */
+  --color-coral-50: #fff1f0;
+  --color-coral-100: #ffe0de;
+  --color-coral-200: #ffc7c3;
+  --color-coral-300: #ff9f99;
+  --color-coral-400: #ff6b62;
+  --color-coral-500: #f83d32;
+  --color-coral-600: #e52014;
+  --color-coral-700: #c1160b;
+  --color-coral-800: #9f160e;
+  --color-coral-900: #831912;
+  --color-coral-950: #470804;
+
+  /* Fonts */
+  --font-family-display: 'Playfair Display', serif;
+  --font-family-body: 'DM Sans', sans-serif;
+
+  /* Animations */
+  --animate-fade-up: fade-up 0.6s ease-out both;
+  --animate-fade-in: fade-in 0.5s ease-out both;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+}
+
+/* shadcn CSS variables — neutral base */
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+  }
+
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: var(--font-family-body);
+  }
+}
