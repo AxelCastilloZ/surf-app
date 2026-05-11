@@ -2,7 +2,8 @@ import 'reflect-metadata'
 import { NestFactory } from '@nestjs/core'
 import { ValidationPipe } from '@nestjs/common'
 import helmet from 'helmet'
-import * as compression from 'compression'
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const compression = require('compression')
 import { AppModule } from './app.module'
 
 async function bootstrap() {

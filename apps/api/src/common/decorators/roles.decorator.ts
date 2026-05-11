@@ -1,5 +1,5 @@
 import { SetMetadata } from '@nestjs/common'
+import type { UserRole } from '@surf-app/types'
 
-// TODO: Phase 2 — implement roles-based access control
 export const ROLES_KEY = 'roles'
-export const Roles = (...roles: string[]) => SetMetadata(ROLES_KEY, roles)
+export const Roles = (...roles: UserRole[]) => SetMetadata(ROLES_KEY, roles)
