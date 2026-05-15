@@ -6,7 +6,7 @@ type Lang = 'es' | 'en'
 
 const i18n = {
   es: {
-    seo: { title: 'Políticas', description: 'Políticas de cancelación y privacidad de Surf App.' },
+    seo: { title: 'Políticas', description: 'Políticas de cancelación y privacidad de Surfers Lab CR.' },
     title: 'Políticas',
     cancellation: {
       title: 'Política de Cancelación',
@@ -29,7 +29,7 @@ const i18n = {
     },
   },
   en: {
-    seo: { title: 'Policies', description: 'Cancellation and privacy policies for Surf App.' },
+    seo: { title: 'Policies', description: 'Cancellation and privacy policies for Surfers Lab CR.' },
     title: 'Policies',
     cancellation: {
       title: 'Cancellation Policy',
@@ -63,16 +63,18 @@ export default function PoliciesPage({ lang }: { lang: Lang }) {
   })
 
   return (
-    <div className="min-h-screen bg-white font-body">
+    <div className="min-h-screen bg-white font-body text-slate-900">
       <Navbar />
-      <main className="mx-auto max-w-3xl px-6 py-16">
-        <h1 className="font-display text-4xl font-bold text-ocean-900">{t.title}</h1>
 
-        <section className="mt-12">
-          <h2 className="font-display text-2xl font-semibold text-ocean-800">{t.cancellation.title}</h2>
-          <ul className="mt-4 space-y-3">
+      <main className="mx-auto max-w-3xl px-6 py-16">
+        <h1 className="font-display text-4xl font-bold text-slate-900">{t.title}</h1>
+
+        {/* Cancelación */}
+        <section className="mt-12 rounded-2xl border border-slate-200 bg-mist-50 p-8">
+          <h2 className="font-display text-2xl font-semibold text-ocean-600">{t.cancellation.title}</h2>
+          <ul className="mt-5 space-y-4">
             {t.cancellation.body.map((item, i) => (
-              <li key={i} className="flex gap-3 text-sm leading-relaxed text-gray-700">
+              <li key={i} className="flex gap-3 text-sm leading-relaxed text-slate-600">
                 <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-ocean-500" />
                 {item}
               </li>
@@ -80,11 +82,12 @@ export default function PoliciesPage({ lang }: { lang: Lang }) {
           </ul>
         </section>
 
-        <section className="mt-12">
-          <h2 className="font-display text-2xl font-semibold text-ocean-800">{t.privacy.title}</h2>
-          <ul className="mt-4 space-y-3">
+        {/* Privacidad */}
+        <section className="mt-6 rounded-2xl border border-slate-200 bg-mist-50 p-8">
+          <h2 className="font-display text-2xl font-semibold text-ocean-600">{t.privacy.title}</h2>
+          <ul className="mt-5 space-y-4">
             {t.privacy.body.map((item, i) => (
-              <li key={i} className="flex gap-3 text-sm leading-relaxed text-gray-700">
+              <li key={i} className="flex gap-3 text-sm leading-relaxed text-slate-600">
                 <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-coral-500" />
                 {item}
               </li>
@@ -92,6 +95,7 @@ export default function PoliciesPage({ lang }: { lang: Lang }) {
           </ul>
         </section>
       </main>
+
       <Footer />
     </div>
   )

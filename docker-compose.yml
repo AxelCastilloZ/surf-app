@@ -1,0 +1,76 @@
+# =============================================================
+# docker-compose.yml — Surfers Lab CR Monorepo
+#
+# Uso:
+#   docker compose up --build          → levanta los 3 servicios
+#   docker compose up api              → solo la API
+#   docker compose up --build web      → solo el sitio web
+#
+# Variables de entorno:
+#   Las vars VITE_* se pasan como build args (no env_file) porque
+#   Vite las incrusta en el bundle estático durante el build.
+#   En runtime solo corre Nginx — no hay proceso que lea env vars.
+#
+#   Crea un archivo .env en la raíz del monorepo con:
+#     VITE_API_URL=https://tu-api.com/api/v1
+#     VITE_BRAND_NAME=...
+#     etc.
+#   Docker Compose lo leerá automáticamente.
+# =============================================================
+
+services:
+
+  # ── API (NestJS) ────────────────────────────────────────────
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:
+      - apps/api/.env          # Vars de runtime: JWT_SECRET, SUPABASE_*, etc.
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3000/api/v1/packages"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+
+  # ── Web — Sitio público (React + Nginx) ─────────────────────
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      args:
+        # Las VITE_* se leen del entorno del shell o de un .env en la raíz
+        VITE_API_URL:          ${VITE_API_URL}
+        VITE_BRAND_NAME:       ${VITE_BRAND_NAME}
+        VITE_WHATSAPP_NUMBER:  ${VITE_WHATSAPP_NUMBER}
+        VITE_CONTACT_EMAIL:    ${VITE_CONTACT_EMAIL}
+        VITE_SITE_URL:         ${VITE_SITE_URL}
+        VITE_SUPABASE_URL:     ${VITE_SUPABASE_URL}
+        VITE_SUPABASE_ANON_KEY: ${VITE_SUPABASE_ANON_KEY}
+    ports:
+      - "5173:80"
+    restart: unless-stopped
+    depends_on:
+      api:
+        condition: service_healthy
+
+
+  # ── Dashboard — Panel admin (React + Nginx) ──────────────────
+  dashboard:
+    build:
+      context: .
+      dockerfile: apps/dashboard/Dockerfile
+      args:
+        VITE_API_URL:    ${VITE_API_URL}
+        VITE_BRAND_NAME: ${VITE_BRAND_NAME}
+    ports:
+      - "5174:80"
+    restart: unless-stopped
+    depends_on:
+      api:
+        condition: service_healthy

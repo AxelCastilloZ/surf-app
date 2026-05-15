@@ -1,0 +1,30 @@
+# ── Dependencias ─────────────────────────────────────────────
+# Cada stage de Docker hace su propio pnpm install desde cero.
+# Excluir node_modules reduce drásticamente el tamaño del contexto
+# enviado al daemon y evita conflictos con binarios de plataforma.
+**/node_modules
+
+# ── Build artifacts ──────────────────────────────────────────
+# Se generan dentro del contenedor, no se necesitan del host.
+**/dist
+**/.turbo
+
+# ── Variables de entorno ─────────────────────────────────────
+# Nunca deben entrar al contexto de build.
+# Las vars de runtime van via env_file en docker-compose.
+# Las vars VITE_* van via build args.
+**/.env
+**/*.env
+
+# ── Git ──────────────────────────────────────────────────────
+.git
+.gitignore
+**/.gitkeep
+
+# ── Archivos de desarrollo local ─────────────────────────────
+**/*.log
+**/*.md
+.editorconfig
+.prettierrc
+.eslintrc*
+*.local

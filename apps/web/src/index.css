@@ -1,50 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
 @import "tailwindcss";
 
 @theme {
-  /* Ocean palette */
-  --color-ocean-50: #f0f9ff;
-  --color-ocean-100: #e0f2fe;
-  --color-ocean-200: #bae6fd;
-  --color-ocean-300: #7dd3fc;
-  --color-ocean-400: #38bdf8;
-  --color-ocean-500: #0ea5e9;
-  --color-ocean-600: #0284c7;
-  --color-ocean-700: #0369a1;
-  --color-ocean-800: #075985;
-  --color-ocean-900: #0c4a6e;
-  --color-ocean-950: #082f49;
+  /* ── Mist — fondo suave azul-agua ── */
+  --color-mist-50:  #f0fafa;
+  --color-mist-100: #e0f5f5;
+  --color-mist-200: #c0eaea;
 
-  /* Sand palette */
-  --color-sand-50: #fdf8f0;
-  --color-sand-100: #faefd9;
-  --color-sand-200: #f4dbb0;
-  --color-sand-300: #ecc17e;
-  --color-sand-400: #e3a24b;
-  --color-sand-500: #db882a;
-  --color-sand-600: #cc6f1f;
-  --color-sand-700: #a9561b;
-  --color-sand-800: #88451d;
-  --color-sand-900: #6f3a1b;
-  --color-sand-950: #3c1c0c;
+  /* ── Ocean — turquesa, color principal ── */
+  --color-ocean-50:  #ecfeff;
+  --color-ocean-100: #cffafe;
+  --color-ocean-200: #a5f3fc;
+  --color-ocean-300: #67e8f9;
+  --color-ocean-400: #22d3ee;
+  --color-ocean-500: #06b6d4;
+  --color-ocean-600: #0891b2;
+  --color-ocean-700: #0e7490;
+  --color-ocean-800: #155e75;
+  --color-ocean-900: #164e63;
+  --color-ocean-950: #0a2f3d;
 
-  /* Coral palette */
-  --color-coral-50: #fff1f0;
-  --color-coral-100: #ffe0de;
-  --color-coral-200: #ffc7c3;
-  --color-coral-300: #ff9f99;
-  --color-coral-400: #ff6b62;
-  --color-coral-500: #f83d32;
-  --color-coral-600: #e52014;
-  --color-coral-700: #c1160b;
-  --color-coral-800: #9f160e;
-  --color-coral-900: #831912;
-  --color-coral-950: #470804;
+  /* ── Mint — verde menta suave, secundario ── */
+  --color-mint-50:  #f0fdf4;
+  --color-mint-100: #dcfce7;
+  --color-mint-200: #bbf7d0;
+  --color-mint-300: #86efac;
+  --color-mint-400: #4ade80;
+  --color-mint-500: #22c55e;
+  --color-mint-600: #16a34a;
+  --color-mint-700: #15803d;
 
-  /* Fonts */
-  --font-family-display: 'Playfair Display', serif;
-  --font-family-body: 'DM Sans', sans-serif;
+  /* ── Sand — arena / dorado, decorativo ── */
+  --color-sand-100: #fef9ee;
+  --color-sand-200: #fde68a;
+  --color-sand-300: #fcd34d;
+  --color-sand-400: #fbbf24;
+  --color-sand-500: #f59e0b;
 
-  /* Animations */
+  /* ── Coral — naranja, acento CTA ── */
+  --color-coral-400: #fb923c;
+  --color-coral-500: #f97316;
+  --color-coral-600: #ea580c;
+  --color-coral-700: #c2410c;
+
+  /* ── Slate — texto ── */
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #0f172a;
+
+  /* ── WhatsApp ── */
+  --color-whatsapp: #25a855;
+
+  /* ── Fuentes ── */
+  --font-family-display: 'Playfair Display', Georgia, serif;
+  --font-family-body:    'Inter', system-ui, sans-serif;
+  --font-family-mono:    'JetBrains Mono', monospace;
+
+  /* ── Animaciones ── */
   --animate-fade-up: fade-up 0.6s ease-out both;
   --animate-fade-in: fade-in 0.5s ease-out both;
 
@@ -61,8 +79,27 @@
 
   @keyframes fade-in {
     from { opacity: 0; }
-    to { opacity: 1; }
+    to   { opacity: 1; }
   }
+}
+
+/* Variables semánticas globales */
+:root {
+  --color-primary: #0891b2;
+  --color-accent:  #f97316;
+  --color-wa:      #25a855;
+}
+
+/* Accesibilidad — focus visible para navegación con teclado */
+:focus-visible {
+  outline: 2px solid #0891b2;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Suavizado de fuentes */
+* {
+  -webkit-font-smoothing: antialiased;
 }
 
 /* shadcn CSS variables — neutral base */

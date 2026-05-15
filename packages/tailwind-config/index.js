@@ -1,60 +1,85 @@
+// NOTA: Este archivo es referencia documental. La configuración activa de Tailwind v4
+// vive en apps/web/src/index.css y apps/dashboard/src/index.css
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   theme: {
     extend: {
       colors: {
+        // Fondo suave azul-agua
+        mist: {
+          50:  '#f0fafa',
+          100: '#e0f5f5',
+          200: '#c0eaea',
+        },
+        // Turquesa — color principal
         ocean: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          200: '#bae6fd',
-          300: '#7dd3fc',
-          400: '#38bdf8',
-          500: '#0ea5e9',
-          600: '#0284c7',
-          700: '#0369a1',
-          800: '#075985',
-          900: '#0c4a6e',
-          950: '#082f49',
+          50:  '#ecfeff',
+          100: '#cffafe',
+          200: '#a5f3fc',
+          300: '#67e8f9',
+          400: '#22d3ee',
+          500: '#06b6d4',
+          600: '#0891b2',
+          700: '#0e7490',
+          800: '#155e75',
+          900: '#164e63',
+          950: '#0a2f3d',
         },
+        // Verde menta suave — secundario
+        mint: {
+          50:  '#f0fdf4',
+          100: '#dcfce7',
+          200: '#bbf7d0',
+          300: '#86efac',
+          400: '#4ade80',
+          500: '#22c55e',
+          600: '#16a34a',
+          700: '#15803d',
+        },
+        // Arena / dorado — decorativo
         sand: {
-          50: '#fdf8f0',
-          100: '#faefd9',
-          200: '#f4dbb0',
-          300: '#ecc17e',
-          400: '#e3a24b',
-          500: '#db882a',
-          600: '#cc6f1f',
-          700: '#a9561b',
-          800: '#88451d',
-          900: '#6f3a1b',
-          950: '#3c1c0c',
+          100: '#fef9ee',
+          200: '#fde68a',
+          300: '#fcd34d',
+          400: '#fbbf24',
+          500: '#f59e0b',
         },
+        // Coral / naranja — acento CTA
         coral: {
-          50: '#fff1f0',
-          100: '#ffe0de',
-          200: '#ffc7c3',
-          300: '#ff9f99',
-          400: '#ff6b62',
-          500: '#f83d32',
-          600: '#e52014',
-          700: '#c1160b',
-          800: '#9f160e',
-          900: '#831912',
-          950: '#470804',
+          400: '#fb923c',
+          500: '#f97316',
+          600: '#ea580c',
+          700: '#c2410c',
         },
+        // Texto
+        slate: {
+          100: '#f1f5f9',
+          200: '#e2e8f0',
+          300: '#cbd5e1',
+          400: '#94a3b8',
+          500: '#64748b',
+          600: '#475569',
+          700: '#334155',
+          800: '#1e293b',
+          900: '#0f172a',
+        },
+        // WhatsApp
+        whatsapp: '#25a855',
       },
       fontFamily: {
-        display: ['Playfair Display', 'serif'],
-        body: ['DM Sans', 'sans-serif'],
+        display: ['Playfair Display', 'Georgia', 'serif'],
+        body:    ['Inter', 'system-ui', 'sans-serif'],
+        mono:    ['JetBrains Mono', 'monospace'],
       },
       keyframes: {
         'fade-up': {
           from: { opacity: '0', transform: 'translateY(20px)' },
-          to: { opacity: '1', transform: 'translateY(0)' },
+          to:   { opacity: '1', transform: 'translateY(0)' },
         },
         'fade-in': {
           from: { opacity: '0' },
-          to: { opacity: '1' },
+          to:   { opacity: '1' },
         },
       },
       animation: {
