@@ -2,11 +2,13 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import useEmblaCarousel from 'embla-carousel-react'
 import { useInView } from 'react-intersection-observer'
-import { Mail, MessageCircle, Waves, Video, MapPin, Star } from 'lucide-react'
+import { Mail, MessageCircle, Waves, Video, MapPin, Star, ArrowRight } from 'lucide-react'
 import { useSEO } from '../shared/hooks/useSEO'
 import { useGallery } from '../shared/hooks/useGallery'
 import { usePackages } from '../shared/hooks/usePackages'
 import { useReviews } from '../shared/hooks/useReviews'
+import { usePublicInstructors } from '../shared/hooks/useInstructors'
+import { useSiteSetting } from '../shared/hooks/useSiteSettings'
 import type { GoogleReview } from '../shared/api/reviews'
 import { formatPrice } from '@surf-app/utils'
 import Navbar from '../shared/components/Navbar'
@@ -28,25 +30,33 @@ const i18n = {
     },
     services: {
       title: 'Nuestros Servicios',
+      cta: 'Reservar',
       items: [
         {
           icon: Waves,
           title: 'Clases de Surf',
+          serviceType: 'surf_lesson' as const,
           description: 'Aprende a surfear con instructores certificados. Desde principiantes hasta nivel avanzado, adaptamos cada clase a tu ritmo.',
         },
         {
           icon: Video,
           title: 'Video Análisis',
+          serviceType: 'video_analysis' as const,
           description: 'Grabamos tu sesión y analizamos cada detalle de tu técnica para que progreses más rápido.',
         },
         {
           icon: MapPin,
           title: 'Surf Trips',
+          serviceType: 'surf_trip' as const,
           description: 'Exploramos los mejores spots de Costa Rica. Organizamos todo para que solo te preocupes por surfear.',
         },
       ],
     },
-    packages: { title: 'Nuestros Paquetes', cta: 'Reservar por WhatsApp' },
+    instructors: {
+      title: 'Nuestros Instructores',
+      cta: 'Ver perfil',
+    },
+    packages: { title: 'Nuestros Paquetes', cta: 'Reservar' },
     about: {
       title: 'Quiénes Somos',
       mission: 'Nuestra misión es compartir la pasión por el surf con personas de todo el mundo, en un ambiente seguro, divertido y respetuoso con el océano.',
@@ -83,25 +93,33 @@ const i18n = {
     },
     services: {
       title: 'Our Services',
+      cta: 'Book Now',
       items: [
         {
           icon: Waves,
           title: 'Surf Lessons',
+          serviceType: 'surf_lesson' as const,
           description: 'Learn to surf with certified instructors. From beginners to advanced, we tailor every lesson to your pace.',
         },
         {
           icon: Video,
           title: 'Video Analysis',
+          serviceType: 'video_analysis' as const,
           description: 'We film your session and break down every detail of your technique so you progress faster.',
         },
         {
           icon: MapPin,
           title: 'Surf Trips',
+          serviceType: 'surf_trip' as const,
           description: 'We explore the best spots in Costa Rica. We handle everything so you just focus on surfing.',
         },
       ],
     },
-    packages: { title: 'Our Packages', cta: 'Book via WhatsApp' },
+    instructors: {
+      title: 'Our Instructors',
+      cta: 'View profile',
+    },
+    packages: { title: 'Our Packages', cta: 'Book Now' },
     about: {
       title: 'About Us',
       mission: 'Our mission is to share the passion for surfing with people from around the world, in a safe, fun, and ocean-respectful environment.',
@@ -148,12 +166,17 @@ export default function LandingPage({ lang }: { lang: Lang }) {
   const waHref = `https://wa.me/${wa}`
   const mailHref = `mailto:${email}`
   const galleryHref = lang === 'es' ? '/galeria' : '/en/gallery'
+  const bookingBase = lang === 'es' ? '/reservar' : '/en/book'
 
   useSEO({ title: t.seo.title, description: t.seo.description, lang })
 
   const { data: packages } = usePackages()
   const { data: galleryItems, isLoading: isGalleryLoading } = useGallery()
+  const { data: instructors } = usePublicInstructors()
+  const { data: heroImageUrl } = useSiteSetting('hero_image_url')
+  const { data: heroImagePos } = useSiteSetting('hero_image_position')
   const preview = galleryItems?.slice(0, 6) ?? []
+  const instructorBase = lang === 'es' ? '/instructores' : '/en/instructors'
 
   return (
     <div className="min-h-screen bg-white font-body text-slate-900">
@@ -162,15 +185,22 @@ export default function LandingPage({ lang }: { lang: Lang }) {
       {/* Hero */}
       <section
         id="hero"
-        className="relative flex min-h-[90vh] items-center justify-center overflow-hidden bg-mist-50"
+        className="relative flex min-h-[90vh] items-end justify-center overflow-hidden bg-slate-900"
       >
+        {/* Full-color background image */}
         <div
-          className="absolute inset-0 bg-cover bg-center opacity-10"
-          style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=1600)' }}
+          className="absolute inset-0 bg-cover"
+          style={{
+            backgroundImage: `url(${heroImageUrl ?? 'https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=1600'})`,
+            backgroundPosition: `center ${heroImagePos ?? 'center'}`,
+          }}
         />
-        <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
+        {/* Gradient: transparent top → dark bottom for text legibility */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/0 via-slate-900/20 to-slate-900/80" />
+
+        <div className="relative z-10 mx-auto max-w-4xl px-6 pb-20 pt-40 text-center">
           <motion.h1
-            className="font-display text-4xl font-bold leading-tight text-slate-900 sm:text-6xl lg:text-7xl"
+            className="font-display text-4xl font-bold leading-tight text-white drop-shadow-lg sm:text-6xl lg:text-7xl"
             initial={{ opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -178,7 +208,7 @@ export default function LandingPage({ lang }: { lang: Lang }) {
             {t.hero.title}
           </motion.h1>
           <motion.p
-            className="mt-6 text-lg text-slate-600 sm:text-xl"
+            className="mt-6 text-lg text-white/90 drop-shadow-md sm:text-xl"
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -202,7 +232,7 @@ export default function LandingPage({ lang }: { lang: Lang }) {
             </a>
             <a
               href={mailHref}
-              className="flex items-center gap-2 rounded-full border border-ocean-500 px-8 py-3 font-semibold text-ocean-600 transition hover:bg-ocean-50"
+              className="flex items-center gap-2 rounded-full border border-white/60 bg-white/10 px-8 py-3 font-semibold text-white backdrop-blur-sm transition hover:bg-white/20"
             >
               <Mail size={20} />
               {t.hero.ctaEmail}
@@ -210,6 +240,53 @@ export default function LandingPage({ lang }: { lang: Lang }) {
           </motion.div>
         </div>
       </section>
+
+      {/* Instructores */}
+      {instructors && instructors.length > 0 && (
+        <section className="bg-white py-24">
+          <div className="mx-auto max-w-7xl px-6">
+            <FadeIn>
+              <h2 className="font-display text-center text-3xl font-bold text-slate-900 sm:text-4xl">
+                {t.instructors.title}
+              </h2>
+            </FadeIn>
+            <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {instructors.map((inst, i) => (
+                <FadeIn key={inst.id} delay={i * 0.1}>
+                  <div className="group flex flex-col items-center rounded-2xl border border-slate-200 bg-white p-8 shadow-sm transition hover:border-ocean-400 hover:shadow-md">
+                    {inst.photo_url ? (
+                      <img
+                        src={inst.photo_url}
+                        alt={inst.full_name}
+                        className="h-32 w-32 rounded-full object-cover shadow-md"
+                      />
+                    ) : (
+                      <div className="flex h-32 w-32 items-center justify-center rounded-full bg-ocean-100 text-3xl font-bold text-ocean-600">
+                        {inst.full_name.charAt(0)}
+                      </div>
+                    )}
+                    <h3 className="mt-5 font-display text-xl font-semibold text-slate-900">
+                      {inst.full_name}
+                    </h3>
+                    {inst.bio && (
+                      <p className="mt-2 line-clamp-3 text-center text-sm leading-relaxed text-slate-600">
+                        {inst.bio}
+                      </p>
+                    )}
+                    <Link
+                      to={`${instructorBase}/${inst.id}`}
+                      className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-ocean-600 transition hover:text-ocean-700"
+                    >
+                      {t.instructors.cta}
+                      <ArrowRight size={14} />
+                    </Link>
+                  </div>
+                </FadeIn>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Servicios */}
       <section className="bg-mist-50 py-24">
@@ -228,15 +305,12 @@ export default function LandingPage({ lang }: { lang: Lang }) {
                   </div>
                   <h3 className="font-display text-xl font-semibold text-slate-900">{svc.title}</h3>
                   <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-600">{svc.description}</p>
-                  <a
-                    href={waHref}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-ocean-600 transition-colors hover:text-ocean-700"
+                  <Link
+                    to={`${bookingBase}?service=${svc.serviceType}`}
+                    className="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-coral-500 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-coral-600"
                   >
-                    <MessageCircle size={16} />
-                    WhatsApp
-                  </a>
+                    {t.services.cta}
+                  </Link>
                 </div>
               </FadeIn>
             ))}
@@ -266,15 +340,12 @@ export default function LandingPage({ lang }: { lang: Lang }) {
                     <p className="mt-4 text-2xl font-bold text-coral-500">
                       {formatPrice(pkg.price, pkg.currency)}
                     </p>
-                    <a
-                      href={waHref}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <Link
+                      to={bookingBase}
                       className="mt-6 flex items-center justify-center gap-2 rounded-full bg-coral-500 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-coral-600"
                     >
-                      <MessageCircle size={16} />
                       {t.packages.cta}
-                    </a>
+                    </Link>
                   </div>
                 </FadeIn>
               ))}

@@ -2,7 +2,9 @@ import { Injectable, UnauthorizedException } from '@nestjs/common'
 import { PassportStrategy } from '@nestjs/passport'
 import { ExtractJwt, Strategy } from 'passport-jwt'
 import { ConfigService } from '@nestjs/config'
-import { SupabaseService } from '../supabase/supabase.service'
+import { InjectRepository } from '@nestjs/typeorm'
+import { Repository } from 'typeorm'
+import { DashboardUser } from '../../modules/users/entities/dashboard-user.entity'
 
 export interface JwtPayload {
   sub: string
@@ -14,7 +16,8 @@ export interface JwtPayload {
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
     private readonly config: ConfigService,
-    private readonly supabase: SupabaseService,
+    @InjectRepository(DashboardUser)
+    private readonly repo: Repository<DashboardUser>,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -24,13 +27,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: JwtPayload) {
-    const { data: user, error } = await this.supabase.supabase
-      .from('dashboard_users')
-      .select('id, email, role, full_name, is_active, created_at')
-      .eq('id', payload.sub)
-      .single()
+    const user = await this.repo.findOne({
+      where: { id: payload.sub },
+      select: { id: true, email: true, role: true, full_name: true, is_active: true, created_at: true },
+    })
 
-    if (error || !user) throw new UnauthorizedException('Token inválido')
+    if (!user) throw new UnauthorizedException('Token inválido')
     if (!user.is_active) throw new UnauthorizedException('Cuenta desactivada')
 
     return user

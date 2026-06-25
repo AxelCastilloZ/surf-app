@@ -1,10 +1,13 @@
 import { lazy, Suspense } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-const LandingPage  = lazy(() => import('./pages/LandingPage'))
-const GalleryPage  = lazy(() => import('./pages/GalleryPage'))
-const PoliciesPage = lazy(() => import('./pages/PoliciesPage'))
-const NotFoundPage = lazy(() => import('./pages/NotFoundPage'))
+const LandingPage        = lazy(() => import('./pages/LandingPage'))
+const GalleryPage        = lazy(() => import('./pages/GalleryPage'))
+const PoliciesPage       = lazy(() => import('./pages/PoliciesPage'))
+const BookingFormPage    = lazy(() => import('./pages/BookingFormPage'))
+const ConfirmBookingPage = lazy(() => import('./pages/ConfirmBookingPage'))
+const InstructorProfilePage = lazy(() => import('./pages/InstructorProfilePage'))
+const NotFoundPage       = lazy(() => import('./pages/NotFoundPage'))
 
 function PageLoader() {
   return (
@@ -22,9 +25,15 @@ export default function App() {
           <Route path="/"            element={<LandingPage lang="es" />} />
           <Route path="/galeria"     element={<GalleryPage lang="es" />} />
           <Route path="/politicas"   element={<PoliciesPage lang="es" />} />
+          <Route path="/instructores/:id" element={<InstructorProfilePage lang="es" />} />
+          <Route path="/reservar"    element={<BookingFormPage lang="es" />} />
+          <Route path="/confirmar-reserva/:token" element={<ConfirmBookingPage lang="es" />} />
           <Route path="/en"          element={<LandingPage lang="en" />} />
           <Route path="/en/gallery"  element={<GalleryPage lang="en" />} />
           <Route path="/en/policies" element={<PoliciesPage lang="en" />} />
+          <Route path="/en/instructors/:id" element={<InstructorProfilePage lang="en" />} />
+          <Route path="/en/book"     element={<BookingFormPage lang="en" />} />
+          <Route path="/en/confirm-booking/:token" element={<ConfirmBookingPage lang="en" />} />
           <Route path="*"            element={<NotFoundPage />} />
         </Routes>
       </Suspense>

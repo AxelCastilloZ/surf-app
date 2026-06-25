@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom'
-import { LayoutDashboard, Images, Package, Users, LogOut } from 'lucide-react'
+import { LayoutDashboard, Images, Package, CalendarDays, GraduationCap, DollarSign, Settings, Users, LogOut } from 'lucide-react'
 import { useAuthStore } from '@/core/store/authStore'
 import { RoleGate } from '@/core/guards/RoleGate'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
@@ -11,6 +11,10 @@ const navItems = [
   { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard, end: true },
   { to: '/dashboard/gallery', label: 'Galería', icon: Images, end: false },
   { to: '/dashboard/packages', label: 'Paquetes', icon: Package, end: false },
+  { to: '/dashboard/bookings', label: 'Reservas', icon: CalendarDays, end: false },
+  { to: '/dashboard/instructors', label: 'Instructores', icon: GraduationCap, end: false },
+  { to: '/dashboard/pricing', label: 'Tarifas', icon: DollarSign, end: false },
+  { to: '/dashboard/settings', label: 'Configuración', icon: Settings, end: false },
 ]
 
 export function Sidebar() {

@@ -6,6 +6,10 @@ import { DashboardHome } from '@/modules/dashboard/pages/DashboardHome'
 import { GalleryPage } from '@/modules/gallery/pages/GalleryPage'
 import { PackagesPage } from '@/modules/packages/pages/PackagesPage'
 import { UsersPage } from '@/modules/users/pages/UsersPage'
+import { BookingsPage } from '@/modules/bookings/pages/BookingsPage'
+import { InstructorsPage } from '@/modules/instructors/pages/InstructorsPage'
+import { PricingPage } from '@/modules/pricing/pages/PricingPage'
+import { SettingsPage } from '@/modules/settings/pages/SettingsPage'
 
 export function App() {
   return (
@@ -19,6 +23,10 @@ export function App() {
           <Route path="/dashboard" element={<DashboardHome />} />
           <Route path="/dashboard/gallery" element={<GalleryPage />} />
           <Route path="/dashboard/packages" element={<PackagesPage />} />
+          <Route path="/dashboard/bookings" element={<BookingsPage />} />
+          <Route path="/dashboard/instructors" element={<InstructorsPage />} />
+          <Route path="/dashboard/pricing" element={<PricingPage />} />
+          <Route path="/dashboard/settings" element={<SettingsPage />} />
 
           {/* Solo superadmin */}
           <Route

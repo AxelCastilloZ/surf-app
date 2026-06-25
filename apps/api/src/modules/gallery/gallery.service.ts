@@ -2,8 +2,11 @@ import {
   Injectable, InternalServerErrorException,
   NotFoundException, BadRequestException,
 } from '@nestjs/common'
+import { InjectRepository } from '@nestjs/typeorm'
+import { Repository } from 'typeorm'
 import { SupabaseService } from '../../common/supabase/supabase.service'
-import type { GalleryCategory, GalleryItem, ApiResponse } from '@surf-app/types'
+import { GalleryItem } from './entities/gallery-item.entity'
+import type { GalleryCategory, GalleryItem as GalleryItemType, ApiResponse } from '@surf-app/types'
 import { CreateGalleryItemDto } from './dto/create-gallery-item.dto'
 
 const STORAGE_BUCKET = 'gallery'
@@ -15,46 +18,42 @@ const ALLOWED_MIMETYPES = [
 
 @Injectable()
 export class GalleryService {
-  constructor(private readonly supabase: SupabaseService) {}
+  constructor(
+    @InjectRepository(GalleryItem)
+    private readonly repo: Repository<GalleryItem>,
+    private readonly supabase: SupabaseService,
+  ) {}
 
-  // ── Público: solo items visibles ────────────────────────────
-  async findAll(category?: GalleryCategory): Promise<ApiResponse<GalleryItem[]>> {
-    let query = this.supabase.supabase
-      .from('gallery_items')
-      .select('*')
-      .eq('is_visible', true)
-      .order('sort_order', { ascending: true })
+  async findAll(category?: GalleryCategory): Promise<ApiResponse<GalleryItemType[]>> {
+    const where: Record<string, unknown> = { is_visible: true }
+    if (category) where.category = category
 
-    if (category) query = query.eq('category', category)
-
-    const { data, error } = await query
-    if (error) throw new InternalServerErrorException(error.message)
-    return { data: data ?? [] }
+    const data = await this.repo.find({
+      where,
+      order: { sort_order: 'ASC' },
+    })
+    return { data: data as unknown as GalleryItemType[] }
   }
 
-  // ── Admin: todos los items sin filtro ────────────────────────
-  async findAllAdmin(category?: GalleryCategory): Promise<ApiResponse<GalleryItem[]>> {
-    let query = this.supabase.supabase
-      .from('gallery_items')
-      .select('*')
-      .order('sort_order', { ascending: true })
+  async findAllAdmin(category?: GalleryCategory): Promise<ApiResponse<GalleryItemType[]>> {
+    const where: Record<string, unknown> = {}
+    if (category) where.category = category
 
-    if (category) query = query.eq('category', category)
-
-    const { data, error } = await query
-    if (error) throw new InternalServerErrorException(error.message)
-    return { data: data ?? [] }
+    const data = await this.repo.find({
+      where,
+      order: { sort_order: 'ASC' },
+    })
+    return { data: data as unknown as GalleryItemType[] }
   }
 
-  async create(dto: CreateGalleryItemDto): Promise<ApiResponse<GalleryItem>> {
-    const { data, error } = await this.supabase.supabase
-      .from('gallery_items')
-      .insert({ ...dto, is_visible: dto.is_visible ?? true, sort_order: dto.sort_order ?? 0 })
-      .select()
-      .single()
-
-    if (error) throw new InternalServerErrorException(error.message)
-    return { data, message: 'Item creado' }
+  async create(dto: CreateGalleryItemDto): Promise<ApiResponse<GalleryItemType>> {
+    const item = this.repo.create({
+      ...dto,
+      is_visible: dto.is_visible ?? true,
+      sort_order: dto.sort_order ?? 0,
+    })
+    const saved = await this.repo.save(item)
+    return { data: saved as unknown as GalleryItemType, message: 'Item creado' }
   }
 
   async uploadFile(
@@ -62,17 +61,15 @@ export class GalleryService {
     category: string,
     alt_text?: string,
     alt_text_en?: string,
-  ): Promise<ApiResponse<GalleryItem>> {
+  ): Promise<ApiResponse<GalleryItemType>> {
     if (!file) throw new BadRequestException('No se recibió ningún archivo')
 
-    // Validar tipo MIME
     if (!ALLOWED_MIMETYPES.includes(file.mimetype)) {
       throw new BadRequestException(
         `Tipo de archivo no permitido: ${file.mimetype}. Permitidos: JPEG, PNG, WEBP, MP4, WEBM`,
       )
     }
 
-    // Validar tamaño: imágenes máx 10 MB, videos máx 50 MB (el limit del interceptor)
     const isVideo = file.mimetype.startsWith('video/')
     if (!isVideo && file.size > IMAGE_MAX_BYTES) {
       throw new BadRequestException(
@@ -90,7 +87,7 @@ export class GalleryService {
     const folder = isVideo ? 'videos' : 'images'
     const storagePath = `${folder}/${category}/${safeName}`
 
-    // Subir a Supabase Storage
+    // Supabase Storage (se mantiene — Storage no es TypeORM)
     const { error: storageError } = await this.supabase.supabase.storage
       .from(STORAGE_BUCKET)
       .upload(storagePath, file.buffer, {
@@ -100,79 +97,58 @@ export class GalleryService {
 
     if (storageError) throw new InternalServerErrorException(storageError.message)
 
-    // Obtener URL pública
     const { data: { publicUrl } } = this.supabase.supabase.storage
       .from(STORAGE_BUCKET)
       .getPublicUrl(storagePath)
 
     const mediaType = isVideo ? 'video' : 'image'
 
-    // Guardar en tabla gallery_items con storage_path explícito
-    const { data, error } = await this.supabase.supabase
-      .from('gallery_items')
-      .insert({
-        url: publicUrl,
-        storage_path: storagePath,
-        media_type: mediaType,
-        category,
-        alt_text: alt_text ?? null,
-        alt_text_en: alt_text_en ?? null,
-        is_visible: true,
-        sort_order: 0,
-      })
-      .select()
-      .single()
+    const item = this.repo.create({
+      url: publicUrl,
+      storage_path: storagePath,
+      media_type: mediaType,
+      category,
+      alt_text: alt_text ?? null,
+      alt_text_en: alt_text_en ?? null,
+      is_visible: true,
+      sort_order: 0,
+    })
 
-    if (error) {
-      // Si falla la inserción en DB, intentar limpiar Storage
+    try {
+      const saved = await this.repo.save(item)
+      return { data: saved as unknown as GalleryItemType, message: 'Archivo subido correctamente' }
+    } catch (err) {
       await this.supabase.supabase.storage.from(STORAGE_BUCKET).remove([storagePath])
-      throw new InternalServerErrorException(error.message)
+      throw new InternalServerErrorException((err as Error).message)
     }
-
-    return { data, message: 'Archivo subido correctamente' }
   }
 
-  async update(id: string, dto: Partial<CreateGalleryItemDto>): Promise<ApiResponse<GalleryItem>> {
-    const { data, error } = await this.supabase.supabase
-      .from('gallery_items')
-      .update(dto)
-      .eq('id', id)
-      .select()
-      .single()
+  async update(id: string, dto: Partial<CreateGalleryItemDto>): Promise<ApiResponse<GalleryItemType>> {
+    const item = await this.repo.findOne({ where: { id } })
+    if (!item) throw new NotFoundException('Item no encontrado')
 
-    if (error) throw new InternalServerErrorException(error.message)
-    if (!data) throw new NotFoundException('Item no encontrado')
-    return { data, message: 'Item actualizado' }
+    await this.repo.update(id, dto)
+    const updated = await this.repo.findOne({ where: { id } })
+    return { data: updated as unknown as GalleryItemType, message: 'Item actualizado' }
   }
 
   async remove(id: string): Promise<void> {
-    // Obtener storage_path de la tabla (fuente de verdad, no parsear la URL)
-    const { data: item, error: fetchError } = await this.supabase.supabase
-      .from('gallery_items')
-      .select('storage_path')
-      .eq('id', id)
-      .single()
+    const item = await this.repo.findOne({
+      where: { id },
+      select: { id: true, storage_path: true },
+    })
+    if (!item) throw new NotFoundException('Item no encontrado')
 
-    if (fetchError || !item) throw new NotFoundException('Item no encontrado')
-
-    // Eliminar de Supabase Storage si existe storage_path
     if (item.storage_path) {
       const { error: storageError } = await this.supabase.supabase.storage
         .from(STORAGE_BUCKET)
         .remove([item.storage_path])
 
-      // Log pero no falla si Storage falla (podría estar ya eliminado)
       if (storageError) {
         console.warn(`[GalleryService] Storage delete warning for ${item.storage_path}:`, storageError.message)
       }
     }
 
-    // Eliminar de la tabla
-    const { error } = await this.supabase.supabase
-      .from('gallery_items')
-      .delete()
-      .eq('id', id)
-
-    if (error) throw new InternalServerErrorException(error.message)
+    await this.repo.delete(id)
   }
 }
