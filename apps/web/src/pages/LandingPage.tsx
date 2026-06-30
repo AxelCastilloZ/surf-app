@@ -19,8 +19,8 @@ type Lang = 'es' | 'en'
 const i18n = {
   es: {
     seo: {
-      title: 'Clases de Surf en Costa Rica',
-      description: 'Aprende surf con instructores certificados en Costa Rica. Clases, video análisis y surf trips.',
+      title: 'Clases de Surf en Nosara, Guanacaste — Costa Rica',
+      description: 'Escuela de surf en Playa Guiones, Nosara. Clases con instructores certificados, video análisis y surf trips en Guanacaste, Costa Rica.',
     },
     hero: {
       title: 'Vive el Surf en Costa Rica',
@@ -82,8 +82,8 @@ const i18n = {
   },
   en: {
     seo: {
-      title: 'Surf Lessons in Costa Rica',
-      description: 'Learn to surf with certified instructors in Costa Rica. Lessons, video analysis and surf trips.',
+      title: 'Surf Lessons in Nosara, Guanacaste — Costa Rica',
+      description: 'Surf school at Playa Guiones, Nosara. Certified instructors, video analysis and surf trips in Guanacaste, Costa Rica.',
     },
     hero: {
       title: 'Experience Surfing in Costa Rica',

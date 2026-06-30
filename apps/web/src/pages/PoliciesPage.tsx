@@ -6,7 +6,7 @@ type Lang = 'es' | 'en'
 
 const i18n = {
   es: {
-    seo: { title: 'Políticas', description: 'Políticas de cancelación y privacidad de Surfers Lab CR.' },
+    seo: { title: 'Políticas', description: 'Políticas de cancelación y privacidad de Surfers Lab CR, escuela de surf en Nosara, Guanacaste.' },
     title: 'Políticas',
     cancellation: {
       title: 'Política de Cancelación',
@@ -29,7 +29,7 @@ const i18n = {
     },
   },
   en: {
-    seo: { title: 'Policies', description: 'Cancellation and privacy policies for Surfers Lab CR.' },
+    seo: { title: 'Policies', description: 'Cancellation and privacy policies for Surfers Lab CR, surf school in Nosara, Guanacaste.' },
     title: 'Policies',
     cancellation: {
       title: 'Cancellation Policy',

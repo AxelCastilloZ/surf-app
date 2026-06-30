@@ -316,10 +316,16 @@ export default function InstructorProfilePage({ lang }: { lang: Lang }) {
 
   const [showReviewForm, setShowReviewForm] = useState(false)
 
+  const instructorPath = lang === 'es' ? `/instructores/${id}` : `/en/instructors/${id}`
+  const locationSuffix = lang === 'es'
+    ? ' — Instructor de surf en Nosara, Guanacaste, Costa Rica'
+    : ' — Surf instructor in Nosara, Guanacaste, Costa Rica'
+
   useSEO({
     title: instructor?.full_name ?? t.loading,
-    description: instructor?.bio ?? '',
+    description: (instructor?.bio ?? '') + locationSuffix,
     lang,
+    path: instructorPath,
   })
 
   const reviews = reviewsData?.data ?? []

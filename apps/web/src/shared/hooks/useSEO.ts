@@ -79,12 +79,38 @@ export function useSEO({ title, description, lang, path = '', ogImage }: SEOProp
     ld.type = 'application/ld+json'
     ld.textContent = JSON.stringify({
       '@context': 'https://schema.org',
-      '@type': 'LocalBusiness',
+      '@type': 'SurfSchool',
+      '@id': SITE_URL,
       name: BRAND_NAME,
       url: SITE_URL,
       description,
       inLanguage: lang,
-      address: { '@type': 'PostalAddress', addressCountry: 'CR' },
+      telephone: '+506-8397-2306',
+      email: 'info@surferlabscr.com',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Playa Guiones',
+        addressLocality: 'Nosara',
+        addressRegion: 'Guanacaste',
+        addressCountry: 'CR',
+      },
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: 9.9416,
+        longitude: -85.6609,
+      },
+      areaServed: [
+        { '@type': 'Place', name: 'Nosara' },
+        { '@type': 'Place', name: 'Guanacaste' },
+        { '@type': 'Place', name: 'Costa Rica' },
+      ],
+      makesOffer: [
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Surf Lessons' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Video Analysis' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Surf Trips' } },
+      ],
+      image: `${SITE_URL}/assets/icons/logo4k.png`,
+      priceRange: '$$',
     })
     document.head.appendChild(ld)
   }, [title, description, lang, path, ogImage])

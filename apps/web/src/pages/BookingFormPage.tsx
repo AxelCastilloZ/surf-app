@@ -29,7 +29,7 @@ for (let h = BUSINESS_START; h < BUSINESS_END; h++) {
 
 const i18n = {
   es: {
-    seo: { title: 'Reservar', description: 'Reserva tu clase de surf en Costa Rica.' },
+    seo: { title: 'Reservar', description: 'Reserva tu clase de surf en Nosara, Guanacaste, Costa Rica.' },
     title: 'Reservar',
     subtitle: 'Completa el formulario para reservar tu experiencia.',
     service: {
@@ -82,7 +82,7 @@ const i18n = {
     },
   },
   en: {
-    seo: { title: 'Book Now', description: 'Book your surf lesson in Costa Rica.' },
+    seo: { title: 'Book Now', description: 'Book your surf lesson in Nosara, Guanacaste, Costa Rica.' },
     title: 'Book Now',
     subtitle: 'Complete the form to book your experience.',
     service: {

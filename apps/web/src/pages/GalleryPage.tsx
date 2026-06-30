@@ -25,13 +25,13 @@ const i18n = {
   es: {
     title:       'Galería',
     subtitle:    'Fotos y videos de nuestras clases y surf trips en Costa Rica.',
-    description: 'Galería de fotos y videos de clases de surf, trips y video análisis en Costa Rica.',
+    description: 'Galería de fotos y videos de clases de surf, trips y video análisis en Nosara, Guanacaste, Costa Rica.',
     empty:       'Próximamente — estamos añadiendo contenido a la galería.',
   },
   en: {
     title:       'Gallery',
     subtitle:    'Photos and videos from our surf lessons and trips in Costa Rica.',
-    description: 'Gallery of photos and videos from surf lessons, trips and video analysis in Costa Rica.',
+    description: 'Gallery of photos and videos from surf lessons, trips and video analysis in Nosara, Guanacaste, Costa Rica.',
     empty:       'Coming soon — we are adding content to the gallery.',
   },
 }
