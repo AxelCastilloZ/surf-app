@@ -1,5 +1,5 @@
-import { lazy, Suspense } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { lazy, Suspense, useEffect } from 'react'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 
 const LandingPage        = lazy(() => import('./pages/LandingPage'))
 const GalleryPage        = lazy(() => import('./pages/GalleryPage'))
@@ -8,6 +8,12 @@ const BookingFormPage    = lazy(() => import('./pages/BookingFormPage'))
 const ConfirmBookingPage = lazy(() => import('./pages/ConfirmBookingPage'))
 const InstructorProfilePage = lazy(() => import('./pages/InstructorProfilePage'))
 const NotFoundPage       = lazy(() => import('./pages/NotFoundPage'))
+
+function ScrollToTop() {
+  const { pathname } = useLocation()
+  useEffect(() => { window.scrollTo(0, 0) }, [pathname])
+  return null
+}
 
 function PageLoader() {
   return (
@@ -20,6 +26,7 @@ function PageLoader() {
 export default function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Suspense fallback={<PageLoader />}>
         <Routes>
           <Route path="/"            element={<LandingPage lang="es" />} />

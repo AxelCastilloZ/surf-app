@@ -70,10 +70,133 @@ export class MailService {
     }
   }
 
+  async sendBookingExpired(data: {
+    clientName: string
+    clientEmail: string
+    serviceName: string
+    bookingDate: string
+    startTime: string
+    bookingUrl: string
+    language: string
+  }): Promise<void> {
+    if (!this.config.get<string>('RESEND_API_KEY')) {
+      this.logger.warn('RESEND_API_KEY not set — skipping expiration email')
+      return
+    }
+
+    const es = data.language === 'es'
+    const service = es ? this.serviceLabelEs(data.serviceName) : this.serviceLabel(data.serviceName)
+
+    const subject = es
+      ? `Tu reserva ha expirado — ${service}`
+      : `Your booking has expired — ${service}`
+
+    const html = `
+<!DOCTYPE html>
+<html lang="${es ? 'es' : 'en'}">
+<head><meta charset="utf-8"></head>
+<body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333;">
+  <h2 style="color: #0077b6;">Surfers Lab CR</h2>
+  <p>${es ? 'Hola' : 'Hi'} <strong>${data.clientName}</strong>,</p>
+  <p>${es
+    ? `Tu reserva de <strong>${service}</strong> para el <strong>${data.bookingDate}</strong> a las <strong>${data.startTime}</strong> no fue confirmada a tiempo y ha expirado.`
+    : `Your <strong>${service}</strong> booking for <strong>${data.bookingDate}</strong> at <strong>${data.startTime}</strong> was not confirmed in time and has expired.`
+  }</p>
+  <p>${es ? 'Si aún deseas reservar, puedes hacer una nueva reserva aquí:' : 'If you still want to book, you can make a new reservation here:'}</p>
+  <a href="${data.bookingUrl}"
+     style="display: inline-block; background: #0077b6; color: #fff; padding: 14px 32px; text-decoration: none; border-radius: 6px; font-weight: bold;">
+    ${es ? 'Nueva reserva' : 'New booking'}
+  </a>
+  <p style="margin-top: 24px; font-size: 13px; color: #999;">
+    ${es ? 'Si tienes preguntas, no dudes en contactarnos.' : "If you have any questions, don't hesitate to contact us."}
+  </p>
+</body>
+</html>`
+
+    try {
+      await this.resend.emails.send({ from: this.from, to: data.clientEmail, subject, html })
+      this.logger.log(`Expiration email sent to ${data.clientEmail}`)
+    } catch (err) {
+      this.logger.error(`Failed to send expiration email to ${data.clientEmail}:`, (err as Error).message)
+    }
+  }
+
+  async sendBookingCompleted(data: {
+    clientName: string
+    clientEmail: string
+    serviceName: string
+    bookingDate: string
+    instructorName: string | null
+    reviewUrl: string
+    language: string
+  }): Promise<void> {
+    if (!this.config.get<string>('RESEND_API_KEY')) {
+      this.logger.warn('RESEND_API_KEY not set — skipping completion email')
+      return
+    }
+
+    const es = data.language === 'es'
+    const service = es ? this.serviceLabelEs(data.serviceName) : this.serviceLabel(data.serviceName)
+
+    const subject = es
+      ? `¡Gracias por surfear con nosotros! — ${service}`
+      : `Thanks for surfing with us! — ${service}`
+
+    const instructorLine = data.instructorName
+      ? (es
+          ? `Esperamos que hayas disfrutado tu sesión con <strong>${data.instructorName}</strong>.`
+          : `We hope you enjoyed your session with <strong>${data.instructorName}</strong>.`)
+      : (es
+          ? 'Esperamos que hayas disfrutado tu sesión.'
+          : 'We hope you enjoyed your session.')
+
+    const html = `
+<!DOCTYPE html>
+<html lang="${es ? 'es' : 'en'}">
+<head><meta charset="utf-8"></head>
+<body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333;">
+  <h2 style="color: #0077b6;">Surfers Lab CR</h2>
+  <p>${es ? 'Hola' : 'Hi'} <strong>${data.clientName}</strong>,</p>
+  <p>${es
+    ? `¡Gracias por tu <strong>${service}</strong> el <strong>${data.bookingDate}</strong>!`
+    : `Thank you for your <strong>${service}</strong> on <strong>${data.bookingDate}</strong>!`
+  }</p>
+  <p>${instructorLine}</p>
+  <p>${es
+    ? 'Tu opinión nos ayuda a mejorar y ayuda a otros viajeros a elegir su experiencia. ¿Nos dejarías una reseña rápida?'
+    : 'Your feedback helps us improve and helps other travelers choose their experience. Would you leave us a quick review?'
+  }</p>
+  <a href="${data.reviewUrl}"
+     style="display: inline-block; background: #0077b6; color: #fff; padding: 14px 32px; text-decoration: none; border-radius: 6px; font-weight: bold;">
+    ${es ? 'Dejar reseña' : 'Leave a review'}
+  </a>
+  <p style="margin-top: 24px; font-size: 13px; color: #999;">
+    ${es ? '¡Nos encantaría verte de nuevo en el agua! Pura vida 🤙' : "We'd love to see you back in the water! Pura vida 🤙"}
+  </p>
+</body>
+</html>`
+
+    try {
+      await this.resend.emails.send({ from: this.from, to: data.clientEmail, subject, html })
+      this.logger.log(`Completion email sent to ${data.clientEmail}`)
+    } catch (err) {
+      this.logger.error(`Failed to send completion email to ${data.clientEmail}:`, (err as Error).message)
+    }
+  }
+
   private serviceLabel(serviceType: string): string {
     const labels: Record<string, string> = {
       surf_lesson: 'Surf Lesson',
       video_analysis: 'Video Analysis',
+      surf_trip: 'Surf Trip',
+    }
+    return labels[serviceType] ?? serviceType
+  }
+
+  private serviceLabelEs(serviceType: string): string {
+    const labels: Record<string, string> = {
+      surf_lesson: 'Clase de Surf',
+      video_analysis: 'Video Análisis',
       surf_trip: 'Surf Trip',
     }
     return labels[serviceType] ?? serviceType

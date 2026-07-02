@@ -1,9 +1,10 @@
 import {
-  Injectable, NotFoundException, BadRequestException,
+  Injectable, Logger, NotFoundException, BadRequestException,
   ConflictException,
 } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Repository, In } from 'typeorm'
+import { Repository, In, LessThan } from 'typeorm'
+import { Cron, CronExpression } from '@nestjs/schedule'
 import { randomUUID } from 'crypto'
 import { Booking } from './entities/booking.entity'
 import { Instructor } from '../instructors/entities/instructor.entity'
@@ -19,6 +20,8 @@ const TOKEN_EXPIRY_HOURS = 48
 
 @Injectable()
 export class BookingsService {
+  private readonly logger = new Logger(BookingsService.name)
+
   constructor(
     @InjectRepository(Booking)
     private readonly repo: Repository<Booking>,
@@ -138,8 +141,7 @@ export class BookingsService {
     if (booking.status === 'cancelled') throw new BadRequestException('Esta reserva fue cancelada')
 
     if (booking.token_expires_at && booking.token_expires_at < new Date()) {
-      booking.status = 'cancelled'
-      booking.cancelled_reason = 'Token de confirmación expirado'
+      booking.status = 'expired'
       await this.repo.save(booking)
       throw new BadRequestException('El link de confirmación ha expirado. Realiza una nueva reserva.')
     }
@@ -175,7 +177,10 @@ export class BookingsService {
   }
 
   async updateStatus(id: string, dto: UpdateBookingStatusDto) {
-    const booking = await this.repo.findOne({ where: { id } })
+    const booking = await this.repo.findOne({
+      where: { id },
+      relations: { client: true, instructors: true },
+    })
     if (!booking) throw new NotFoundException('Reserva no encontrada')
 
     if (booking.status === 'cancelled') {
@@ -193,6 +198,27 @@ export class BookingsService {
     }
 
     await this.repo.save(booking)
+
+    if (dto.status === 'completed' && booking.client) {
+      const lang = booking.client.language ?? 'es'
+      const webUrl = this.config.get<string>('WEB_URL', 'http://localhost:5173')
+      const instructor = booking.instructors?.[0] ?? null
+      const reviewPath = instructor
+        ? (lang === 'es' ? `/instructores/${instructor.id}` : `/en/instructors/${instructor.id}`)
+        : (lang === 'es' ? '/' : '/en')
+
+      this.mailService.sendBookingCompleted({
+        clientName: booking.client.full_name,
+        clientEmail: booking.client.email,
+        serviceName: booking.service_type,
+        bookingDate: booking.booking_date,
+        instructorName: instructor?.full_name ?? null,
+        reviewUrl: `${webUrl}${reviewPath}`,
+        language: lang,
+      }).catch(err => {
+        this.logger.error(`Failed to send completion email for booking ${id}:`, err?.message ?? err)
+      })
+    }
 
     return { data: booking, message: `Reserva marcada como ${dto.status}` }
   }
@@ -229,5 +255,41 @@ export class BookingsService {
     })
 
     return { data: updated, message: 'Instructores asignados correctamente' }
+  }
+
+  @Cron(CronExpression.EVERY_HOUR)
+  async expirePendingBookings() {
+    const expired = await this.repo.find({
+      where: { status: 'pending', token_expires_at: LessThan(new Date()) },
+      relations: { client: true },
+    })
+
+    if (expired.length === 0) return
+
+    await this.repo.update(
+      expired.map(b => b.id),
+      { status: 'expired' },
+    )
+
+    this.logger.log(`Expired ${expired.length} pending booking(s)`)
+
+    const webUrl = this.config.get<string>('WEB_URL', 'http://localhost:5173')
+
+    for (const booking of expired) {
+      const lang = booking.client.language ?? 'es'
+      const bookingUrl = lang === 'es' ? `${webUrl}/reservar` : `${webUrl}/en/book`
+
+      this.mailService.sendBookingExpired({
+        clientName: booking.client.full_name,
+        clientEmail: booking.client.email,
+        serviceName: booking.service_type,
+        bookingDate: booking.booking_date,
+        startTime: booking.start_time,
+        bookingUrl,
+        language: lang,
+      }).catch(err => {
+        this.logger.error(`Failed to send expiration email for booking ${booking.id}:`, err?.message ?? err)
+      })
+    }
   }
 }
