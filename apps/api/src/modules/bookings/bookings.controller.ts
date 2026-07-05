@@ -42,6 +42,13 @@ export class BookingsController {
     return this.bookingsService.updateStatus(id, dto)
   }
 
+  @Get('admin/:id/instructor-availability')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('superadmin', 'admin')
+  checkInstructorAvailability(@Param('id') id: string) {
+    return this.bookingsService.checkInstructorAvailability(id)
+  }
+
   @Patch('admin/:id/instructors')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('superadmin', 'admin')

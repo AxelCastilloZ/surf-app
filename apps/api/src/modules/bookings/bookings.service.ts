@@ -14,6 +14,7 @@ import { UpdateBookingStatusDto } from './dto/update-booking-status.dto'
 import { AssignInstructorsDto } from './dto/assign-instructors.dto'
 import { MailService } from '../mail/mail.service'
 import { PricingService } from '../pricing/pricing.service'
+import { GoogleCalendarService } from '../calendar/google-calendar.service'
 import { ConfigService } from '@nestjs/config'
 
 const TOKEN_EXPIRY_HOURS = 48
@@ -30,6 +31,7 @@ export class BookingsService {
     private readonly clientsService: ClientsService,
     private readonly mailService: MailService,
     private readonly pricingService: PricingService,
+    private readonly calendarService: GoogleCalendarService,
     private readonly config: ConfigService,
   ) {}
 
@@ -255,6 +257,44 @@ export class BookingsService {
     })
 
     return { data: updated, message: 'Instructores asignados correctamente' }
+  }
+
+  async checkInstructorAvailability(bookingId: string) {
+    const booking = await this.repo.findOne({ where: { id: bookingId } })
+    if (!booking) throw new NotFoundException('Reserva no encontrada')
+
+    const instructors = await this.instructorRepo.find({
+      where: { is_active: true },
+      select: { id: true, full_name: true, google_calendar_id: true },
+      order: { full_name: 'ASC' },
+    })
+
+    const results = await Promise.all(
+      instructors.map(async (inst) => {
+        const availability = await this.calendarService.checkAvailability(
+          inst.google_calendar_id ?? '',
+          booking.booking_date,
+          booking.start_time,
+          booking.end_time,
+        )
+        return {
+          instructor_id: inst.id,
+          full_name: inst.full_name,
+          has_calendar: !!inst.google_calendar_id,
+          ...availability,
+        }
+      }),
+    )
+
+    return {
+      data: {
+        booking_id: booking.id,
+        booking_date: booking.booking_date,
+        start_time: booking.start_time,
+        end_time: booking.end_time,
+        instructors: results,
+      },
+    }
   }
 
   @Cron(CronExpression.EVERY_HOUR)

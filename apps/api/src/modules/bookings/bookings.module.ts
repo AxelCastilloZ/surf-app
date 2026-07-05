@@ -7,6 +7,7 @@ import { Instructor } from '../instructors/entities/instructor.entity'
 import { ClientsModule } from '../clients/clients.module'
 import { MailModule } from '../mail/mail.module'
 import { PricingModule } from '../pricing/pricing.module'
+import { CalendarModule } from '../calendar/calendar.module'
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { PricingModule } from '../pricing/pricing.module'
     ClientsModule,
     MailModule,
     PricingModule,
+    CalendarModule,
   ],
   controllers: [BookingsController],
   providers: [BookingsService],
