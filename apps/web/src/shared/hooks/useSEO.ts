@@ -8,8 +8,35 @@ interface SEOProps {
   ogImage?: string
 }
 
-const SITE_URL = import.meta.env.VITE_SITE_URL as string
+const SITE_URL = (import.meta.env.VITE_SITE_URL as string).replace(/\/$/, '')
 const BRAND_NAME = import.meta.env.VITE_BRAND_NAME as string
+
+const ES_TO_EN: Record<string, string> = {
+  '/': '/en',
+  '/galeria': '/en/gallery',
+  '/reservar': '/en/book',
+  '/politicas': '/en/policies',
+}
+
+const EN_TO_ES: Record<string, string> = {
+  '/en': '/',
+  '/en/gallery': '/galeria',
+  '/en/book': '/reservar',
+  '/en/policies': '/politicas',
+}
+
+function toAlternatePath(path: string, fromLang: 'es' | 'en'): string {
+  if (fromLang === 'es') {
+    const mapped = ES_TO_EN[path]
+    if (mapped) return mapped
+    return path.replace(/^\/instructores\//, '/en/instructors/')
+               .replace(/^\/confirmar-reserva\//, '/en/confirm-booking/')
+  }
+  const mapped = EN_TO_ES[path]
+  if (mapped) return mapped
+  return path.replace(/^\/en\/instructors\//, '/instructores/')
+             .replace(/^\/en\/confirm-booking\//, '/confirmar-reserva/')
+}
 
 function setMeta(selector: string, attr: string, value: string) {
   let el = document.querySelector<HTMLMetaElement>(selector)
@@ -37,7 +64,7 @@ export function useSEO({ title, description, lang, path = '', ogImage }: SEOProp
     const fullTitle = `${title} | ${BRAND_NAME}`
     const canonical = `${SITE_URL}${path}`
     const altLang = lang === 'es' ? 'en' : 'es'
-    const altPath = lang === 'es' ? `/en${path}` : path.replace(/^\/en/, '')
+    const altPath = toAlternatePath(path, lang)
 
     document.title = fullTitle
     document.documentElement.lang = lang

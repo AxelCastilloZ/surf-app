@@ -168,7 +168,7 @@ export default function LandingPage({ lang }: { lang: Lang }) {
   const galleryHref = lang === 'es' ? '/galeria' : '/en/gallery'
   const bookingBase = lang === 'es' ? '/reservar' : '/en/book'
 
-  useSEO({ title: t.seo.title, description: t.seo.description, lang })
+  useSEO({ title: t.seo.title, description: t.seo.description, lang, path: lang === 'es' ? '/' : '/en' })
 
   const { data: packages } = usePackages()
   const { data: galleryItems, isLoading: isGalleryLoading } = useGallery()
