@@ -45,6 +45,17 @@ The system SHALL return prerendered HTML with correct OG meta tags when social m
 - **WHEN** a request with WhatsApp User-Agent hits `/preguntas-frecuentes`
 - **THEN** the prerender handler returns HTML with og:title containing "Preguntas Frecuentes" and og:description about the surf school FAQ
 
+### Requirement: FAQ page is discoverable from site navigation
+The system SHALL include a link to the FAQ page in the shared Footer component, visible on every page of the site.
+
+#### Scenario: Footer link in Spanish
+- **WHEN** the site is viewed in Spanish
+- **THEN** the Footer displays a "Preguntas Frecuentes" link pointing to `/preguntas-frecuentes`
+
+#### Scenario: Footer link in English
+- **WHEN** the site is viewed in English
+- **THEN** the Footer displays a "FAQ" link pointing to `/en/faq`
+
 ### Requirement: FAQ content covers core visitor questions
 The system SHALL display at least 6 Q&A items covering: booking process, cancellation policy, what to bring, experience level requirements, lesson duration, and location/directions.
 

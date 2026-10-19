@@ -31,10 +31,14 @@
 - [x] 6.2 Add FAQ entries to `ROUTE_META` in `api/prerender.ts` with appropriate Spanish and English titles and descriptions. Verify the prerender handler returns correct OG tags for both FAQ URLs.
 - [x] 6.3 Add the FAQ path mappings to `ES_TO_EN` and `EN_TO_ES` in `useSEO.ts` so hreflang alternates resolve correctly. Verify the FAQ page's hreflang alternate link points to the other language version.
 
-## 7. Integration verification
+## 7. Add FAQ navigation link
 
-- [x] 7.1 Run `pnpm type-check` and `pnpm build` from the monorepo root and verify both pass with zero errors.
-- [x] 7.2 Start the web dev server, navigate to each modified page (landing, gallery, booking, policies, instructor profile, FAQ), and verify JSON-LD tags are present and valid using browser DevTools (check `document.querySelectorAll('script[type="application/ld+json"]')`).
+- [x] 7.1 Add bilingual FAQ link (`Preguntas Frecuentes` / `FAQ`) to `Footer.tsx` alongside the existing Policies link. Verify the link renders in both languages and navigates to the correct FAQ route.
+
+## 8. Integration verification
+
+- [x] 8.1 Run `pnpm type-check` and `pnpm build` from the monorepo root and verify both pass with zero errors.
+- [x] 8.2 Start the web dev server, navigate to each modified page (landing, gallery, booking, policies, instructor profile, FAQ), and verify JSON-LD tags are present and valid using browser DevTools (check `document.querySelectorAll('script[type="application/ld+json"]')`).
 
 ## Workflow follow-up
 

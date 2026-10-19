@@ -7,6 +7,8 @@ export default function Footer() {
 
   const policiesHref = lang === 'es' ? '/politicas' : '/en/policies'
   const policiesLabel = lang === 'es' ? 'Políticas' : 'Policies'
+  const faqHref = lang === 'es' ? '/preguntas-frecuentes' : '/en/faq'
+  const faqLabel = lang === 'es' ? 'Preguntas Frecuentes' : 'FAQ'
 
   return (
     <footer className="border-t border-slate-800 bg-slate-900 py-8">
@@ -14,9 +16,14 @@ export default function Footer() {
         <p>
           © {year} {import.meta.env.VITE_BRAND_NAME}. Todos los derechos reservados.
         </p>
-        <Link to={policiesHref} className="transition-colors hover:text-white">
-          {policiesLabel}
-        </Link>
+        <div className="flex gap-4">
+          <Link to={faqHref} className="transition-colors hover:text-white">
+            {faqLabel}
+          </Link>
+          <Link to={policiesHref} className="transition-colors hover:text-white">
+            {policiesLabel}
+          </Link>
+        </div>
       </div>
     </footer>
   )
