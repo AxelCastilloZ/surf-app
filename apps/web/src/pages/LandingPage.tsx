@@ -188,12 +188,13 @@ export default function LandingPage({ lang }: { lang: Lang }) {
         className="relative flex min-h-[90vh] items-end justify-center overflow-hidden bg-slate-900"
       >
         {/* Full-color background image */}
-        <div
-          className="absolute inset-0 bg-cover"
-          style={{
-            backgroundImage: `url(${heroImageUrl ?? 'https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=1600'})`,
-            backgroundPosition: `center ${heroImagePos ?? 'center'}`,
-          }}
+        <img
+          src={heroImageUrl ?? 'https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=1600'}
+          alt=""
+          fetchPriority="high"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover"
+          style={{ objectPosition: `center ${heroImagePos ?? 'center'}` }}
         />
         {/* Gradient: transparent top → dark bottom for text legibility */}
         <div className="absolute inset-0 bg-gradient-to-b from-slate-900/0 via-slate-900/20 to-slate-900/80" />
@@ -258,6 +259,10 @@ export default function LandingPage({ lang }: { lang: Lang }) {
                       <img
                         src={inst.photo_url}
                         alt={inst.full_name}
+                        width={128}
+                        height={128}
+                        loading="lazy"
+                        decoding="async"
                         className="h-32 w-32 rounded-full object-cover shadow-md"
                       />
                     ) : (
@@ -560,6 +565,10 @@ function ReviewCard({ review }: { review: GoogleReview }) {
           <img
             src={review.profile_photo_url}
             alt={review.author_name}
+            width={40}
+            height={40}
+            loading="lazy"
+            decoding="async"
             className="h-10 w-10 rounded-full object-cover"
             referrerPolicy="no-referrer"
           />
