@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-
-const API_URL = import.meta.env.VITE_API_URL as string
+import { supabase } from '../../lib/supabase'
 
 export interface InstructorReview {
   id: string
@@ -16,9 +15,26 @@ interface ReviewsResponse {
 }
 
 async function fetchReviews(instructorId: string): Promise<ReviewsResponse> {
-  const res = await fetch(`${API_URL}/instructors/${instructorId}/reviews`)
-  if (!res.ok) throw new Error('Error al cargar reseñas')
-  return res.json()
+  const { data, error } = await supabase
+    .from('instructor_reviews')
+    .select('id, client_name, rating, comment, created_at')
+    .eq('instructor_id', instructorId)
+    .order('created_at', { ascending: false })
+
+  if (error) throw new Error('Error al cargar reseñas')
+
+  const reviews = (data ?? []) as InstructorReview[]
+  const avg = reviews.length > 0
+    ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
+    : 0
+
+  return {
+    data: reviews,
+    meta: {
+      count: reviews.length,
+      average_rating: Math.round(avg * 10) / 10,
+    },
+  }
 }
 
 export function useInstructorReviews(instructorId: string) {

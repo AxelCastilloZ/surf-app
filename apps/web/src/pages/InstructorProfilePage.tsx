@@ -12,7 +12,7 @@ import Footer from '../shared/components/Footer'
 
 type Lang = 'es' | 'en'
 
-const API_URL = import.meta.env.VITE_API_URL as string
+import { supabase } from '@/lib/supabase'
 
 const i18n = {
   es: {
@@ -173,19 +173,21 @@ function ReviewFormModal({
     setError(null)
 
     try {
-      const res = await fetch(`${API_URL}/instructors/${instructorId}/reviews`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
+      const { data, error: fnError } = await supabase.functions.invoke('create-instructor-review', {
+        body: {
+          instructor_id: instructorId,
           booking_id: bookingId.trim(),
           rating,
           comment: comment.trim() || undefined,
-        }),
+        },
       })
 
-      if (!res.ok) {
-        const body = await res.json().catch(() => null)
-        throw new Error(body?.message ?? (lang === 'es' ? 'Error al enviar la reseña' : 'Failed to submit review'))
+      if (fnError) {
+        throw new Error(lang === 'es' ? 'Error al enviar la reseña' : 'Failed to submit review')
+      }
+
+      if (data?.error) {
+        throw new Error(data.error)
       }
 
       setSuccess(true)

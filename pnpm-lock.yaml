@@ -159,6 +159,9 @@ importers:
       '@radix-ui/react-tabs':
         specifier: ^1.1.13
         version: 1.1.13(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      '@surf-app/supabase':
+        specifier: workspace:*
+        version: link:../../packages/supabase
       '@surf-app/types':
         specifier: workspace:*
         version: link:../../packages/types
@@ -253,6 +256,9 @@ importers:
       '@radix-ui/react-slot':
         specifier: ^1.2.4
         version: 1.2.4(@types/react@19.2.14)(react@19.2.5)
+      '@surf-app/supabase':
+        specifier: workspace:*
+        version: link:../../packages/supabase
       '@surf-app/types':
         specifier: workspace:*
         version: link:../../packages/types
@@ -335,6 +341,16 @@ importers:
       vite:
         specifier: ^6.0.7
         version: 6.4.2(@types/node@22.19.17)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(tsx@4.21.0)
+
+  packages/supabase:
+    dependencies:
+      '@supabase/supabase-js':
+        specifier: ^2.49.1
+        version: 2.105.1
+    devDependencies:
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
 
   packages/tailwind-config: {}
 

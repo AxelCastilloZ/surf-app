@@ -1,11 +1,12 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import type { DashboardUser } from '@surf-app/types'
+import { supabase } from '@/lib/supabase'
 
 interface AuthState {
   user: DashboardUser | null
-  token: string | null
-  setAuth: (user: DashboardUser, token: string) => void
+  session: { access_token: string } | null
+  setAuth: (user: DashboardUser, session: { access_token: string }) => void
   logout: () => void
 }
 
@@ -13,10 +14,19 @@ export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
       user: null,
-      token: null,
-      setAuth: (user, token) => set({ user, token }),
-      logout: () => set({ user: null, token: null }),
+      session: null,
+      setAuth: (user, session) => set({ user, session }),
+      logout: () => {
+        supabase.auth.signOut()
+        set({ user: null, session: null })
+      },
     }),
     { name: 'surf-dashboard-auth' },
   ),
 )
+
+supabase.auth.onAuthStateChange((_event, session) => {
+  if (!session) {
+    useAuthStore.setState({ user: null, session: null })
+  }
+})

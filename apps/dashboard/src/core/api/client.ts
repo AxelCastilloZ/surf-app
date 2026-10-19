@@ -2,16 +2,16 @@ import { useAuthStore } from '@/core/store/authStore'
 
 const BASE_URL = import.meta.env.VITE_API_URL as string
 
-if (!BASE_URL) throw new Error('VITE_API_URL is not defined')
-
 export async function apiClient<T>(path: string, options?: RequestInit): Promise<T> {
-  const { token, logout } = useAuthStore.getState()
+  if (!BASE_URL) throw new Error('VITE_API_URL is not defined')
+
+  const { session, logout } = useAuthStore.getState()
 
   const isFormData = options?.body instanceof FormData
 
   const headers: Record<string, string> = {
     ...(!isFormData && { 'Content-Type': 'application/json' }),
-    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    ...(session?.access_token ? { Authorization: `Bearer ${session.access_token}` } : {}),
     ...(options?.headers as Record<string, string> | undefined),
   }
 

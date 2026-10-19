@@ -1,12 +1,15 @@
 import { useQuery } from '@tanstack/react-query'
-
-const API_URL = import.meta.env.VITE_API_URL as string
+import { supabase } from '../../lib/supabase'
 
 async function fetchSetting(key: string): Promise<string> {
-  const res = await fetch(`${API_URL}/site-settings/${key}`)
-  if (!res.ok) throw new Error(`Setting ${key} not found`)
-  const json = await res.json()
-  return json.data?.value ?? json.value
+  const { data, error } = await supabase
+    .from('site_settings')
+    .select('value')
+    .eq('key', key)
+    .single()
+
+  if (error || !data) throw new Error(`Setting ${key} not found`)
+  return data.value
 }
 
 export function useSiteSetting(key: string) {

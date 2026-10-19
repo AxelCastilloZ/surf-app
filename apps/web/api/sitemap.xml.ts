@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
+import { createClient } from '@supabase/supabase-js'
 
 const SITE_URL = 'https://surferlabscr.com'
-const API_URL = process.env.VITE_API_URL || 'http://localhost:3000/api/v1'
 
 interface Instructor {
   id: string
@@ -40,10 +40,21 @@ function buildUrlEntry(esPath: string, enPath: string, changefreq: string, prior
 
 export default async function handler(_req: VercelRequest, res: VercelResponse) {
   try {
-    const instructorsRes = await fetch(`${API_URL}/instructors/public`)
-    const instructors: Instructor[] = instructorsRes.ok
-      ? ((await instructorsRes.json()) as { data: Instructor[] }).data
-      : []
+    const supabaseUrl = process.env.VITE_SUPABASE_URL || ''
+    const supabaseAnonKey = process.env.VITE_SUPABASE_ANON_KEY || ''
+
+    let instructors: Instructor[] = []
+
+    if (supabaseUrl && supabaseAnonKey) {
+      const supabase = createClient(supabaseUrl, supabaseAnonKey)
+      const { data } = await supabase
+        .from('instructors')
+        .select('id, full_name')
+        .eq('is_active', true)
+        .order('full_name', { ascending: true })
+
+      instructors = (data ?? []) as Instructor[]
+    }
 
     const staticEntries = STATIC_ROUTES.map(r => buildUrlEntry(r.es, r.en, r.changefreq, r.priority))
 

@@ -10,7 +10,7 @@ export function useLogin() {
   return useMutation({
     mutationFn: login,
     onSuccess: (data) => {
-      setAuth(data.user, data.access_token)
+      setAuth(data.user, data.session)
       navigate('/dashboard', { replace: true })
     },
   })

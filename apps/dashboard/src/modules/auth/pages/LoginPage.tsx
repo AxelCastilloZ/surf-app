@@ -19,12 +19,12 @@ type FormValues = z.infer<typeof schema>
 
 export function LoginPage() {
   const navigate = useNavigate()
-  const token = useAuthStore((s) => s.token)
+  const session = useAuthStore((s) => s.session)
   const { mutate, isPending, error } = useLogin()
 
   useEffect(() => {
-    if (token) navigate('/dashboard', { replace: true })
-  }, [token, navigate])
+    if (session) navigate('/dashboard', { replace: true })
+  }, [session, navigate])
 
   const {
     register,
@@ -80,7 +80,7 @@ export function LoginPage() {
 
             {error && (
               <Alert variant="destructive" className="text-sm">
-                Credenciales incorrectas. Verifica tu correo y contraseña.
+                {error.message || 'Credenciales incorrectas. Verifica tu correo y contraseña.'}
               </Alert>
             )}
 

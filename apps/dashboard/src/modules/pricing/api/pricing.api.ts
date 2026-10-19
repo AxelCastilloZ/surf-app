@@ -1,4 +1,4 @@
-import { apiClient } from '@/core/api/client'
+import { supabase } from '@/lib/supabase'
 
 export interface PricingTier {
   id: string
@@ -20,26 +20,43 @@ export interface PricingTierPayload {
 }
 
 export async function fetchPricingTiers(): Promise<PricingTier[]> {
-  const res = await apiClient<{ data: PricingTier[] }>('/pricing/tiers')
-  return res.data ?? []
+  const { data, error } = await supabase
+    .from('service_pricing_tiers')
+    .select('*')
+    .order('service_type', { ascending: true })
+    .order('min_participants', { ascending: true })
+
+  if (error) throw new Error(error.message)
+  return (data ?? []) as PricingTier[]
 }
 
 export async function createPricingTier(payload: PricingTierPayload): Promise<PricingTier> {
-  const res = await apiClient<{ data: PricingTier }>('/pricing/tiers', {
-    method: 'POST',
-    body: JSON.stringify(payload),
-  })
-  return res.data
+  const { data, error } = await supabase
+    .from('service_pricing_tiers')
+    .insert({
+      ...payload,
+      is_active: payload.is_active ?? true,
+    })
+    .select()
+    .single()
+
+  if (error) throw new Error(error.message)
+  return data as PricingTier
 }
 
 export async function updatePricingTier(id: string, payload: Partial<PricingTierPayload>): Promise<PricingTier> {
-  const res = await apiClient<{ data: PricingTier }>(`/pricing/tiers/${id}`, {
-    method: 'PATCH',
-    body: JSON.stringify(payload),
-  })
-  return res.data
+  const { data, error } = await supabase
+    .from('service_pricing_tiers')
+    .update(payload)
+    .eq('id', id)
+    .select()
+    .single()
+
+  if (error) throw new Error(error.message)
+  return data as PricingTier
 }
 
 export async function deletePricingTier(id: string): Promise<void> {
-  return apiClient<void>(`/pricing/tiers/${id}`, { method: 'DELETE' })
+  const { error } = await supabase.from('service_pricing_tiers').delete().eq('id', id)
+  if (error) throw new Error(error.message)
 }

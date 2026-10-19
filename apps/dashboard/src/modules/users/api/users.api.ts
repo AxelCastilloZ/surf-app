@@ -1,4 +1,4 @@
-import { apiClient } from '@/core/api/client'
+import { supabase } from '@/lib/supabase'
 import type { DashboardUser, UserRole } from '@surf-app/types'
 
 export interface CreateUserPayload {
@@ -15,19 +15,33 @@ export interface UpdateUserPayload {
 }
 
 export async function fetchUsers(): Promise<DashboardUser[]> {
-  return apiClient<DashboardUser[]>('/users')
+  const { data, error } = await supabase
+    .from('dashboard_users')
+    .select('id, email, role, full_name, is_active, created_at')
+    .order('created_at', { ascending: false })
+
+  if (error) throw new Error(error.message)
+  return (data ?? []) as unknown as DashboardUser[]
 }
 
 export async function createUser(payload: CreateUserPayload): Promise<DashboardUser> {
-  return apiClient<DashboardUser>('/users', {
-    method: 'POST',
-    body: JSON.stringify(payload),
+  const { data, error } = await supabase.functions.invoke('admin-create-user', {
+    body: payload,
   })
+
+  if (error) throw new Error(error.message)
+  if (data?.error) throw new Error(data.error)
+  return data.data as DashboardUser
 }
 
 export async function updateUser(id: string, payload: UpdateUserPayload): Promise<DashboardUser> {
-  return apiClient<DashboardUser>(`/users/${id}`, {
-    method: 'PATCH',
-    body: JSON.stringify(payload),
-  })
+  const { data, error } = await supabase
+    .from('dashboard_users')
+    .update(payload)
+    .eq('id', id)
+    .select('id, email, role, full_name, is_active, created_at')
+    .single()
+
+  if (error) throw new Error(error.message)
+  return data as unknown as DashboardUser
 }

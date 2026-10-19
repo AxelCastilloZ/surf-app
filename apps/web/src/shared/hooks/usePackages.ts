@@ -1,21 +1,22 @@
 import { useQuery } from '@tanstack/react-query'
 import type { Package } from '@surf-app/types'
-
-const API_URL = import.meta.env.VITE_API_URL as string
+import { supabase } from '../../lib/supabase'
 
 async function fetchPackages(): Promise<Package[]> {
-  const res = await fetch(`${API_URL}/packages`)
-  if (!res.ok) throw new Error('Error al cargar los paquetes')
+  const { data, error } = await supabase
+    .from('packages')
+    .select('*')
+    .eq('is_active', true)
+    .order('sort_order', { ascending: true })
 
-  const json = await res.json()
-  // La API devuelve { data: Package[] }
-  return Array.isArray(json) ? json : (json.data ?? [])
+  if (error) throw new Error('Error al cargar los paquetes')
+  return (data ?? []) as unknown as Package[]
 }
 
 export function usePackages() {
   return useQuery({
     queryKey: ['packages'],
     queryFn: fetchPackages,
-    staleTime: 1000 * 60 * 5, // 5 min
+    staleTime: 1000 * 60 * 5,
   })
 }

@@ -4,15 +4,9 @@ import { CheckCircle, XCircle, Loader2, MessageCircle, Mail } from 'lucide-react
 import { useSEO } from '../shared/hooks/useSEO'
 import Navbar from '../shared/components/Navbar'
 import Footer from '../shared/components/Footer'
+import { supabase } from '@/lib/supabase'
 
 type Lang = 'es' | 'en'
-
-interface ConfirmResult {
-  data: { id: string; status: string }
-  message: string
-}
-
-const API_URL = import.meta.env.VITE_API_URL as string
 
 const i18n = {
   es: {
@@ -83,18 +77,17 @@ export default function ConfirmBookingPage({ lang }: { lang: Lang }) {
       return
     }
 
-    fetch(`${API_URL}/bookings/confirm/${token}`)
-      .then(async (res) => {
-        if (res.ok) {
-          setStatus('success')
-        } else {
-          const body = await res.json().catch(() => ({}))
-          const msg = (body as { message?: string }).message ?? ''
-          if (msg.includes('expirado') || msg.includes('expired') || msg.includes('cancelada') || res.status === 400) {
+    supabase.functions.invoke('confirm-booking', { body: { token } })
+      .then(({ data, error }) => {
+        if (error || data?.error) {
+          const msg = data?.error ?? error?.message ?? ''
+          if (msg.includes('expirado') || msg.includes('expired') || msg.includes('cancelada')) {
             setStatus('expired')
           } else {
             setStatus('error')
           }
+        } else {
+          setStatus('success')
         }
       })
       .catch(() => setStatus('error'))

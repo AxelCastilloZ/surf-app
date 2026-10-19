@@ -12,9 +12,9 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 
-type Lang = 'es' | 'en'
+import { supabase } from '@/lib/supabase'
 
-const API_URL = import.meta.env.VITE_API_URL as string
+type Lang = 'es' | 'en'
 
 const SERVICE_TYPES = ['surf_lesson', 'video_analysis', 'surf_trip'] as const
 
@@ -153,10 +153,13 @@ function usePublicInstructors() {
   return useQuery({
     queryKey: ['instructors-public'],
     queryFn: async (): Promise<PublicInstructor[]> => {
-      const res = await fetch(`${API_URL}/instructors/public`)
-      if (!res.ok) throw new Error('Error loading instructors')
-      const json = await res.json()
-      return json.data ?? []
+      const { data, error } = await supabase
+        .from('instructors')
+        .select('id, full_name')
+        .eq('is_active', true)
+        .order('full_name', { ascending: true })
+      if (error) throw new Error(error.message)
+      return (data ?? []) as PublicInstructor[]
     },
     staleTime: 1000 * 60 * 5,
   })
@@ -235,30 +238,36 @@ export default function BookingFormPage({ lang }: { lang: Lang }) {
       return
     }
 
-    const controller = new AbortController()
+    let cancelled = false
     setPriceLoading(true)
     setPriceError('')
 
-    fetch(`${API_URL}/pricing/estimate?service_type=${watchedService}&participants=${watchedParticipants}`, {
-      signal: controller.signal,
-    })
-      .then(res => {
-        if (!res.ok) return res.json().then(b => { throw new Error(b.message ?? 'Error') })
-        return res.json()
-      })
-      .then(json => {
-        setPriceEstimate(json.data)
-        setPriceLoading(false)
-      })
-      .catch(err => {
-        if (err.name === 'AbortError') return
-        setPriceEstimate(null)
-        setPriceError(err.message ?? '')
+    supabase
+      .from('service_pricing_tiers')
+      .select('price_per_person')
+      .eq('service_type', watchedService)
+      .eq('is_active', true)
+      .lte('min_participants', watchedParticipants)
+      .gte('max_participants', watchedParticipants)
+      .single()
+      .then(({ data: tier, error }) => {
+        if (cancelled) return
+        if (error || !tier) {
+          setPriceEstimate(null)
+          setPriceError(t.price.noTier)
+          setPriceLoading(false)
+          return
+        }
+        const pricePerPerson = Number(tier.price_per_person)
+        setPriceEstimate({
+          price_per_person: pricePerPerson,
+          total_price: pricePerPerson * watchedParticipants,
+        })
         setPriceLoading(false)
       })
 
-    return () => controller.abort()
-  }, [watchedService, watchedParticipants])
+    return () => { cancelled = true }
+  }, [watchedService, watchedParticipants, t])
 
   async function onSubmit(data: FormValues) {
     setServerError('')
@@ -279,15 +288,17 @@ export default function BookingFormPage({ lang }: { lang: Lang }) {
     }
 
     try {
-      const res = await fetch(`${API_URL}/bookings`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
+      const { data, error } = await supabase.functions.invoke('create-booking', {
+        body,
       })
 
-      if (!res.ok) {
-        const json = await res.json().catch(() => ({}))
-        setServerError((json as { message?: string }).message ?? t.errors.server)
+      if (error) {
+        setServerError(t.errors.server)
+        return
+      }
+
+      if (data?.error) {
+        setServerError(data.error)
         return
       }
 

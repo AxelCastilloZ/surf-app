@@ -1,3 +1,5 @@
+import { supabase } from '../../lib/supabase'
+
 export interface GoogleReview {
   author_name: string
   rating: number
@@ -7,13 +9,14 @@ export interface GoogleReview {
   relative_time_description: string
 }
 
-const API_URL = import.meta.env.VITE_API_URL as string
-
 export async function fetchReviews(): Promise<GoogleReview[]> {
-  const res = await fetch(`${API_URL}/reviews`)
-  if (!res.ok) throw new Error('Error al cargar las reseñas')
+  const { data, error } = await supabase.functions.invoke('google-reviews')
 
-  const json = await res.json()
-  // La API devuelve GoogleReview[] directamente (sin wrapper { data })
-  return Array.isArray(json) ? json : (json.data ?? [])
+  if (error) {
+    console.warn('Google reviews Edge Function not available yet:', error.message)
+    return []
+  }
+
+  const reviews = data as GoogleReview[] | null
+  return Array.isArray(reviews) ? reviews : []
 }

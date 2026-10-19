@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-
-const API_URL = import.meta.env.VITE_API_URL as string
+import { supabase } from '../../lib/supabase'
 
 export interface PublicInstructor {
   id: string
@@ -12,17 +11,26 @@ export interface PublicInstructor {
 }
 
 async function fetchPublicInstructors(): Promise<PublicInstructor[]> {
-  const res = await fetch(`${API_URL}/instructors/public`)
-  if (!res.ok) throw new Error('Error al cargar instructores')
-  const json = await res.json()
-  return json.data ?? []
+  const { data, error } = await supabase
+    .from('instructors')
+    .select('id, full_name, email, photo_url, bio, is_active')
+    .eq('is_active', true)
+    .order('full_name', { ascending: true })
+
+  if (error) throw new Error('Error al cargar instructores')
+  return (data ?? []) as PublicInstructor[]
 }
 
 async function fetchPublicInstructor(id: string): Promise<PublicInstructor> {
-  const res = await fetch(`${API_URL}/instructors/public/${id}`)
-  if (!res.ok) throw new Error('Instructor no encontrado')
-  const json = await res.json()
-  return json.data
+  const { data, error } = await supabase
+    .from('instructors')
+    .select('id, full_name, email, photo_url, bio, is_active')
+    .eq('id', id)
+    .eq('is_active', true)
+    .single()
+
+  if (error || !data) throw new Error('Instructor no encontrado')
+  return data as PublicInstructor
 }
 
 export function usePublicInstructors() {

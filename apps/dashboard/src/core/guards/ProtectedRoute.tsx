@@ -8,9 +8,9 @@ interface Props {
 }
 
 export function ProtectedRoute({ allowedRoles, children }: Props) {
-  const { token, user } = useAuthStore()
+  const { session, user } = useAuthStore()
 
-  if (!token || !user) return <Navigate to="/login" replace />
+  if (!session || !user) return <Navigate to="/login" replace />
 
   if (allowedRoles && !allowedRoles.includes(user.role)) {
     return <Navigate to="/dashboard" replace />
