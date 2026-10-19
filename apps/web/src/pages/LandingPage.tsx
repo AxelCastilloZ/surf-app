@@ -1,8 +1,10 @@
+import { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import useEmblaCarousel from 'embla-carousel-react'
+import Autoplay from 'embla-carousel-autoplay'
 import { useInView } from 'react-intersection-observer'
-import { Mail, MessageCircle, Waves, Video, MapPin, Star, ArrowRight } from 'lucide-react'
+import { Mail, MessageCircle, Waves, Video, MapPin, Star, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
 import { useSEO, buildLocalBusinessSchema } from '../shared/hooks/useSEO'
 import { useGallery } from '../shared/hooks/useGallery'
 import { usePackages } from '../shared/hooks/usePackages'
@@ -523,9 +525,29 @@ function TestimonialsSection({
   fallback: StaticTestimonial[]
 }) {
   const { reviews, isLoading, isError } = useReviews()
-  const [emblaRef] = useEmblaCarousel({ loop: true })
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
+    Autoplay({ delay: 5000, stopOnInteraction: false, stopOnMouseEnter: true }),
+  ])
+
+  const [selectedIndex, setSelectedIndex] = useState(0)
+  const [scrollSnaps, setScrollSnaps] = useState<number[]>([])
+
+  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi])
+  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi])
+  const scrollTo = useCallback((i: number) => emblaApi?.scrollTo(i), [emblaApi])
+
+  useEffect(() => {
+    if (!emblaApi) return
+    const onInit = () => setScrollSnaps(emblaApi.scrollSnapList())
+    const onSelect = () => setSelectedIndex(emblaApi.selectedScrollSnap())
+    emblaApi.on('reInit', onInit).on('select', onSelect)
+    onInit()
+    onSelect()
+    return () => { emblaApi.off('reInit', onInit).off('select', onSelect) }
+  }, [emblaApi])
 
   const showFallback = !isLoading && (isError || reviews.length === 0)
+  const hasSlides = isLoading || showFallback || reviews.length > 0
 
   return (
     <section className="bg-white py-24">
@@ -536,56 +558,118 @@ function TestimonialsSection({
           </h2>
         </FadeIn>
 
-        <div className="mt-12 overflow-hidden" ref={emblaRef}>
-          <div className="flex">
-            {/* Loading: 3 skeletons */}
-            {isLoading &&
-              Array.from({ length: 3 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="min-w-0 flex-[0_0_100%] px-4 sm:flex-[0_0_50%] lg:flex-[0_0_33.33%]"
-                >
-                  <div className="h-52 animate-pulse rounded-2xl bg-slate-100" />
-                </div>
-              ))}
+        <div className="relative mt-12">
+          {/* Edge fade masks */}
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-white to-transparent sm:w-16" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-white to-transparent sm:w-16" />
 
-            {/* Fallback estático */}
-            {showFallback &&
-              fallback.map((item) => (
-                <div
-                  key={item.name}
-                  className="min-w-0 flex-[0_0_100%] px-4 sm:flex-[0_0_50%] lg:flex-[0_0_33.33%]"
-                >
-                  <div className="h-full rounded-2xl border border-slate-200 bg-mist-50 p-8">
-                    <div className="mb-4 flex gap-1">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} size={16} className="fill-sand-400 text-sand-400" />
-                      ))}
-                    </div>
-                    <p className="text-sm leading-relaxed text-slate-600">"{item.text}"</p>
-                    <div className="mt-6">
-                      <p className="font-semibold text-slate-900">{item.name}</p>
-                      <p className="text-xs text-ocean-600">{item.country}</p>
-                    </div>
+          {/* Prev/Next arrows */}
+          {hasSlides && !isLoading && (
+            <>
+              <button
+                onClick={scrollPrev}
+                className="absolute left-0 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/90 p-2 shadow-md backdrop-blur-sm transition-colors hover:bg-ocean-50"
+                aria-label="Previous"
+              >
+                <ChevronLeft size={20} className="text-slate-700" />
+              </button>
+              <button
+                onClick={scrollNext}
+                className="absolute right-0 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/90 p-2 shadow-md backdrop-blur-sm transition-colors hover:bg-ocean-50"
+                aria-label="Next"
+              >
+                <ChevronRight size={20} className="text-slate-700" />
+              </button>
+            </>
+          )}
+
+          <div className="overflow-hidden" ref={emblaRef}>
+            <div className="flex">
+              {isLoading &&
+                Array.from({ length: 3 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className="min-w-0 flex-[0_0_100%] px-4 sm:flex-[0_0_50%] lg:flex-[0_0_33.33%]"
+                  >
+                    <div className="h-52 animate-pulse rounded-2xl bg-slate-100" />
                   </div>
-                </div>
-              ))}
+                ))}
 
-            {/* Google Reviews reales */}
-            {!isLoading &&
-              !isError &&
-              reviews.map((review) => (
-                <div
-                  key={`${review.author_name}-${review.time}`}
-                  className="min-w-0 flex-[0_0_100%] px-4 sm:flex-[0_0_50%] lg:flex-[0_0_33.33%]"
-                >
-                  <ReviewCard review={review} />
-                </div>
-              ))}
+              {showFallback &&
+                fallback.map((item) => (
+                  <div
+                    key={item.name}
+                    className="min-w-0 flex-[0_0_100%] px-4 sm:flex-[0_0_50%] lg:flex-[0_0_33.33%]"
+                  >
+                    <FallbackCard testimonial={item} />
+                  </div>
+                ))}
+
+              {!isLoading &&
+                !isError &&
+                reviews.map((review) => (
+                  <div
+                    key={`${review.author_name}-${review.time}`}
+                    className="min-w-0 flex-[0_0_100%] px-4 sm:flex-[0_0_50%] lg:flex-[0_0_33.33%]"
+                  >
+                    <ReviewCard review={review} />
+                  </div>
+                ))}
+            </div>
           </div>
         </div>
+
+        {/* Dot indicators */}
+        {scrollSnaps.length > 1 && (
+          <div className="mt-6 flex justify-center gap-2">
+            {scrollSnaps.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => scrollTo(i)}
+                className={`h-2.5 rounded-full transition-all ${
+                  i === selectedIndex
+                    ? 'w-6 bg-ocean-600'
+                    : 'w-2.5 bg-slate-300 hover:bg-slate-400'
+                }`}
+                aria-label={`Go to slide ${i + 1}`}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
+  )
+}
+
+// ─── Fallback Card (matches ReviewCard style) ───────────────────────────────
+
+function FallbackCard({ testimonial }: { testimonial: StaticTestimonial }) {
+  const initial = testimonial.name.charAt(0).toUpperCase()
+  const truncated =
+    testimonial.text.length > 150
+      ? testimonial.text.slice(0, 150).trimEnd() + '…'
+      : testimonial.text
+
+  return (
+    <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div className="flex items-center gap-3">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-ocean-600 text-sm font-semibold text-white">
+          {initial}
+        </div>
+        <div>
+          <p className="font-semibold leading-tight text-slate-900">{testimonial.name}</p>
+          <p className="text-xs text-slate-400">{testimonial.country}</p>
+        </div>
+      </div>
+
+      <div className="mt-4 flex gap-0.5">
+        {[1, 2, 3, 4, 5].map((star) => (
+          <Star key={star} size={14} className="fill-sand-400 text-sand-400" />
+        ))}
+      </div>
+
+      <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-600">"{truncated}"</p>
+    </div>
   )
 }
 
