@@ -11,7 +11,7 @@ interface SEOProps {
 
 const SITE_URL = (import.meta.env.VITE_SITE_URL as string).replace(/\/$/, '')
 const BRAND_NAME = import.meta.env.VITE_BRAND_NAME as string
-const DEFAULT_OG_IMAGE = `${SITE_URL}/api/og.png`
+const DEFAULT_OG_IMAGE = `${SITE_URL}/api/og-image`
 
 const ES_TO_EN: Record<string, string> = {
   '/': '/en',
