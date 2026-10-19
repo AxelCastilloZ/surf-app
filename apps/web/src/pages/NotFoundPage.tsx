@@ -1,10 +1,18 @@
 import { Link } from 'react-router-dom'
 import { useLanguageStore } from '../shared/store/languageStore'
+import { useSEO } from '../shared/hooks/useSEO'
 import Navbar from '../shared/components/Navbar'
 
 export default function NotFoundPage() {
   const { lang } = useLanguageStore()
   const homeHref = lang === 'es' ? '/' : '/en'
+
+  useSEO({
+    title: lang === 'es' ? 'Página no encontrada' : 'Page not found',
+    description: lang === 'es' ? 'La página que buscas no existe.' : "The page you're looking for doesn't exist.",
+    lang,
+    noindex: true,
+  })
 
   return (
     <div className="min-h-screen bg-white font-body text-slate-900">

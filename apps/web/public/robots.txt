@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /confirmar-reserva/
+Disallow: /en/confirm-booking/
 
 Sitemap: https://surferlabscr.com/sitemap.xml

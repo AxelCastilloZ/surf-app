@@ -6,10 +6,12 @@ interface SEOProps {
   lang: 'es' | 'en'
   path?: string
   ogImage?: string
+  noindex?: boolean
 }
 
 const SITE_URL = (import.meta.env.VITE_SITE_URL as string).replace(/\/$/, '')
 const BRAND_NAME = import.meta.env.VITE_BRAND_NAME as string
+const DEFAULT_OG_IMAGE = `${SITE_URL}/assets/icons/logo4k.png`
 
 const ES_TO_EN: Record<string, string> = {
   '/': '/en',
@@ -59,27 +61,40 @@ function setLink(rel: string, attrs: Record<string, string>) {
   Object.entries(attrs).forEach(([k, v]) => el!.setAttribute(k, v))
 }
 
-export function useSEO({ title, description, lang, path = '', ogImage }: SEOProps) {
+export function useSEO({ title, description, lang, path = '', ogImage, noindex }: SEOProps) {
   useEffect(() => {
     const fullTitle = `${title} | ${BRAND_NAME}`
     const canonical = `${SITE_URL}${path}`
     const altLang = lang === 'es' ? 'en' : 'es'
     const altPath = toAlternatePath(path, lang)
+    const image = ogImage || DEFAULT_OG_IMAGE
 
     document.title = fullTitle
     document.documentElement.lang = lang
 
     setMeta('meta[name="description"]', 'content', description)
+    if (noindex) {
+      setMeta('meta[name="robots"]', 'content', 'noindex, nofollow')
+    }
+
+    // Open Graph
     setMeta('meta[property="og:title"]', 'content', fullTitle)
     setMeta('meta[property="og:description"]', 'content', description)
     setMeta('meta[property="og:url"]', 'content', canonical)
     setMeta('meta[property="og:locale"]', 'content', lang === 'es' ? 'es_CR' : 'en_US')
-    if (ogImage) setMeta('meta[property="og:image"]', 'content', ogImage)
+    setMeta('meta[property="og:type"]', 'content', 'website')
+    setMeta('meta[property="og:site_name"]', 'content', BRAND_NAME)
+    setMeta('meta[property="og:image"]', 'content', image)
+
+    // Twitter Card
+    setMeta('meta[name="twitter:card"]', 'content', 'summary_large_image')
+    setMeta('meta[name="twitter:title"]', 'content', fullTitle)
+    setMeta('meta[name="twitter:description"]', 'content', description)
+    setMeta('meta[name="twitter:image"]', 'content', image)
 
     setLink('canonical', { href: canonical })
     setLink('alternate', { hreflang: lang, href: canonical })
 
-    // Alternate language link
     let altEl = document.querySelector<HTMLLinkElement>(`link[hreflang="${altLang}"]`)
     if (!altEl) {
       altEl = document.createElement('link')
@@ -89,7 +104,6 @@ export function useSEO({ title, description, lang, path = '', ogImage }: SEOProp
     }
     altEl.href = `${SITE_URL}${altPath}`
 
-    // x-default
     let xDefault = document.querySelector<HTMLLinkElement>('link[hreflang="x-default"]')
     if (!xDefault) {
       xDefault = document.createElement('link')
@@ -106,7 +120,7 @@ export function useSEO({ title, description, lang, path = '', ogImage }: SEOProp
     ld.type = 'application/ld+json'
     ld.textContent = JSON.stringify({
       '@context': 'https://schema.org',
-      '@type': 'SurfSchool',
+      '@type': 'SportsActivityLocation',
       '@id': SITE_URL,
       name: BRAND_NAME,
       url: SITE_URL,
@@ -140,5 +154,5 @@ export function useSEO({ title, description, lang, path = '', ogImage }: SEOProp
       priceRange: '$$',
     })
     document.head.appendChild(ld)
-  }, [title, description, lang, path, ogImage])
+  }, [title, description, lang, path, ogImage, noindex])
 }
