@@ -105,7 +105,7 @@ async function getInstructorMeta(id: string, lang: 'es' | 'en'): Promise<PageMet
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  const path = '/' + ((req.query.path as string) ?? '').replace(/^\//, '')
+  const path = '/' + ((req.query.path as string) ?? '').trim().replace(/^\//, '')
 
   // Static routes
   const staticMeta = ROUTE_META[path]
