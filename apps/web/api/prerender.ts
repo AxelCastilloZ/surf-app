@@ -1,18 +1,5 @@
-import { next } from '@vercel/edge'
+import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { createClient } from '@supabase/supabase-js'
-
-const BOT_AGENTS = [
-  'facebookexternalhit',
-  'Facebot',
-  'Twitterbot',
-  'LinkedInBot',
-  'WhatsApp',
-  'Slackbot',
-  'TelegramBot',
-  'Discordbot',
-  'Pinterest',
-  'Embedly',
-]
 
 const SITE_URL = 'https://surferlabscr.com'
 const BRAND = 'Surfers Lab CR'
@@ -67,11 +54,6 @@ const ROUTE_META: Record<string, PageMeta> = {
   },
 }
 
-function isBot(ua: string): boolean {
-  const lower = ua.toLowerCase()
-  return BOT_AGENTS.some((bot) => lower.includes(bot.toLowerCase()))
-}
-
 function buildHtml(meta: PageMeta, canonical: string): string {
   return `<!DOCTYPE html>
 <html lang="${meta.locale.startsWith('es') ? 'es' : 'en'}">
@@ -111,35 +93,26 @@ async function getInstructorMeta(id: string, lang: 'es' | 'en'): Promise<PageMet
 
   if (!data) return null
 
-  const bio = data.bio ?? ''
   const suffix = lang === 'es'
-    ? ` — Instructor de surf en Nosara, Costa Rica`
-    : ` — Surf instructor in Nosara, Costa Rica`
+    ? ' — Instructor de surf en Nosara, Costa Rica'
+    : ' — Surf instructor in Nosara, Costa Rica'
 
   return {
     title: `${data.full_name} | ${BRAND}`,
-    description: (bio + suffix).slice(0, 160),
+    description: ((data.bio ?? '') + suffix).slice(0, 160),
     locale: lang === 'es' ? 'es_CR' : 'en_US',
   }
 }
 
-export default async function middleware(request: Request) {
-  const ua = request.headers.get('user-agent') ?? ''
-  if (!isBot(ua)) return next()
-
-  const url = new URL(request.url)
-  const path = url.pathname
-
-  // Skip assets and API routes
-  if (path.startsWith('/assets/') || path.startsWith('/api/')) return next()
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  const path = '/' + ((req.query.path as string) ?? '').replace(/^\//, '')
 
   // Static routes
   const staticMeta = ROUTE_META[path]
   if (staticMeta) {
-    return new Response(buildHtml(staticMeta, `${SITE_URL}${path}`), {
-      status: 200,
-      headers: { 'Content-Type': 'text/html; charset=utf-8' },
-    })
+    res.setHeader('Content-Type', 'text/html; charset=utf-8')
+    res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400')
+    return res.status(200).send(buildHtml(staticMeta, `${SITE_URL}${path}`))
   }
 
   // Dynamic: instructor profiles
@@ -149,23 +122,16 @@ export default async function middleware(request: Request) {
   const lang = enMatch ? 'en' : 'es'
 
   if (instructorId) {
-    const meta = await getInstructorMeta(instructorId, lang)
+    const meta = await getInstructorMeta(instructorId, lang as 'es' | 'en')
     if (meta) {
-      return new Response(buildHtml(meta, `${SITE_URL}${path}`), {
-        status: 200,
-        headers: { 'Content-Type': 'text/html; charset=utf-8' },
-      })
+      res.setHeader('Content-Type', 'text/html; charset=utf-8')
+      res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400')
+      return res.status(200).send(buildHtml(meta, `${SITE_URL}${path}`))
     }
   }
 
-  // Default fallback for unknown routes
-  const defaultMeta = ROUTE_META['/']
-  return new Response(buildHtml(defaultMeta, `${SITE_URL}${path}`), {
-    status: 200,
-    headers: { 'Content-Type': 'text/html; charset=utf-8' },
-  })
-}
-
-export const config = {
-  matcher: ['/((?!_next|assets|api|favicon.ico|robots.txt|sitemap.xml).*)'],
+  // Fallback to home meta
+  const fallback = ROUTE_META['/']
+  res.setHeader('Content-Type', 'text/html; charset=utf-8')
+  res.status(200).send(buildHtml(fallback, `${SITE_URL}${path}`))
 }

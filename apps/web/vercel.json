@@ -18,6 +18,11 @@
   "rewrites": [
     { "source": "/robots.txt", "destination": "/robots.txt" },
     { "source": "/sitemap.xml", "destination": "/api/sitemap.xml" },
+    {
+      "source": "/:path((?!api|assets|_next).*)",
+      "has": [{ "type": "header", "key": "user-agent", "value": ".*(facebookexternalhit|Facebot|Twitterbot|LinkedInBot|WhatsApp|Slackbot|TelegramBot|Discordbot|Pinterest|Embedly).*" }],
+      "destination": "/api/prerender?path=/:path"
+    },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
