@@ -13,6 +13,7 @@ const STATIC_ROUTES = [
   { es: '/galeria', en: '/en/gallery', changefreq: 'weekly', priority: '0.8' },
   { es: '/reservar', en: '/en/book', changefreq: 'monthly', priority: '0.9' },
   { es: '/politicas', en: '/en/policies', changefreq: 'yearly', priority: '0.3' },
+  { es: '/preguntas-frecuentes', en: '/en/faq', changefreq: 'monthly', priority: '0.6' },
 ]
 
 function buildUrlEntry(esPath: string, enPath: string, changefreq: string, priority: string): string {

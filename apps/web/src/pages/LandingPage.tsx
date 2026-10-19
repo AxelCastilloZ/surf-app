@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import useEmblaCarousel from 'embla-carousel-react'
 import { useInView } from 'react-intersection-observer'
 import { Mail, MessageCircle, Waves, Video, MapPin, Star, ArrowRight } from 'lucide-react'
-import { useSEO } from '../shared/hooks/useSEO'
+import { useSEO, buildLocalBusinessSchema } from '../shared/hooks/useSEO'
 import { useGallery } from '../shared/hooks/useGallery'
 import { usePackages } from '../shared/hooks/usePackages'
 import { useReviews } from '../shared/hooks/useReviews'
@@ -168,11 +168,48 @@ export default function LandingPage({ lang }: { lang: Lang }) {
   const galleryHref = lang === 'es' ? '/galeria' : '/en/gallery'
   const bookingBase = lang === 'es' ? '/reservar' : '/en/book'
 
-  useSEO({ title: t.seo.title, description: t.seo.description, lang, path: lang === 'es' ? '/' : '/en' })
-
   const { data: packages } = usePackages()
   const { data: galleryItems, isLoading: isGalleryLoading } = useGallery()
   const { data: instructors } = usePublicInstructors()
+  const { reviews } = useReviews()
+
+  const courseSchemas: Record<string, unknown>[] = (packages ?? []).map((pkg) => ({
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    name: lang === 'es' ? pkg.name : pkg.name_en,
+    description: lang === 'es' ? pkg.description : pkg.description_en,
+    provider: {
+      '@type': 'SportsActivityLocation',
+      name: 'Surfers Lab CR',
+      url: 'https://surferlabscr.com',
+    },
+    offers: {
+      '@type': 'Offer',
+      price: pkg.price,
+      priceCurrency: pkg.currency,
+    },
+  }))
+
+  const aggregateRating = reviews.length > 0
+    ? {
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          ratingValue: (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1),
+          reviewCount: reviews.length,
+          bestRating: 5,
+        },
+      }
+    : undefined
+
+  const localBusinessSchema = buildLocalBusinessSchema(t.seo.description, lang, aggregateRating)
+
+  useSEO({
+    title: t.seo.title,
+    description: t.seo.description,
+    lang,
+    path: lang === 'es' ? '/' : '/en',
+    schemas: [localBusinessSchema, ...courseSchemas],
+  })
   const { data: heroImageUrl } = useSiteSetting('hero_image_url')
   const { data: heroImagePos } = useSiteSetting('hero_image_position')
   const preview = galleryItems?.slice(0, 6) ?? []

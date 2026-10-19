@@ -7,6 +7,7 @@ interface SEOProps {
   path?: string
   ogImage?: string
   noindex?: boolean
+  schemas?: Record<string, unknown>[]
 }
 
 const SITE_URL = (import.meta.env.VITE_SITE_URL as string).replace(/\/$/, '')
@@ -18,6 +19,7 @@ const ES_TO_EN: Record<string, string> = {
   '/galeria': '/en/gallery',
   '/reservar': '/en/book',
   '/politicas': '/en/policies',
+  '/preguntas-frecuentes': '/en/faq',
 }
 
 const EN_TO_ES: Record<string, string> = {
@@ -25,6 +27,7 @@ const EN_TO_ES: Record<string, string> = {
   '/en/gallery': '/galeria',
   '/en/book': '/reservar',
   '/en/policies': '/politicas',
+  '/en/faq': '/preguntas-frecuentes',
 }
 
 function toAlternatePath(path: string, fromLang: 'es' | 'en'): string {
@@ -61,7 +64,69 @@ function setLink(rel: string, attrs: Record<string, string>) {
   Object.entries(attrs).forEach(([k, v]) => el!.setAttribute(k, v))
 }
 
-export function useSEO({ title, description, lang, path = '', ogImage, noindex }: SEOProps) {
+export function buildLocalBusinessSchema(
+  description: string,
+  lang: 'es' | 'en',
+  extra?: Record<string, unknown>,
+): Record<string, unknown> {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'SportsActivityLocation',
+    '@id': SITE_URL,
+    name: BRAND_NAME,
+    url: SITE_URL,
+    description,
+    inLanguage: lang,
+    telephone: '+506-8397-2306',
+    email: 'info@surferlabscr.com',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Playa Guiones',
+      addressLocality: 'Nosara',
+      addressRegion: 'Guanacaste',
+      addressCountry: 'CR',
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: 9.9416,
+      longitude: -85.6609,
+    },
+    areaServed: [
+      { '@type': 'Place', name: 'Nosara' },
+      { '@type': 'Place', name: 'Guanacaste' },
+      { '@type': 'Place', name: 'Costa Rica' },
+    ],
+    makesOffer: [
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Surf Lessons' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Video Analysis' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Surf Trips' } },
+    ],
+    image: `${SITE_URL}/assets/icons/logo4k.png`,
+    priceRange: '$$',
+    ...extra,
+  }
+}
+
+export function buildBreadcrumbs(path: string, lang: 'es' | 'en', pageTitle: string): Record<string, unknown> {
+  const homeName = lang === 'es' ? 'Inicio' : 'Home'
+  const items: { name: string; url: string }[] = [
+    { name: homeName, url: `${SITE_URL}${lang === 'es' ? '/' : '/en'}` },
+    { name: pageTitle, url: `${SITE_URL}${path}` },
+  ]
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: item.name,
+      item: item.url,
+    })),
+  }
+}
+
+export function useSEO({ title, description, lang, path = '', ogImage, noindex, schemas }: SEOProps) {
   useEffect(() => {
     const fullTitle = `${title} | ${BRAND_NAME}`
     const canonical = `${SITE_URL}${path}`
@@ -113,46 +178,15 @@ export function useSEO({ title, description, lang, path = '', ogImage, noindex }
     }
     xDefault.href = `${SITE_URL}/`
 
-    // JSON-LD LocalBusiness
-    const existingLd = document.querySelector('script[type="application/ld+json"]')
-    if (existingLd) existingLd.remove()
-    const ld = document.createElement('script')
-    ld.type = 'application/ld+json'
-    ld.textContent = JSON.stringify({
-      '@context': 'https://schema.org',
-      '@type': 'SportsActivityLocation',
-      '@id': SITE_URL,
-      name: BRAND_NAME,
-      url: SITE_URL,
-      description,
-      inLanguage: lang,
-      telephone: '+506-8397-2306',
-      email: 'info@surferlabscr.com',
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: 'Playa Guiones',
-        addressLocality: 'Nosara',
-        addressRegion: 'Guanacaste',
-        addressCountry: 'CR',
-      },
-      geo: {
-        '@type': 'GeoCoordinates',
-        latitude: 9.9416,
-        longitude: -85.6609,
-      },
-      areaServed: [
-        { '@type': 'Place', name: 'Nosara' },
-        { '@type': 'Place', name: 'Guanacaste' },
-        { '@type': 'Place', name: 'Costa Rica' },
-      ],
-      makesOffer: [
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Surf Lessons' } },
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Video Analysis' } },
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Surf Trips' } },
-      ],
-      image: `${SITE_URL}/assets/icons/logo4k.png`,
-      priceRange: '$$',
-    })
-    document.head.appendChild(ld)
-  }, [title, description, lang, path, ogImage, noindex])
+    // JSON-LD schemas
+    document.querySelectorAll('script[type="application/ld+json"]').forEach(el => el.remove())
+
+    const allSchemas = schemas ?? [buildLocalBusinessSchema(description, lang)]
+    for (const schema of allSchemas) {
+      const script = document.createElement('script')
+      script.type = 'application/ld+json'
+      script.textContent = JSON.stringify(schema)
+      document.head.appendChild(script)
+    }
+  }, [title, description, lang, path, ogImage, noindex, schemas])
 }

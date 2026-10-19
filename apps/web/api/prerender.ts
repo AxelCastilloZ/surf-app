@@ -52,6 +52,16 @@ const ROUTE_META: Record<string, PageMeta> = {
     description: 'Cancellation and privacy policies for Surfers Lab CR, surf school in Nosara, Guanacaste.',
     locale: 'en_US',
   },
+  '/preguntas-frecuentes': {
+    title: `Preguntas Frecuentes | ${BRAND}`,
+    description: 'Preguntas frecuentes sobre clases de surf, reservas, políticas y más en Surfers Lab CR, Nosara, Costa Rica.',
+    locale: 'es_CR',
+  },
+  '/en/faq': {
+    title: `FAQ | ${BRAND}`,
+    description: 'Frequently asked questions about surf lessons, bookings, policies and more at Surfers Lab CR, Nosara, Costa Rica.',
+    locale: 'en_US',
+  },
 }
 
 function buildHtml(meta: PageMeta, canonical: string): string {

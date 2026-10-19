@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useQuery } from '@tanstack/react-query'
 import { Loader2, CheckCircle, Mail, ChevronDown } from 'lucide-react'
-import { useSEO } from '../shared/hooks/useSEO'
+import { useSEO, buildBreadcrumbs } from '../shared/hooks/useSEO'
 import Navbar from '../shared/components/Navbar'
 import Footer from '../shared/components/Footer'
 import { Input } from '@/components/ui/input'
@@ -179,7 +179,8 @@ export default function BookingFormPage({ lang }: { lang: Lang }) {
   const policyHref = lang === 'es' ? '/politicas' : '/en/policies'
   const homeHref = lang === 'es' ? '/' : '/en'
 
-  useSEO({ title: t.seo.title, description: t.seo.description, lang, path: lang === 'es' ? '/reservar' : '/en/book' })
+  const bookingPath = lang === 'es' ? '/reservar' : '/en/book'
+  useSEO({ title: t.seo.title, description: t.seo.description, lang, path: bookingPath, schemas: [buildBreadcrumbs(bookingPath, lang, t.seo.title)] })
 
   const schema = useMemo(() => z.object({
     service_type: z.enum(SERVICE_TYPES, { required_error: t.errors.required }),

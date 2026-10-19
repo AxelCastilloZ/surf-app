@@ -1,4 +1,4 @@
-import { useSEO } from '../shared/hooks/useSEO'
+import { useSEO, buildBreadcrumbs } from '../shared/hooks/useSEO'
 import Navbar from '../shared/components/Navbar'
 import Footer from '../shared/components/Footer'
 
@@ -55,11 +55,13 @@ const i18n = {
 
 export default function PoliciesPage({ lang }: { lang: Lang }) {
   const t = i18n[lang]
+  const policiesPath = lang === 'es' ? '/politicas' : '/en/policies'
   useSEO({
     title: t.seo.title,
     description: t.seo.description,
     lang,
-    path: lang === 'es' ? '/politicas' : '/en/policies',
+    path: policiesPath,
+    schemas: [buildBreadcrumbs(policiesPath, lang, t.seo.title)],
   })
 
   return (

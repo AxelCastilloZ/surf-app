@@ -1,10 +1,10 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import useEmblaCarousel from 'embla-carousel-react'
 import { Star, ArrowLeft, Send, MessageSquarePlus } from 'lucide-react'
-import { useSEO } from '../shared/hooks/useSEO'
+import { useSEO, buildBreadcrumbs } from '../shared/hooks/useSEO'
 import { usePublicInstructor } from '../shared/hooks/useInstructors'
 import { useInstructorReviews } from '../shared/hooks/useInstructorReviews'
 import Navbar from '../shared/components/Navbar'
@@ -323,15 +323,45 @@ export default function InstructorProfilePage({ lang }: { lang: Lang }) {
     ? ' — Instructor de surf en Nosara, Guanacaste, Costa Rica'
     : ' — Surf instructor in Nosara, Guanacaste, Costa Rica'
 
+  const reviews = reviewsData?.data ?? []
+  const meta = reviewsData?.meta
+
+  const schemas = useMemo(() => {
+    const list: Record<string, unknown>[] = [
+      buildBreadcrumbs(instructorPath, lang, instructor?.full_name ?? t.loading),
+    ]
+    if (reviews.length > 0 && instructor) {
+      list.push({
+        '@context': 'https://schema.org',
+        '@type': 'Person',
+        name: instructor.full_name,
+        jobTitle: lang === 'es' ? 'Instructor de Surf' : 'Surf Instructor',
+        worksFor: { '@type': 'SportsActivityLocation', name: 'Surfers Lab CR' },
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          ratingValue: meta?.average_rating ?? 0,
+          reviewCount: meta?.count ?? 0,
+          bestRating: 5,
+        },
+        review: reviews.map((r) => ({
+          '@type': 'Review',
+          author: { '@type': 'Person', name: r.client_name },
+          reviewRating: { '@type': 'Rating', ratingValue: r.rating, bestRating: 5 },
+          reviewBody: r.comment ?? '',
+          datePublished: r.created_at.split('T')[0],
+        })),
+      })
+    }
+    return list
+  }, [instructorPath, lang, instructor, reviews, meta, t.loading])
+
   useSEO({
     title: instructor?.full_name ?? t.loading,
     description: (instructor?.bio ?? '') + locationSuffix,
     lang,
     path: instructorPath,
+    schemas,
   })
-
-  const reviews = reviewsData?.data ?? []
-  const meta = reviewsData?.meta
   const useCarousel = reviews.length >= CAROUSEL_THRESHOLD
 
   const [emblaRef] = useEmblaCarousel({ loop: true, align: 'start' })

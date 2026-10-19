@@ -7,7 +7,7 @@ import { useInView } from 'react-intersection-observer'
 import { Play } from 'lucide-react'
 import type { GalleryItem, GalleryCategory } from '@surf-app/types'
 import { useGallery } from '../shared/hooks/useGallery'
-import { useSEO } from '../shared/hooks/useSEO'
+import { useSEO, buildBreadcrumbs } from '../shared/hooks/useSEO'
 import Navbar from '../shared/components/Navbar'
 import Footer from '../shared/components/Footer'
 
@@ -56,11 +56,13 @@ export default function GalleryPage({ lang }: { lang: Lang }) {
   const [activeCategory, setActiveCategory] = useState<GalleryCategory | undefined>(undefined)
   const [lightboxIndex, setLightboxIndex] = useState(-1)
 
+  const galleryPath = lang === 'es' ? '/galeria' : '/en/gallery'
   useSEO({
     title: t.title,
     description: t.description,
     lang,
-    path: lang === 'es' ? '/galeria' : '/en/gallery',
+    path: galleryPath,
+    schemas: [buildBreadcrumbs(galleryPath, lang, t.title)],
   })
 
   const { data: items = [], isLoading } = useGallery(activeCategory)
