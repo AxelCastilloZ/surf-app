@@ -174,12 +174,22 @@ function GalleryCard({
       transition={{ duration: 0.4, delay: (index % 6) * 0.05 }}
       className="group relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-slate-100 focus:outline-none shadow-sm hover:shadow-md transition-shadow"
     >
-      <img
-        src={item.url}
-        alt={alt}
-        loading="lazy"
-        className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-      />
+      {isVideo ? (
+        <video
+          src={item.url}
+          muted
+          playsInline
+          preload="metadata"
+          className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+        />
+      ) : (
+        <img
+          src={item.url}
+          alt={alt}
+          loading="lazy"
+          className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+        />
+      )}
 
       {/* Overlay en hover */}
       <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />

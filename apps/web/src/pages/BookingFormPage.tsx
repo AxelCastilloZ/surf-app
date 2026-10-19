@@ -184,7 +184,10 @@ export default function BookingFormPage({ lang }: { lang: Lang }) {
 
   const schema = useMemo(() => z.object({
     service_type: z.enum(SERVICE_TYPES, { required_error: t.errors.required }),
-    booking_date: z.string().min(1, t.errors.required),
+    booking_date: z.string().min(1, t.errors.required).refine(
+      (val) => val >= getTodayStr(),
+      { message: t.errors.pastDate },
+    ),
     start_time: z.string().min(1, t.errors.required),
     instructor_id: z.string().optional(),
     full_name: z.string().min(2, t.errors.required),
@@ -192,7 +195,7 @@ export default function BookingFormPage({ lang }: { lang: Lang }) {
     phone: z.string().optional(),
     country: z.string().optional(),
     language: z.enum(['es', 'en']).optional(),
-    participants: z.number().int().min(1).default(1),
+    participants: z.number().int().min(1).max(10).default(1),
     medical_notes: z.string().min(1, t.errors.required),
     notes: z.string().optional(),
     accept_policy: z.literal(true, { errorMap: () => ({ message: t.errors.policy }) }),
