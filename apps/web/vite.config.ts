@@ -10,6 +10,19 @@ export default defineConfig({
       '@': resolve(__dirname, './src'),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (!id.includes('node_modules')) return
+          if (id.includes('@supabase') || id.includes('supabase-js'))
+            return 'vendor-supabase'
+          if (id.includes('framer-motion'))
+            return 'vendor-motion'
+        },
+      },
+    },
+  },
   server: {
     proxy: {
       '/api': {

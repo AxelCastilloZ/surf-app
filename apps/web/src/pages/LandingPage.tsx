@@ -191,6 +191,8 @@ export default function LandingPage({ lang }: { lang: Lang }) {
         <img
           src={heroImageUrl ?? 'https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=1600'}
           alt=""
+          width={1600}
+          height={1067}
           fetchPriority="high"
           decoding="async"
           className="absolute inset-0 h-full w-full object-cover"
@@ -644,8 +646,11 @@ function GalleryPreviewItem({
       <img
         src={item.url}
         alt={item.alt_text ?? ''}
-        className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+        width={600}
+        height={450}
         loading="lazy"
+        decoding="async"
+        className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
       />
       <div className="absolute inset-0 flex items-end bg-gradient-to-t from-slate-900/70 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
         {item.category && (

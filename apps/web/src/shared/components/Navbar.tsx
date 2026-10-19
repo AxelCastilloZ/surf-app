@@ -43,8 +43,10 @@ export default function Navbar() {
           aria-label="Surfers Lab CR - Volver al inicio"
         >
           <img
-            src="/assets/icons/logo4k.png"
+            src="/assets/icons/logo-64.webp"
             alt="Surfers Lab CR"
+            width={49}
+            height={64}
             className="h-8 w-auto object-contain"
             style={{ filter: 'invert(1) sepia(1) saturate(3) hue-rotate(170deg)' }}
             onError={(e) => {
