@@ -68,11 +68,6 @@ const i18n = {
     },
     testimonials: {
       title: 'Lo que dicen nuestros alumnos',
-      fallback: [
-        { name: 'María G.', country: 'México', text: 'Increíble experiencia. En tres días ya estaba surfeando olas reales. Los instructores son súper pacientes y profesionales.' },
-        { name: 'James T.', country: 'USA', text: "Best surf lessons I've ever had. The video analysis totally changed my technique. Highly recommend!" },
-        { name: 'Ana R.', country: 'España', text: 'Vine sola y me sentí parte de una familia desde el primer día. El surf trip fue lo más épico de mi viaje.' },
-      ],
     },
     gallery: { title: 'Galería', viewAll: 'Ver galería completa' },
     contact: {
@@ -131,11 +126,6 @@ const i18n = {
     },
     testimonials: {
       title: 'What our students say',
-      fallback: [
-        { name: 'María G.', country: 'Mexico', text: 'Incredible experience. In three days I was surfing real waves. The instructors are super patient and professional.' },
-        { name: 'James T.', country: 'USA', text: "Best surf lessons I've ever had. The video analysis totally changed my technique. Highly recommend!" },
-        { name: 'Ana R.', country: 'Spain', text: 'I came alone and felt part of a family from day one. The surf trip was the most epic part of my trip.' },
-      ],
     },
     gallery: { title: 'Gallery', viewAll: 'View full gallery' },
     contact: {
@@ -442,8 +432,8 @@ export default function LandingPage({ lang }: { lang: Lang }) {
         </div>
       </section>
 
-      {/* Testimonios — Google Reviews con fallback estático */}
-      <TestimonialsSection title={t.testimonials.title} fallback={t.testimonials.fallback} />
+      {/* Testimonios — solo se muestra con reseñas reales de Google */}
+      <TestimonialsSection title={t.testimonials.title} />
 
       {/* Galería preview */}
       {(isGalleryLoading || preview.length > 0) && (
@@ -515,15 +505,7 @@ export default function LandingPage({ lang }: { lang: Lang }) {
 
 // ─── Testimonials Section ────────────────────────────────────────────────────
 
-type StaticTestimonial = { name: string; country: string; text: string }
-
-function TestimonialsSection({
-  title,
-  fallback,
-}: {
-  title: string
-  fallback: StaticTestimonial[]
-}) {
+function TestimonialsSection({ title }: { title: string }) {
   const { reviews, isLoading, isError } = useReviews()
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
     Autoplay({ delay: 5000, stopOnInteraction: false, stopOnMouseEnter: true }),
@@ -546,8 +528,7 @@ function TestimonialsSection({
     return () => { emblaApi.off('reInit', onInit).off('select', onSelect) }
   }, [emblaApi])
 
-  const showFallback = !isLoading && (isError || reviews.length === 0)
-  const hasSlides = isLoading || showFallback || reviews.length > 0
+  if (!isLoading && (isError || reviews.length === 0)) return null
 
   return (
     <section className="bg-white py-24">
@@ -559,12 +540,10 @@ function TestimonialsSection({
         </FadeIn>
 
         <div className="relative mt-12">
-          {/* Edge fade masks */}
           <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-white to-transparent sm:w-16" />
           <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-white to-transparent sm:w-16" />
 
-          {/* Prev/Next arrows */}
-          {hasSlides && !isLoading && (
+          {reviews.length > 0 && (
             <>
               <button
                 onClick={scrollPrev}
@@ -595,16 +574,6 @@ function TestimonialsSection({
                   </div>
                 ))}
 
-              {showFallback &&
-                fallback.map((item) => (
-                  <div
-                    key={item.name}
-                    className="min-w-0 flex-[0_0_100%] px-4 sm:flex-[0_0_50%] lg:flex-[0_0_33.33%]"
-                  >
-                    <FallbackCard testimonial={item} />
-                  </div>
-                ))}
-
               {!isLoading &&
                 !isError &&
                 reviews.map((review) => (
@@ -619,7 +588,6 @@ function TestimonialsSection({
           </div>
         </div>
 
-        {/* Dot indicators */}
         {scrollSnaps.length > 1 && (
           <div className="mt-6 flex justify-center gap-2">
             {scrollSnaps.map((_, i) => (
@@ -638,38 +606,6 @@ function TestimonialsSection({
         )}
       </div>
     </section>
-  )
-}
-
-// ─── Fallback Card (matches ReviewCard style) ───────────────────────────────
-
-function FallbackCard({ testimonial }: { testimonial: StaticTestimonial }) {
-  const initial = testimonial.name.charAt(0).toUpperCase()
-  const truncated =
-    testimonial.text.length > 150
-      ? testimonial.text.slice(0, 150).trimEnd() + '…'
-      : testimonial.text
-
-  return (
-    <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-      <div className="flex items-center gap-3">
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-ocean-600 text-sm font-semibold text-white">
-          {initial}
-        </div>
-        <div>
-          <p className="font-semibold leading-tight text-slate-900">{testimonial.name}</p>
-          <p className="text-xs text-slate-400">{testimonial.country}</p>
-        </div>
-      </div>
-
-      <div className="mt-4 flex gap-0.5">
-        {[1, 2, 3, 4, 5].map((star) => (
-          <Star key={star} size={14} className="fill-sand-400 text-sand-400" />
-        ))}
-      </div>
-
-      <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-600">"{truncated}"</p>
-    </div>
   )
 }
 

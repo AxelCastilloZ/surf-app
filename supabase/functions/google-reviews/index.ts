@@ -36,40 +36,50 @@ Deno.serve(async (req) => {
       })
     }
 
-    const url =
-      `https://maps.googleapis.com/maps/api/place/details/json` +
-      `?place_id=${encodeURIComponent(placeId)}` +
-      `&fields=reviews` +
-      `&key=${apiKey}`
+    const url = `https://places.googleapis.com/v1/places/${encodeURIComponent(placeId)}`
 
-    const response = await fetch(url)
+    const response = await fetch(url, {
+      headers: {
+        'X-Goog-Api-Key': apiKey,
+        'X-Goog-FieldMask': 'reviews',
+      },
+    })
 
     if (!response.ok) {
-      console.error(`Google Places API responded with status ${response.status}`)
+      const errText = await response.text()
+      console.error(`Places API responded with status ${response.status}: ${errText}`)
       return new Response(JSON.stringify(cache?.data ?? []), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       })
     }
 
     const json = await response.json() as {
-      result?: { reviews?: GoogleReview[] }
-      status?: string
-      error_message?: string
+      reviews?: {
+        rating: number
+        text?: { text: string }
+        authorAttribution?: {
+          displayName: string
+          photoUri?: string
+        }
+        relativePublishTimeDescription?: string
+        publishTime?: string
+      }[]
     }
 
-    if (json.status !== 'OK') {
-      console.error(`Google Places API error: ${json.status} — ${json.error_message ?? ''}`)
-      return new Response(JSON.stringify(cache?.data ?? []), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      })
-    }
+    const raw = json.reviews ?? []
 
-    const raw = json.result?.reviews ?? []
-
-    const filtered = raw
-      .filter((r) => r.rating >= MIN_RATING && r.text?.trim())
-      .sort((a, b) => b.rating - a.rating || b.time - a.time)
+    const filtered: GoogleReview[] = raw
+      .filter((r) => r.rating >= MIN_RATING && r.text?.text?.trim())
+      .sort((a, b) => b.rating - a.rating)
       .slice(0, MAX_REVIEWS)
+      .map((r) => ({
+        author_name: r.authorAttribution?.displayName ?? 'Anonymous',
+        rating: r.rating,
+        text: r.text?.text ?? '',
+        time: r.publishTime ? Math.floor(new Date(r.publishTime).getTime() / 1000) : 0,
+        profile_photo_url: r.authorAttribution?.photoUri,
+        relative_time_description: r.relativePublishTimeDescription ?? '',
+      }))
 
     cache = { data: filtered, timestamp: Date.now() }
 
