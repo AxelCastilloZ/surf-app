@@ -9,6 +9,7 @@ export default function Footer() {
   const policiesLabel = lang === 'es' ? 'Políticas' : 'Policies'
   const faqHref = lang === 'es' ? '/preguntas-frecuentes' : '/en/faq'
   const faqLabel = lang === 'es' ? 'Preguntas Frecuentes' : 'FAQ'
+  const reviewLabel = lang === 'es' ? 'Déjanos tu reseña' : 'Leave us a review'
 
   return (
     <footer className="border-t border-slate-800 bg-slate-900 py-8">
@@ -23,6 +24,14 @@ export default function Footer() {
           <Link to={policiesHref} className="transition-colors hover:text-white">
             {policiesLabel}
           </Link>
+          <a
+            href="https://search.google.com/local/writereview?placeid=ChIJ-VT2s-VVno8R-5RMA8j1qdI"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition-colors hover:text-white"
+          >
+            {reviewLabel}
+          </a>
         </div>
       </div>
     </footer>
