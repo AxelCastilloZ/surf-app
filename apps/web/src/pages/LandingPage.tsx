@@ -297,12 +297,25 @@ export default function LandingPage({ lang }: { lang: Lang }) {
 
   const localBusinessSchema = buildLocalBusinessSchema(t.seo.description, lang, aggregateRating)
 
+  const faqSchema: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: t.faq.items.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.a,
+      },
+    })),
+  }
+
   useSEO({
     title: t.seo.title,
     description: t.seo.description,
     lang,
     path: lang === 'es' ? '/' : '/en',
-    schemas: [localBusinessSchema, ...courseSchemas],
+    schemas: [localBusinessSchema, ...courseSchemas, faqSchema],
   })
   const { data: heroImageUrl } = useSiteSetting('hero_image_url')
   const { data: heroImagePos } = useSiteSetting('hero_image_position')
