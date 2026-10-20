@@ -103,6 +103,11 @@ export function buildLocalBusinessSchema(
     ],
     image: `${SITE_URL}/assets/icons/logo4k.png`,
     priceRange: '$$',
+    keywords: 'surf lessons Nosara, surf school Guiones, Costa Rica surf, Playa Guiones surf, learn to surf Nosara, escuela de surf Nosara, clases de surf Guanacaste',
+    sameAs: [
+      'https://www.instagram.com/surferslab',
+      'https://www.facebook.com/SurfersLab',
+    ],
     ...extra,
   }
 }

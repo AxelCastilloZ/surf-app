@@ -21,12 +21,13 @@ type Lang = 'es' | 'en'
 const i18n = {
   es: {
     seo: {
-      title: 'Clases de Surf en Nosara, Guanacaste — Costa Rica',
-      description: 'Escuela de surf en Playa Guiones, Nosara. Clases con instructores certificados, video análisis y surf trips en Guanacaste, Costa Rica.',
+      title: 'Escuela de Surf en Playa Guiones, Nosara — Surfers Lab CR',
+      description: 'Clases de surf en Playa Guiones, Nosara, Costa Rica. Instructores certificados ISA, video análisis y surf trips por Guanacaste. Reserva tu lección hoy.',
     },
+    heroAlt: 'Clases de surf en Playa Guiones, Nosara — Surfers Lab CR',
     hero: {
-      title: 'Vive el Surf en Costa Rica',
-      subtitle: 'Clases profesionales, video análisis y surf trips en las mejores olas de Costa Rica.',
+      title: 'Escuela de Surf en Playa Guiones, Nosara',
+      subtitle: 'Clases profesionales con instructores certificados, video análisis y surf trips en las mejores olas de Nosara, Costa Rica.',
       ctaWhatsapp: 'Contáctanos por WhatsApp',
       ctaEmail: 'Escríbenos por Email',
     },
@@ -38,22 +39,22 @@ const i18n = {
           icon: Waves,
           title: 'Clases de Surf',
           serviceType: 'surf_lesson' as const,
-          description: 'Aprende a surfear con instructores certificados. Desde principiantes hasta nivel avanzado, adaptamos cada clase a tu ritmo.',
-          includes: ['Tabla y rash guard', '1.5 — 2 horas de clase', 'Instructor certificado ISA', 'Calentamiento + práctica en el agua'],
+          description: 'Aprende a surfear en Playa Guiones con instructores certificados. Desde principiantes hasta nivel avanzado, adaptamos cada clase a tu ritmo en las olas de Nosara.',
+          includes: ['Tabla y rash guard', '1.5 — 2 horas de clase', 'Instructor certificado ISA', 'Calentamiento en Playa Guiones + práctica en el agua'],
         },
         {
           icon: Video,
           title: 'Video Análisis',
           serviceType: 'video_analysis' as const,
-          description: 'Grabamos tu sesión y analizamos cada detalle de tu técnica para que progreses más rápido.',
-          includes: ['Grabación HD de tu sesión', 'Revisión cuadro por cuadro', 'Tips personalizados', 'Copia digital incluida'],
+          description: 'Grabamos tu sesión en las olas de Playa Guiones y analizamos cada detalle de tu técnica para que progreses más rápido en Nosara.',
+          includes: ['Grabación HD en Playa Guiones', 'Revisión cuadro por cuadro', 'Tips personalizados', 'Copia digital incluida'],
         },
         {
           icon: MapPin,
           title: 'Surf Trips',
           serviceType: 'surf_trip' as const,
-          description: 'Exploramos los mejores spots de Costa Rica. Organizamos todo para que solo te preocupes por surfear.',
-          includes: ['Transporte al spot', 'Todo el equipo', 'Guía local experto', 'Snacks y agua'],
+          description: 'Exploramos los mejores spots de Guanacaste y Costa Rica desde Nosara. Organizamos todo para que solo te preocupes por surfear.',
+          includes: ['Transporte desde Nosara al spot', 'Todo el equipo', 'Guía local experto', 'Snacks y agua'],
         },
       ],
     },
@@ -64,19 +65,19 @@ const i18n = {
           number: '1',
           icon: CalendarCheck,
           title: 'Reserva tu Clase',
-          description: 'Elige tu servicio, selecciona la fecha y reserva en línea en menos de 2 minutos.',
+          description: 'Elige tu servicio, selecciona la fecha y reserva tu clase de surf en Nosara en menos de 2 minutos.',
         },
         {
           number: '2',
           icon: Users,
-          title: 'Nos Encontramos',
-          description: 'Te recibimos en Playa Guiones con todo el equipo listo: tabla, rash guard y buena vibra.',
+          title: 'Nos Encontramos en Playa Guiones',
+          description: 'Te recibimos en Playa Guiones, Nosara, con todo el equipo listo: tabla, rash guard y buena vibra.',
         },
         {
           number: '3',
           icon: Waves,
           title: '¡A Surfear!',
-          description: 'Tu instructor te guía en el agua paso a paso hasta que te pongas de pie en tu primera ola.',
+          description: 'Tu instructor te guía paso a paso en las olas de Nosara hasta que te pongas de pie en tu primera ola.',
         },
       ],
     },
@@ -87,8 +88,8 @@ const i18n = {
     packages: { title: 'Nuestros Paquetes', cta: 'Reservar' },
     about: {
       title: 'Quiénes Somos',
-      mission: 'Nuestra misión es compartir la pasión por el surf con personas de todo el mundo, en un ambiente seguro, divertido y respetuoso con el océano.',
-      vision: 'Ser la escuela de surf más reconocida de Costa Rica, referente en calidad de instrucción y experiencias auténticas.',
+      mission: 'Nuestra misión es compartir la pasión por el surf en Playa Guiones, Nosara, con personas de todo el mundo, en un ambiente seguro, divertido y respetuoso con el océano.',
+      vision: 'Ser la escuela de surf más reconocida de Nosara y Costa Rica, referente en calidad de instrucción y experiencias auténticas en Guanacaste.',
       values: ['Pasión por el océano', 'Seguridad ante todo', 'Respeto al ambiente', 'Comunidad surf'],
       valuesTitle: 'Nuestros Valores',
     },
@@ -102,37 +103,38 @@ const i18n = {
       items: [
         {
           q: '¿Necesito experiencia previa para tomar clases?',
-          a: 'No, nuestras clases están diseñadas para todos los niveles, desde principiantes absolutos hasta surfistas intermedios que quieren mejorar su técnica.',
+          a: 'No, nuestras clases de surf en Playa Guiones están diseñadas para todos los niveles, desde principiantes absolutos hasta surfistas intermedios que quieren mejorar su técnica en Nosara.',
         },
         {
           q: '¿Qué debo llevar a mi clase de surf?',
-          a: 'Solo necesitas traer protector solar biodegradable, traje de baño y una toalla. Nosotros proporcionamos la tabla de surf, el rash guard y todo el equipo necesario.',
+          a: 'Solo necesitas traer protector solar biodegradable, traje de baño y una toalla. En nuestra escuela en Playa Guiones, Nosara, proporcionamos la tabla de surf, el rash guard y todo el equipo necesario.',
         },
         {
           q: '¿Cuánto dura una clase de surf?',
-          a: 'Las clases tienen una duración aproximada de 1.5 a 2 horas, incluyendo calentamiento en tierra, instrucción en el agua y práctica libre.',
+          a: 'Las clases de surf en Nosara tienen una duración aproximada de 1.5 a 2 horas, incluyendo calentamiento en la playa, instrucción en el agua y práctica libre en Playa Guiones.',
         },
         {
           q: '¿Los instructores están certificados?',
-          a: 'Sí, todos nuestros instructores cuentan con certificación ISA (International Surfing Association) y entrenamiento en primeros auxilios y rescate acuático.',
+          a: 'Sí, todos nuestros instructores en Nosara cuentan con certificación ISA (International Surfing Association) y entrenamiento en primeros auxilios y rescate acuático.',
         },
       ],
     },
     contact: {
       title: 'Contáctanos',
-      subtitle: 'Estamos listos para ayudarte a vivir la mejor experiencia de surf.',
+      subtitle: 'Estamos listos para ayudarte a vivir la mejor experiencia de surf en Playa Guiones, Nosara.',
       whatsapp: 'WhatsApp',
       email: 'Email',
     },
   },
   en: {
     seo: {
-      title: 'Surf Lessons in Nosara, Guanacaste — Costa Rica',
-      description: 'Surf school at Playa Guiones, Nosara. Certified instructors, video analysis and surf trips in Guanacaste, Costa Rica.',
+      title: 'Surf School in Playa Guiones, Nosara — Surfers Lab CR',
+      description: 'Surf lessons at Playa Guiones, Nosara, Costa Rica. ISA certified instructors, video analysis and surf trips across Guanacaste. Book your lesson today.',
     },
+    heroAlt: 'Surf lessons at Playa Guiones, Nosara — Surfers Lab CR',
     hero: {
-      title: 'Experience Surfing in Costa Rica',
-      subtitle: 'Professional surf lessons, video analysis, and surf trips on the best waves in Costa Rica.',
+      title: 'Surf School in Nosara, Costa Rica',
+      subtitle: 'Professional surf lessons with certified instructors, video analysis, and surf trips on the best waves of Playa Guiones, Nosara.',
       ctaWhatsapp: 'Contact us on WhatsApp',
       ctaEmail: 'Send us an Email',
     },
@@ -144,22 +146,22 @@ const i18n = {
           icon: Waves,
           title: 'Surf Lessons',
           serviceType: 'surf_lesson' as const,
-          description: 'Learn to surf with certified instructors. From beginners to advanced, we tailor every lesson to your pace.',
-          includes: ['Board & rash guard', '1.5 — 2 hour lesson', 'ISA certified instructor', 'Beach warm-up + water practice'],
+          description: 'Learn to surf at Playa Guiones with certified instructors. From beginners to advanced, we tailor every lesson to your pace on the waves of Nosara.',
+          includes: ['Board & rash guard', '1.5 — 2 hour lesson', 'ISA certified instructor', 'Warm-up at Playa Guiones + water practice'],
         },
         {
           icon: Video,
           title: 'Video Analysis',
           serviceType: 'video_analysis' as const,
-          description: 'We film your session and break down every detail of your technique so you progress faster.',
-          includes: ['HD session recording', 'Frame-by-frame review', 'Personalized tips', 'Digital copy included'],
+          description: 'We film your session on the waves of Playa Guiones and break down every detail of your technique so you progress faster in Nosara.',
+          includes: ['HD recording at Playa Guiones', 'Frame-by-frame review', 'Personalized tips', 'Digital copy included'],
         },
         {
           icon: MapPin,
           title: 'Surf Trips',
           serviceType: 'surf_trip' as const,
-          description: 'We explore the best spots in Costa Rica. We handle everything so you just focus on surfing.',
-          includes: ['Transport to spot', 'All equipment', 'Expert local guide', 'Snacks & water'],
+          description: 'We explore the best surf spots across Guanacaste and Costa Rica from Nosara. We handle everything so you just focus on surfing.',
+          includes: ['Transport from Nosara to the spot', 'All equipment', 'Expert local guide', 'Snacks & water'],
         },
       ],
     },
@@ -170,19 +172,19 @@ const i18n = {
           number: '1',
           icon: CalendarCheck,
           title: 'Book Your Lesson',
-          description: 'Pick your service, choose a date, and book online in under 2 minutes.',
+          description: 'Pick your service, choose a date, and book your surf lesson in Nosara in under 2 minutes.',
         },
         {
           number: '2',
           icon: Users,
-          title: 'Meet & Gear Up',
-          description: 'We welcome you at Playa Guiones with all the gear ready: board, rash guard, and good vibes.',
+          title: 'Meet at Playa Guiones',
+          description: 'We welcome you at Playa Guiones, Nosara, with all the gear ready: board, rash guard, and good vibes.',
         },
         {
           number: '3',
           icon: Waves,
           title: 'Hit the Waves!',
-          description: 'Your instructor guides you step by step in the water until you stand up on your first wave.',
+          description: 'Your instructor guides you step by step on the waves of Nosara until you stand up on your first wave.',
         },
       ],
     },
@@ -193,8 +195,8 @@ const i18n = {
     packages: { title: 'Our Packages', cta: 'Book Now' },
     about: {
       title: 'About Us',
-      mission: 'Our mission is to share the passion for surfing with people from around the world, in a safe, fun, and ocean-respectful environment.',
-      vision: 'To be the most recognized surf school in Costa Rica, a reference for instruction quality and authentic experiences.',
+      mission: 'Our mission is to share the passion for surfing at Playa Guiones, Nosara, with people from around the world, in a safe, fun, and ocean-respectful environment.',
+      vision: 'To be the most recognized surf school in Nosara and Costa Rica, a reference for instruction quality and authentic experiences in Guanacaste.',
       values: ['Passion for the ocean', 'Safety first', 'Environmental respect', 'Surf community'],
       valuesTitle: 'Our Values',
     },
@@ -208,25 +210,25 @@ const i18n = {
       items: [
         {
           q: 'Do I need previous experience to take lessons?',
-          a: 'No, our lessons are designed for all levels, from absolute beginners to intermediate surfers looking to improve their technique.',
+          a: 'No, our surf lessons at Playa Guiones are designed for all levels, from absolute beginners to intermediate surfers looking to improve their technique in Nosara.',
         },
         {
           q: 'What should I bring to my surf lesson?',
-          a: 'Just bring biodegradable sunscreen, a swimsuit, and a towel. We provide the surfboard, rash guard, and all necessary equipment.',
+          a: 'Just bring biodegradable sunscreen, a swimsuit, and a towel. At our surf school in Playa Guiones, Nosara, we provide the surfboard, rash guard, and all necessary equipment.',
         },
         {
           q: 'How long is a surf lesson?',
-          a: 'Lessons last approximately 1.5 to 2 hours, including warm-up on land, instruction in the water, and free practice.',
+          a: 'Surf lessons in Nosara last approximately 1.5 to 2 hours, including warm-up on the beach, instruction in the water, and free practice at Playa Guiones.',
         },
         {
           q: 'Are the instructors certified?',
-          a: 'Yes, all our instructors hold ISA (International Surfing Association) certification and are trained in first aid and water rescue.',
+          a: 'Yes, all our surf instructors in Nosara hold ISA (International Surfing Association) certification and are trained in first aid and water rescue.',
         },
       ],
     },
     contact: {
       title: 'Contact Us',
-      subtitle: "We're ready to help you experience the best surf adventure.",
+      subtitle: "We're ready to help you experience the best surf adventure in Playa Guiones, Nosara.",
       whatsapp: 'WhatsApp',
       email: 'Email',
     },
@@ -275,6 +277,16 @@ export default function LandingPage({ lang }: { lang: Lang }) {
       '@type': 'Offer',
       price: pkg.price,
       priceCurrency: pkg.currency,
+    },
+    locationCreated: {
+      '@type': 'Place',
+      name: 'Playa Guiones, Nosara',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Nosara',
+        addressRegion: 'Guanacaste',
+        addressCountry: 'CR',
+      },
     },
   }))
 
@@ -328,7 +340,7 @@ export default function LandingPage({ lang }: { lang: Lang }) {
         {/* Full-color background image */}
         <img
           src={heroImageUrl ?? 'https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=1600'}
-          alt=""
+          alt={t.heroAlt}
           width={1600}
           height={1067}
           fetchPriority="high"
@@ -399,7 +411,7 @@ export default function LandingPage({ lang }: { lang: Lang }) {
                     {inst.photo_url ? (
                       <img
                         src={inst.photo_url}
-                        alt={inst.full_name}
+                        alt={`${inst.full_name} — ${lang === 'es' ? 'instructor de surf en Nosara' : 'surf instructor in Nosara'}`}
                         width={128}
                         height={128}
                         loading="lazy"
