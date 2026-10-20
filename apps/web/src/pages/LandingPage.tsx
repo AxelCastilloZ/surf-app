@@ -70,6 +70,28 @@ const i18n = {
       title: 'Lo que dicen nuestros alumnos',
     },
     gallery: { title: 'Galería', viewAll: 'Ver galería completa' },
+    faq: {
+      title: 'Preguntas Frecuentes',
+      viewAll: 'Ver todas las preguntas',
+      items: [
+        {
+          q: '¿Necesito experiencia previa para tomar clases?',
+          a: 'No, nuestras clases están diseñadas para todos los niveles, desde principiantes absolutos hasta surfistas intermedios que quieren mejorar su técnica.',
+        },
+        {
+          q: '¿Qué debo llevar a mi clase de surf?',
+          a: 'Solo necesitas traer protector solar biodegradable, traje de baño y una toalla. Nosotros proporcionamos la tabla de surf, el rash guard y todo el equipo necesario.',
+        },
+        {
+          q: '¿Cuánto dura una clase de surf?',
+          a: 'Las clases tienen una duración aproximada de 1.5 a 2 horas, incluyendo calentamiento en tierra, instrucción en el agua y práctica libre.',
+        },
+        {
+          q: '¿Los instructores están certificados?',
+          a: 'Sí, todos nuestros instructores cuentan con certificación ISA (International Surfing Association) y entrenamiento en primeros auxilios y rescate acuático.',
+        },
+      ],
+    },
     contact: {
       title: 'Contáctanos',
       subtitle: 'Estamos listos para ayudarte a vivir la mejor experiencia de surf.',
@@ -128,6 +150,28 @@ const i18n = {
       title: 'What our students say',
     },
     gallery: { title: 'Gallery', viewAll: 'View full gallery' },
+    faq: {
+      title: 'Frequently Asked Questions',
+      viewAll: 'View all questions',
+      items: [
+        {
+          q: 'Do I need previous experience to take lessons?',
+          a: 'No, our lessons are designed for all levels, from absolute beginners to intermediate surfers looking to improve their technique.',
+        },
+        {
+          q: 'What should I bring to my surf lesson?',
+          a: 'Just bring biodegradable sunscreen, a swimsuit, and a towel. We provide the surfboard, rash guard, and all necessary equipment.',
+        },
+        {
+          q: 'How long is a surf lesson?',
+          a: 'Lessons last approximately 1.5 to 2 hours, including warm-up on land, instruction in the water, and free practice.',
+        },
+        {
+          q: 'Are the instructors certified?',
+          a: 'Yes, all our instructors hold ISA (International Surfing Association) certification and are trained in first aid and water rescue.',
+        },
+      ],
+    },
     contact: {
       title: 'Contact Us',
       subtitle: "We're ready to help you experience the best surf adventure.",
@@ -466,6 +510,43 @@ export default function LandingPage({ lang }: { lang: Lang }) {
           </div>
         </section>
       )}
+
+      {/* FAQ */}
+      <section className="bg-white py-24">
+        <div className="mx-auto max-w-3xl px-6">
+          <FadeIn>
+            <h2 className="font-display text-center text-3xl font-bold text-slate-900 sm:text-4xl">
+              {t.faq.title}
+            </h2>
+          </FadeIn>
+          <div className="mt-10 space-y-4">
+            {t.faq.items.map((item, i) => (
+              <FadeIn key={i} delay={i * 0.05}>
+                <details className="group rounded-2xl border border-slate-200 bg-mist-50 transition-colors open:bg-white open:shadow-sm">
+                  <summary className="flex cursor-pointer items-center justify-between gap-4 px-6 py-5 text-left font-display text-lg font-semibold text-ocean-600 [&::-webkit-details-marker]:hidden">
+                    {item.q}
+                    <span className="shrink-0 text-2xl leading-none text-ocean-400 transition-transform group-open:rotate-45">+</span>
+                  </summary>
+                  <div className="px-6 pb-5 text-sm leading-relaxed text-slate-600">
+                    {item.a}
+                  </div>
+                </details>
+              </FadeIn>
+            ))}
+          </div>
+          <FadeIn delay={0.2}>
+            <div className="mt-8 text-center">
+              <Link
+                to={lang === 'es' ? '/preguntas-frecuentes' : '/en/faq'}
+                className="inline-flex items-center gap-2 text-sm font-semibold text-ocean-600 transition hover:text-ocean-700"
+              >
+                {t.faq.viewAll}
+                <ArrowRight size={14} />
+              </Link>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
 
       {/* Contacto */}
       <section className="bg-mist-50 py-24">

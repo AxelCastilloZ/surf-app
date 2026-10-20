@@ -76,9 +76,15 @@ export default function Navbar() {
           ))}
         </ul>
 
-        {/* Desktop: idioma */}
-        <div className="hidden md:block">
+        {/* Desktop: idioma + CTA */}
+        <div className="hidden items-center gap-4 md:flex">
           <LanguageSwitcher />
+          <Link
+            to={lang === 'es' ? '/reservar' : '/en/book'}
+            className="rounded-full bg-coral-500 px-5 py-2 text-sm font-semibold text-white transition hover:bg-coral-600"
+          >
+            {lang === 'es' ? 'Reservar' : 'Book Now'}
+          </Link>
         </div>
 
         {/* Mobile: hamburguesa + Sheet */}
@@ -120,6 +126,18 @@ export default function Navbar() {
                 </SheetClose>
               ))}
             </nav>
+
+            {/* CTA mobile */}
+            <div className="px-4">
+              <SheetClose asChild>
+                <Link
+                  to={lang === 'es' ? '/reservar' : '/en/book'}
+                  className="flex items-center justify-center rounded-full bg-coral-500 px-6 py-3 text-lg font-semibold text-white transition hover:bg-coral-600"
+                >
+                  {lang === 'es' ? 'Reservar' : 'Book Now'}
+                </Link>
+              </SheetClose>
+            </div>
 
             {/* Footer del Sheet: idioma */}
             <div className="border-t border-slate-100 px-6 py-4">
