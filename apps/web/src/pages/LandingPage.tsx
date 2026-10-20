@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
 import { useInView } from 'react-intersection-observer'
-import { Mail, MessageCircle, Waves, Video, MapPin, Star, ArrowRight, ChevronLeft, ChevronRight, CalendarCheck, Users, Check } from 'lucide-react'
+import { Mail, MessageCircle, Waves, Video, MapPin, Star, ArrowRight, ChevronLeft, ChevronRight, CalendarCheck, Users, Check, Shield, Award } from 'lucide-react'
 import { useSEO, buildLocalBusinessSchema } from '../shared/hooks/useSEO'
 import { useGallery } from '../shared/hooks/useGallery'
 import { usePackages } from '../shared/hooks/usePackages'
@@ -31,6 +31,12 @@ const i18n = {
       ctaWhatsapp: 'Contáctanos por WhatsApp',
       ctaEmail: 'Escríbenos por Email',
     },
+    badges: [
+      { icon: Shield, value: 'ISA', label: 'Certificados' },
+      { icon: Users, value: '500+', label: 'Estudiantes' },
+      { icon: Star, value: '4.9', label: 'Google Rating' },
+      { icon: Award, value: '#1', label: 'en Nosara' },
+    ],
     services: {
       title: 'Nuestros Servicios',
       cta: 'Reservar',
@@ -139,6 +145,12 @@ const i18n = {
       ctaWhatsapp: 'Contact us on WhatsApp',
       ctaEmail: 'Send us an Email',
     },
+    badges: [
+      { icon: Shield, value: 'ISA', label: 'Certified' },
+      { icon: Users, value: '500+', label: 'Students' },
+      { icon: Star, value: '4.9', label: 'Google Rating' },
+      { icon: Award, value: '#1', label: 'in Nosara' },
+    ],
     services: {
       title: 'Our Services',
       cta: 'Book Now',
@@ -372,6 +384,23 @@ export default function LandingPage({ lang }: { lang: Lang }) {
               {t.hero.ctaEmail}
             </a>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Value badges */}
+      <section className="bg-ocean-600 py-8">
+        <div className="mx-auto max-w-5xl px-6">
+          <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
+            {t.badges.map((badge, i) => (
+              <FadeIn key={i} delay={i * 0.05}>
+                <div className="flex flex-col items-center text-center text-white">
+                  <badge.icon className="mb-2 h-6 w-6 text-coral-300" />
+                  <span className="text-2xl font-bold">{badge.value}</span>
+                  <span className="text-sm text-ocean-200">{badge.label}</span>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
         </div>
       </section>
 
