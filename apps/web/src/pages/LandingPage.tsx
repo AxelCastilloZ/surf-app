@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
 import { useInView } from 'react-intersection-observer'
-import { Mail, MessageCircle, Waves, Video, MapPin, Star, ArrowRight, ChevronLeft, ChevronRight, CalendarCheck, Users } from 'lucide-react'
+import { Mail, MessageCircle, Waves, Video, MapPin, Star, ArrowRight, ChevronLeft, ChevronRight, CalendarCheck, Users, Check } from 'lucide-react'
 import { useSEO, buildLocalBusinessSchema } from '../shared/hooks/useSEO'
 import { useGallery } from '../shared/hooks/useGallery'
 import { usePackages } from '../shared/hooks/usePackages'
@@ -42,18 +42,21 @@ const i18n = {
           title: 'Clases de Surf',
           serviceType: 'surf_lesson' as const,
           description: 'Aprende a surfear con instructores certificados. Desde principiantes hasta nivel avanzado, adaptamos cada clase a tu ritmo.',
+          includes: ['Tabla y rash guard', '1.5 — 2 horas de clase', 'Instructor certificado ISA', 'Calentamiento + práctica en el agua'],
         },
         {
           icon: Video,
           title: 'Video Análisis',
           serviceType: 'video_analysis' as const,
           description: 'Grabamos tu sesión y analizamos cada detalle de tu técnica para que progreses más rápido.',
+          includes: ['Grabación HD de tu sesión', 'Revisión cuadro por cuadro', 'Tips personalizados', 'Copia digital incluida'],
         },
         {
           icon: MapPin,
           title: 'Surf Trips',
           serviceType: 'surf_trip' as const,
           description: 'Exploramos los mejores spots de Costa Rica. Organizamos todo para que solo te preocupes por surfear.',
+          includes: ['Transporte al spot', 'Todo el equipo', 'Guía local experto', 'Snacks y agua'],
         },
       ],
     },
@@ -147,18 +150,21 @@ const i18n = {
           title: 'Surf Lessons',
           serviceType: 'surf_lesson' as const,
           description: 'Learn to surf with certified instructors. From beginners to advanced, we tailor every lesson to your pace.',
+          includes: ['Board & rash guard', '1.5 — 2 hour lesson', 'ISA certified instructor', 'Beach warm-up + water practice'],
         },
         {
           icon: Video,
           title: 'Video Analysis',
           serviceType: 'video_analysis' as const,
           description: 'We film your session and break down every detail of your technique so you progress faster.',
+          includes: ['HD session recording', 'Frame-by-frame review', 'Personalized tips', 'Digital copy included'],
         },
         {
           icon: MapPin,
           title: 'Surf Trips',
           serviceType: 'surf_trip' as const,
           description: 'We explore the best spots in Costa Rica. We handle everything so you just focus on surfing.',
+          includes: ['Transport to spot', 'All equipment', 'Expert local guide', 'Snacks & water'],
         },
       ],
     },
@@ -439,6 +445,16 @@ export default function LandingPage({ lang }: { lang: Lang }) {
                   </div>
                   <h3 className="font-display text-xl font-semibold text-slate-900">{svc.title}</h3>
                   <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-600">{svc.description}</p>
+                  {svc.includes && (
+                    <ul className="mt-4 space-y-1.5">
+                      {svc.includes.map((item) => (
+                        <li key={item} className="flex items-start gap-2 text-sm text-slate-600">
+                          <Check size={14} className="mt-0.5 shrink-0 text-ocean-600" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                   {servicePricing?.[svc.serviceType] && (
                     <p className="mt-4 text-lg font-bold text-coral-500">
                       {t.services.fromPrice} {formatPrice(servicePricing[svc.serviceType], 'USD')}{' '}
