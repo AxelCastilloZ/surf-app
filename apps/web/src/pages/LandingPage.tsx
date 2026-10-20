@@ -10,7 +10,6 @@ import { useGallery } from '../shared/hooks/useGallery'
 import { usePackages } from '../shared/hooks/usePackages'
 import { useReviews } from '../shared/hooks/useReviews'
 import { usePublicInstructors } from '../shared/hooks/useInstructors'
-import { useServicePricing } from '../shared/hooks/useServicePricing'
 import { useSiteSetting } from '../shared/hooks/useSiteSettings'
 import type { GoogleReview } from '../shared/api/reviews'
 import { formatPrice } from '@surf-app/utils'
@@ -34,8 +33,6 @@ const i18n = {
     services: {
       title: 'Nuestros Servicios',
       cta: 'Reservar',
-      fromPrice: 'Desde',
-      perPerson: '/ persona',
       items: [
         {
           icon: Waves,
@@ -142,8 +139,6 @@ const i18n = {
     services: {
       title: 'Our Services',
       cta: 'Book Now',
-      fromPrice: 'From',
-      perPerson: '/ person',
       items: [
         {
           icon: Waves,
@@ -262,7 +257,6 @@ export default function LandingPage({ lang }: { lang: Lang }) {
   const bookingBase = lang === 'es' ? '/reservar' : '/en/book'
 
   const { data: packages } = usePackages()
-  const { data: servicePricing } = useServicePricing()
   const { data: galleryItems, isLoading: isGalleryLoading } = useGallery()
   const { data: instructors } = usePublicInstructors()
   const { reviews } = useReviews()
@@ -467,12 +461,6 @@ export default function LandingPage({ lang }: { lang: Lang }) {
                         </li>
                       ))}
                     </ul>
-                  )}
-                  {servicePricing?.[svc.serviceType] && (
-                    <p className="mt-4 text-lg font-bold text-coral-500">
-                      {t.services.fromPrice} {formatPrice(servicePricing[svc.serviceType], 'USD')}{' '}
-                      <span className="text-sm font-normal text-slate-500">{t.services.perPerson}</span>
-                    </p>
                   )}
                   <Link
                     to={`${bookingBase}?service=${svc.serviceType}`}
