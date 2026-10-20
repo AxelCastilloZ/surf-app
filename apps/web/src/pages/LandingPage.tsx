@@ -325,6 +325,7 @@ export default function LandingPage({ lang }: { lang: Lang }) {
               <h2 className="font-display text-center text-3xl font-bold text-slate-900 sm:text-4xl">
                 {t.instructors.title}
               </h2>
+              <div className="mx-auto mt-4 h-1 w-16 rounded-full bg-coral-500" />
             </FadeIn>
             <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
               {instructors.map((inst, i) => (
@@ -369,18 +370,19 @@ export default function LandingPage({ lang }: { lang: Lang }) {
       )}
 
       {/* Servicios */}
-      <section className="bg-mist-50 py-24">
+      <section className="bg-sand-100 py-24">
         <div className="mx-auto max-w-7xl px-6">
           <FadeIn>
             <h2 className="font-display text-center text-3xl font-bold text-slate-900 sm:text-4xl">
               {t.services.title}
             </h2>
+            <div className="mx-auto mt-4 h-1 w-16 rounded-full bg-coral-500" />
           </FadeIn>
           <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {t.services.items.map((svc, i) => (
               <FadeIn key={svc.title} delay={i * 0.1}>
                 <div className="flex flex-col rounded-2xl border border-slate-200 bg-white p-8 shadow-sm transition hover:border-ocean-400 hover:shadow-md">
-                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-ocean-100 text-ocean-600">
+                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[#fff7ed] text-coral-500">
                     <svc.icon size={24} />
                   </div>
                   <h3 className="font-display text-xl font-semibold text-slate-900">{svc.title}</h3>
@@ -406,6 +408,7 @@ export default function LandingPage({ lang }: { lang: Lang }) {
               <h2 className="font-display text-center text-3xl font-bold text-slate-900 sm:text-4xl">
                 {t.packages.title}
               </h2>
+              <div className="mx-auto mt-4 h-1 w-16 rounded-full bg-coral-500" />
             </FadeIn>
             <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
               {packages.map((pkg, i) => (
@@ -435,12 +438,13 @@ export default function LandingPage({ lang }: { lang: Lang }) {
       )}
 
       {/* Quiénes somos */}
-      <section className="bg-mist-50 py-24">
+      <section className="bg-sand-100 py-24">
         <div className="mx-auto max-w-5xl px-6">
           <FadeIn>
             <h2 className="font-display text-center text-3xl font-bold text-slate-900 sm:text-4xl">
               {t.about.title}
             </h2>
+            <div className="mx-auto mt-4 h-1 w-16 rounded-full bg-coral-500" />
           </FadeIn>
           <div className="mt-12 grid gap-8 md:grid-cols-2">
             <FadeIn>
@@ -481,12 +485,13 @@ export default function LandingPage({ lang }: { lang: Lang }) {
 
       {/* Galería preview */}
       {(isGalleryLoading || preview.length > 0) && (
-        <section className="bg-mist-50 py-24">
+        <section className="bg-sand-100 py-24">
           <div className="mx-auto max-w-7xl px-6">
             <FadeIn>
               <h2 className="font-display text-center text-3xl font-bold text-slate-900 sm:text-4xl">
                 {t.gallery.title}
               </h2>
+              <div className="mx-auto mt-4 h-1 w-16 rounded-full bg-coral-500" />
             </FadeIn>
             <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {isGalleryLoading
@@ -518,11 +523,12 @@ export default function LandingPage({ lang }: { lang: Lang }) {
             <h2 className="font-display text-center text-3xl font-bold text-slate-900 sm:text-4xl">
               {t.faq.title}
             </h2>
+            <div className="mx-auto mt-4 h-1 w-16 rounded-full bg-coral-500" />
           </FadeIn>
           <div className="mt-10 space-y-4">
             {t.faq.items.map((item, i) => (
               <FadeIn key={i} delay={i * 0.05}>
-                <details className="group rounded-2xl border border-slate-200 bg-mist-50 transition-colors open:bg-white open:shadow-sm">
+                <details className="group rounded-2xl border border-slate-200 bg-sand-100 transition-colors open:bg-white open:shadow-sm">
                   <summary className="flex cursor-pointer items-center justify-between gap-4 px-6 py-5 text-left font-display text-lg font-semibold text-ocean-600 [&::-webkit-details-marker]:hidden">
                     {item.q}
                     <span className="shrink-0 text-2xl leading-none text-ocean-400 transition-transform group-open:rotate-45">+</span>
@@ -549,10 +555,11 @@ export default function LandingPage({ lang }: { lang: Lang }) {
       </section>
 
       {/* Contacto */}
-      <section className="bg-mist-50 py-24">
+      <section className="bg-sand-100 py-24">
         <div className="mx-auto max-w-2xl px-6 text-center">
           <FadeIn>
             <h2 className="font-display text-3xl font-bold text-slate-900 sm:text-4xl">{t.contact.title}</h2>
+            <div className="mx-auto mt-4 h-1 w-16 rounded-full bg-coral-500" />
             <p className="mt-4 text-slate-600">{t.contact.subtitle}</p>
             <p className="mt-2 text-sm font-semibold text-ocean-600">+{wa}</p>
           </FadeIn>
@@ -618,6 +625,7 @@ function TestimonialsSection({ title }: { title: string }) {
           <h2 className="font-display text-center text-3xl font-bold text-slate-900 sm:text-4xl">
             {title}
           </h2>
+          <div className="mx-auto mt-4 h-1 w-16 rounded-full bg-coral-500" />
         </FadeIn>
 
         <div className="relative mt-12">
