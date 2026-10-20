@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
 import { useInView } from 'react-intersection-observer'
-import { Mail, MessageCircle, Waves, Video, MapPin, Star, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Mail, MessageCircle, Waves, Video, MapPin, Star, ArrowRight, ChevronLeft, ChevronRight, CalendarCheck, Users } from 'lucide-react'
 import { useSEO, buildLocalBusinessSchema } from '../shared/hooks/useSEO'
 import { useGallery } from '../shared/hooks/useGallery'
 import { usePackages } from '../shared/hooks/usePackages'
@@ -51,6 +51,29 @@ const i18n = {
           title: 'Surf Trips',
           serviceType: 'surf_trip' as const,
           description: 'Exploramos los mejores spots de Costa Rica. Organizamos todo para que solo te preocupes por surfear.',
+        },
+      ],
+    },
+    howItWorks: {
+      title: 'Cómo Funciona',
+      steps: [
+        {
+          number: '1',
+          icon: CalendarCheck,
+          title: 'Reserva tu Clase',
+          description: 'Elige tu servicio, selecciona la fecha y reserva en línea en menos de 2 minutos.',
+        },
+        {
+          number: '2',
+          icon: Users,
+          title: 'Nos Encontramos',
+          description: 'Te recibimos en Playa Guiones con todo el equipo listo: tabla, rash guard y buena vibra.',
+        },
+        {
+          number: '3',
+          icon: Waves,
+          title: '¡A Surfear!',
+          description: 'Tu instructor te guía en el agua paso a paso hasta que te pongas de pie en tu primera ola.',
         },
       ],
     },
@@ -131,6 +154,29 @@ const i18n = {
           title: 'Surf Trips',
           serviceType: 'surf_trip' as const,
           description: 'We explore the best spots in Costa Rica. We handle everything so you just focus on surfing.',
+        },
+      ],
+    },
+    howItWorks: {
+      title: 'How It Works',
+      steps: [
+        {
+          number: '1',
+          icon: CalendarCheck,
+          title: 'Book Your Lesson',
+          description: 'Pick your service, choose a date, and book online in under 2 minutes.',
+        },
+        {
+          number: '2',
+          icon: Users,
+          title: 'Meet & Gear Up',
+          description: 'We welcome you at Playa Guiones with all the gear ready: board, rash guard, and good vibes.',
+        },
+        {
+          number: '3',
+          icon: Waves,
+          title: 'Hit the Waves!',
+          description: 'Your instructor guides you step by step in the water until you stand up on your first wave.',
         },
       ],
     },
@@ -393,6 +439,32 @@ export default function LandingPage({ lang }: { lang: Lang }) {
                   >
                     {t.services.cta}
                   </Link>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Cómo funciona */}
+      <section className="bg-white py-24">
+        <div className="mx-auto max-w-5xl px-6">
+          <FadeIn>
+            <h2 className="font-display text-center text-3xl font-bold text-slate-900 sm:text-4xl">
+              {t.howItWorks.title}
+            </h2>
+            <div className="mx-auto mt-4 h-1 w-16 rounded-full bg-coral-500" />
+          </FadeIn>
+          <div className="mt-12 grid gap-8 md:grid-cols-3">
+            {t.howItWorks.steps.map((step, i) => (
+              <FadeIn key={i} delay={i * 0.1}>
+                <div className="flex flex-col items-center text-center">
+                  <span className="font-display text-5xl font-bold text-coral-500">{step.number}</span>
+                  <div className="mt-4 flex h-14 w-14 items-center justify-center rounded-full bg-sand-100">
+                    <step.icon className="h-7 w-7 text-ocean-600" />
+                  </div>
+                  <h3 className="mt-4 font-display text-lg font-semibold text-slate-900">{step.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-600">{step.description}</p>
                 </div>
               </FadeIn>
             ))}
