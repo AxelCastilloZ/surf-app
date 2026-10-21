@@ -358,27 +358,35 @@ export default function LandingPage({ lang }: { lang: Lang }) {
         <div className="absolute inset-0 bg-gradient-to-b from-slate-900/0 via-slate-900/20 to-slate-900/80" />
 
         <div className="relative z-10 mx-auto max-w-4xl px-6 pb-20 pt-40 text-center">
+          <motion.p
+            className="text-sm font-semibold uppercase tracking-[0.2em] text-white/80 drop-shadow-md"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4 }}
+          >
+            Surfers Lab CR
+          </motion.p>
           <motion.h1
-            className="font-display text-4xl font-bold leading-tight text-white drop-shadow-lg sm:text-6xl lg:text-7xl"
-            initial={{ opacity: 0, y: 32 }}
+            className="mt-3 font-display text-4xl font-bold leading-tight text-white drop-shadow-lg sm:text-6xl lg:text-7xl"
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
           >
             {t.hero.title}
           </motion.h1>
           <motion.p
             className="mt-6 text-lg text-white/90 drop-shadow-md sm:text-xl"
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
           >
             {t.hero.subtitle}
           </motion.p>
           <motion.div
             className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center"
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
           >
             <a
               href={waHref}
@@ -432,9 +440,9 @@ export default function LandingPage({ lang }: { lang: Lang }) {
                     <h3 className="mt-5 font-display text-xl font-semibold text-slate-900">
                       {inst.full_name}
                     </h3>
-                    {inst.bio && (
+                    {(inst.bio || inst.bio_en) && (
                       <p className="mt-2 line-clamp-3 text-center text-sm leading-relaxed text-slate-600">
-                        {inst.bio}
+                        {lang === 'en' ? (inst.bio_en || inst.bio) : inst.bio}
                       </p>
                     )}
                     <Link

@@ -357,7 +357,7 @@ export default function InstructorProfilePage({ lang }: { lang: Lang }) {
 
   useSEO({
     title: instructor?.full_name ?? t.loading,
-    description: (instructor?.bio ?? '') + locationSuffix,
+    description: ((lang === 'en' ? instructor?.bio_en || instructor?.bio : instructor?.bio) ?? '') + locationSuffix,
     lang,
     path: instructorPath,
     schemas,
@@ -459,9 +459,9 @@ export default function InstructorProfilePage({ lang }: { lang: Lang }) {
               </div>
             )}
 
-            {instructor.bio && (
+            {(instructor.bio || instructor.bio_en) && (
               <p className="mt-6 text-base leading-relaxed text-slate-600">
-                {instructor.bio}
+                {lang === 'en' ? (instructor.bio_en || instructor.bio) : instructor.bio}
               </p>
             )}
 

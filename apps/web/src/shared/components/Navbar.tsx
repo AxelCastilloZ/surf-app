@@ -129,6 +129,16 @@ export default function Navbar() {
               ))}
             </nav>
 
+            {/* Idioma — visible right after nav links */}
+            <div className="px-4 pb-4">
+              <div className="flex items-center gap-3 rounded-lg bg-mist-50 px-4 py-3">
+                <span className="text-sm font-medium text-slate-500">
+                  {lang === 'es' ? 'Idioma' : 'Language'}
+                </span>
+                <LanguageSwitcher />
+              </div>
+            </div>
+
             {/* CTA mobile */}
             <div className="px-4">
               <SheetClose asChild>
@@ -139,14 +149,6 @@ export default function Navbar() {
                   {lang === 'es' ? 'Reservar' : 'Book Now'}
                 </Link>
               </SheetClose>
-            </div>
-
-            {/* Footer del Sheet: idioma */}
-            <div className="border-t border-slate-100 px-6 py-4">
-              <p className="mb-3 text-xs font-medium uppercase tracking-wider text-slate-400">
-                {lang === 'es' ? 'Idioma' : 'Language'}
-              </p>
-              <LanguageSwitcher />
             </div>
           </SheetContent>
         </Sheet>

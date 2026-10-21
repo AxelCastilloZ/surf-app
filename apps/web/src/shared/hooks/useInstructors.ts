@@ -7,13 +7,14 @@ export interface PublicInstructor {
   email: string
   photo_url: string | null
   bio: string | null
+  bio_en: string | null
   is_active: boolean
 }
 
 async function fetchPublicInstructors(): Promise<PublicInstructor[]> {
   const { data, error } = await supabase
     .from('instructors')
-    .select('id, full_name, email, photo_url, bio, is_active')
+    .select('id, full_name, email, photo_url, bio, bio_en, is_active')
     .eq('is_active', true)
     .order('full_name', { ascending: true })
 
@@ -24,7 +25,7 @@ async function fetchPublicInstructors(): Promise<PublicInstructor[]> {
 async function fetchPublicInstructor(id: string): Promise<PublicInstructor> {
   const { data, error } = await supabase
     .from('instructors')
-    .select('id, full_name, email, photo_url, bio, is_active')
+    .select('id, full_name, email, photo_url, bio, bio_en, is_active')
     .eq('id', id)
     .eq('is_active', true)
     .single()
