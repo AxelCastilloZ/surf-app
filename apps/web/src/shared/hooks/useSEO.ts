@@ -149,6 +149,9 @@ export function useSEO({ title, description, lang, path = '', ogImage, noindex, 
     setMeta('meta[name="description"]', 'content', description)
     if (noindex) {
       setMeta('meta[name="robots"]', 'content', 'noindex, nofollow')
+    } else {
+      const robotsMeta = document.querySelector('meta[name="robots"]')
+      if (robotsMeta) robotsMeta.remove()
     }
 
     // Open Graph

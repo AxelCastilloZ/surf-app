@@ -92,7 +92,7 @@ export default function BlogPostPage({ lang }: { lang: Lang }) {
     lang,
     path,
     schemas,
-    noindex: !post,
+    noindex: !post && !isLoading,
   })
 
   if (isLoading) {
