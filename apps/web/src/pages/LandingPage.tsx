@@ -23,7 +23,7 @@ type Lang = 'es' | 'en'
 const i18n = {
   es: {
     seo: {
-      title: 'Escuela de Surf en Playa Guiones, Nosara — Surfers Lab CR',
+      title: 'Escuela de Surf en Playa Guiones, Nosara',
       description: 'Clases de surf en Playa Guiones, Nosara, Costa Rica. Instructores certificados ISA, video análisis y surf trips por Guanacaste. Reserva tu lección hoy.',
     },
     heroAlt: 'Clases de surf en Playa Guiones, Nosara — Surfers Lab CR',
@@ -132,7 +132,7 @@ const i18n = {
   },
   en: {
     seo: {
-      title: 'Surf School in Playa Guiones, Nosara — Surfers Lab CR',
+      title: 'Surf School in Playa Guiones, Nosara',
       description: 'Surf lessons at Playa Guiones, Nosara, Costa Rica. ISA certified instructors, video analysis and surf trips across Guanacaste. Book your lesson today.',
     },
     heroAlt: 'Surf lessons at Playa Guiones, Nosara — Surfers Lab CR',
@@ -618,7 +618,7 @@ export default function LandingPage({ lang }: { lang: Lang }) {
                     <div key={i} className="aspect-[4/3] animate-pulse rounded-xl bg-slate-200/60" />
                   ))
                 : preview.map((item, i) => (
-                    <GalleryPreviewItem key={item.id} item={item} index={i} />
+                    <GalleryPreviewItem key={item.id} item={item} index={i} lang={lang} />
                   ))}
             </div>
             {!isGalleryLoading && (
@@ -928,12 +928,22 @@ function ReviewCard({ review }: { review: GoogleReview }) {
 function GalleryPreviewItem({
   item,
   index,
+  lang,
 }: {
   item: { url: string; alt_text?: string; alt_text_en?: string; media_type?: string; category?: string }
   index: number
+  lang: Lang
 }) {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 })
   const isVideo = item.media_type === 'video'
+  const categoryLabels: Record<string, Record<string, string>> = {
+    es: { lessons: 'Clases de surf', trips: 'Surf trips', video_analysis: 'Video análisis', general: 'Surf' },
+    en: { lessons: 'Surf lessons', trips: 'Surf trips', video_analysis: 'Video analysis', general: 'Surf' },
+  }
+  const fallback = item.category
+    ? `${categoryLabels[lang][item.category] ?? item.category.replace('_', ' ')} — Surfers Lab CR`
+    : lang === 'es' ? 'Surfers Lab CR — Escuela de surf en Nosara' : 'Surfers Lab CR — Surf school in Nosara'
+  const alt = (lang === 'en' ? item.alt_text_en || item.alt_text : item.alt_text) || fallback
 
   return (
     <motion.div
@@ -945,7 +955,7 @@ function GalleryPreviewItem({
     >
       <img
         src={item.url}
-        alt={item.alt_text ?? ''}
+        alt={alt}
         width={600}
         height={450}
         loading="lazy"
