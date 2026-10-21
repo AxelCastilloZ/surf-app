@@ -20,6 +20,7 @@ const ES_TO_EN: Record<string, string> = {
   '/reservar': '/en/book',
   '/politicas': '/en/policies',
   '/preguntas-frecuentes': '/en/faq',
+  '/blog': '/en/blog',
 }
 
 const EN_TO_ES: Record<string, string> = {
@@ -28,18 +29,21 @@ const EN_TO_ES: Record<string, string> = {
   '/en/book': '/reservar',
   '/en/policies': '/politicas',
   '/en/faq': '/preguntas-frecuentes',
+  '/en/blog': '/blog',
 }
 
 function toAlternatePath(path: string, fromLang: 'es' | 'en'): string {
   if (fromLang === 'es') {
     const mapped = ES_TO_EN[path]
     if (mapped) return mapped
-    return path.replace(/^\/instructores\//, '/en/instructors/')
+    return path.replace(/^\/blog\//, '/en/blog/')
+               .replace(/^\/instructores\//, '/en/instructors/')
                .replace(/^\/confirmar-reserva\//, '/en/confirm-booking/')
   }
   const mapped = EN_TO_ES[path]
   if (mapped) return mapped
-  return path.replace(/^\/en\/instructors\//, '/instructores/')
+  return path.replace(/^\/en\/blog\//, '/blog/')
+             .replace(/^\/en\/instructors\//, '/instructores/')
              .replace(/^\/en\/confirm-booking\//, '/confirmar-reserva/')
 }
 

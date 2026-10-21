@@ -8,6 +8,8 @@ const BookingFormPage    = lazy(() => import('./pages/BookingFormPage'))
 const ConfirmBookingPage = lazy(() => import('./pages/ConfirmBookingPage'))
 const InstructorProfilePage = lazy(() => import('./pages/InstructorProfilePage'))
 const FaqPage            = lazy(() => import('./pages/FaqPage'))
+const BlogListPage       = lazy(() => import('./pages/BlogListPage'))
+const BlogPostPage       = lazy(() => import('./pages/BlogPostPage'))
 const NotFoundPage       = lazy(() => import('./pages/NotFoundPage'))
 
 function ScrollToTop() {
@@ -37,6 +39,8 @@ export default function App() {
           <Route path="/reservar"    element={<BookingFormPage lang="es" />} />
           <Route path="/confirmar-reserva/:token" element={<ConfirmBookingPage lang="es" />} />
           <Route path="/preguntas-frecuentes" element={<FaqPage lang="es" />} />
+          <Route path="/blog"        element={<BlogListPage lang="es" />} />
+          <Route path="/blog/:slug"  element={<BlogPostPage lang="es" />} />
           <Route path="/en"          element={<LandingPage lang="en" />} />
           <Route path="/en/gallery"  element={<GalleryPage lang="en" />} />
           <Route path="/en/policies" element={<PoliciesPage lang="en" />} />
@@ -44,6 +48,8 @@ export default function App() {
           <Route path="/en/book"     element={<BookingFormPage lang="en" />} />
           <Route path="/en/confirm-booking/:token" element={<ConfirmBookingPage lang="en" />} />
           <Route path="/en/faq"      element={<FaqPage lang="en" />} />
+          <Route path="/en/blog"     element={<BlogListPage lang="en" />} />
+          <Route path="/en/blog/:slug" element={<BlogPostPage lang="en" />} />
           <Route path="*"            element={<NotFoundPage />} />
         </Routes>
       </Suspense>

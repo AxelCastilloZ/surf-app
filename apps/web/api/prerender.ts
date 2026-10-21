@@ -62,6 +62,16 @@ const ROUTE_META: Record<string, PageMeta> = {
     description: 'Frequently asked questions about surf lessons, bookings, policies and more at Surfers Lab CR, Nosara, Costa Rica.',
     locale: 'en_US',
   },
+  '/blog': {
+    title: `Blog — Surf en Nosara, Costa Rica | ${BRAND}`,
+    description: 'Artículos sobre surf en Nosara, Playa Guiones y Costa Rica. Guías para principiantes, mejores épocas para surfear, tips y más.',
+    locale: 'es_CR',
+  },
+  '/en/blog': {
+    title: `Blog — Surfing in Nosara, Costa Rica | ${BRAND}`,
+    description: 'Articles about surfing in Nosara, Playa Guiones and Costa Rica. Beginner guides, best times to surf, tips and more.',
+    locale: 'en_US',
+  },
 }
 
 const FAQ_DATA: Record<'es' | 'en', { q: string; a: string }[]> = {
@@ -96,6 +106,8 @@ const BREADCRUMB_TITLES: Record<string, { title: string; lang: 'es' | 'en' }> = 
   '/en/policies': { title: 'Policies', lang: 'en' },
   '/preguntas-frecuentes': { title: 'Preguntas Frecuentes', lang: 'es' },
   '/en/faq': { title: 'FAQ', lang: 'en' },
+  '/blog': { title: 'Blog', lang: 'es' },
+  '/en/blog': { title: 'Blog', lang: 'en' },
 }
 
 function buildLocalBusinessSchema(description: string, lang: 'es' | 'en'): Record<string, unknown> {
@@ -247,6 +259,51 @@ async function getInstructorMeta(id: string, lang: 'es' | 'en'): Promise<{ meta:
   }
 }
 
+async function getBlogPostMeta(slug: string, lang: 'es' | 'en'): Promise<{ meta: PageMeta; schemas: Record<string, unknown>[] } | null> {
+  const url = process.env.VITE_SUPABASE_URL
+  const key = process.env.VITE_SUPABASE_ANON_KEY
+  if (!url || !key) return null
+
+  const supabase = createClient(url, key)
+  const { data } = await supabase
+    .from('blog_posts')
+    .select('title, title_en, meta_description, meta_description_en, excerpt, excerpt_en, cover_image, published_at')
+    .eq('slug', slug)
+    .eq('is_published', true)
+    .single()
+
+  if (!data) return null
+
+  const title = lang === 'en' ? data.title_en : data.title
+  const description = (lang === 'en' ? data.meta_description_en || data.excerpt_en : data.meta_description || data.excerpt).slice(0, 160)
+  const path = lang === 'es' ? `/blog/${slug}` : `/en/blog/${slug}`
+
+  const articleSchema: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: title,
+    description,
+    url: `${SITE_URL}${path}`,
+    inLanguage: lang,
+    ...(data.published_at && { datePublished: data.published_at }),
+    ...(data.cover_image && { image: data.cover_image }),
+    author: { '@type': 'Organization', name: BRAND, url: SITE_URL },
+    publisher: { '@type': 'Organization', name: BRAND, url: SITE_URL, logo: { '@type': 'ImageObject', url: OG_IMAGE } },
+  }
+
+  return {
+    meta: {
+      title: `${title} | ${BRAND}`,
+      description,
+      locale: lang === 'es' ? 'es_CR' : 'en_US',
+    },
+    schemas: [
+      buildBreadcrumbs(path, lang, title),
+      articleSchema,
+    ],
+  }
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const path = '/' + ((req.query.path as string) ?? '').trim().replace(/^\//, '')
 
@@ -267,6 +324,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   if (instructorId) {
     const result = await getInstructorMeta(instructorId, lang as 'es' | 'en')
+    if (result) {
+      res.setHeader('Content-Type', 'text/html; charset=utf-8')
+      res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400')
+      return res.status(200).send(buildHtml(result.meta, `${SITE_URL}${path}`, result.schemas))
+    }
+  }
+
+  // Dynamic: blog posts
+  const esBlogMatch = path.match(/^\/blog\/(.+)$/)
+  const enBlogMatch = path.match(/^\/en\/blog\/(.+)$/)
+  const blogSlug = esBlogMatch?.[1] ?? enBlogMatch?.[1]
+  const blogLang = enBlogMatch ? 'en' : 'es'
+
+  if (blogSlug) {
+    const result = await getBlogPostMeta(blogSlug, blogLang as 'es' | 'en')
     if (result) {
       res.setHeader('Content-Type', 'text/html; charset=utf-8')
       res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400')

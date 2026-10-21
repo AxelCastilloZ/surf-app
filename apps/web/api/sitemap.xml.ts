@@ -8,12 +8,17 @@ interface Instructor {
   full_name: string
 }
 
+interface BlogPost {
+  slug: string
+}
+
 const STATIC_ROUTES = [
   { es: '/', en: '/en', changefreq: 'weekly', priority: '1.0' },
   { es: '/galeria', en: '/en/gallery', changefreq: 'weekly', priority: '0.8' },
   { es: '/reservar', en: '/en/book', changefreq: 'monthly', priority: '0.9' },
   { es: '/politicas', en: '/en/policies', changefreq: 'yearly', priority: '0.3' },
   { es: '/preguntas-frecuentes', en: '/en/faq', changefreq: 'monthly', priority: '0.6' },
+  { es: '/blog', en: '/en/blog', changefreq: 'weekly', priority: '0.7' },
 ]
 
 function buildUrlEntry(esPath: string, enPath: string, changefreq: string, priority: string): string {
@@ -57,16 +62,32 @@ export default async function handler(_req: VercelRequest, res: VercelResponse) 
       instructors = (data ?? []) as Instructor[]
     }
 
+    let blogPosts: BlogPost[] = []
+    if (supabaseUrl && supabaseAnonKey) {
+      const supabase = createClient(supabaseUrl, supabaseAnonKey)
+      const { data } = await supabase
+        .from('blog_posts')
+        .select('slug')
+        .eq('is_published', true)
+        .order('published_at', { ascending: false })
+
+      blogPosts = (data ?? []) as BlogPost[]
+    }
+
     const staticEntries = STATIC_ROUTES.map(r => buildUrlEntry(r.es, r.en, r.changefreq, r.priority))
 
     const instructorEntries = instructors.map(i =>
       buildUrlEntry(`/instructores/${i.id}`, `/en/instructors/${i.id}`, 'monthly', '0.7'),
     )
 
+    const blogEntries = blogPosts.map(p =>
+      buildUrlEntry(`/blog/${p.slug}`, `/en/blog/${p.slug}`, 'monthly', '0.7'),
+    )
+
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
-${[...staticEntries, ...instructorEntries].join('\n')}
+${[...staticEntries, ...instructorEntries, ...blogEntries].join('\n')}
 </urlset>`
 
     res.setHeader('Content-Type', 'application/xml')

@@ -9,6 +9,7 @@ export default function Footer() {
   const policiesLabel = lang === 'es' ? 'Políticas' : 'Policies'
   const faqHref = lang === 'es' ? '/preguntas-frecuentes' : '/en/faq'
   const faqLabel = lang === 'es' ? 'Preguntas Frecuentes' : 'FAQ'
+  const blogHref = lang === 'es' ? '/blog' : '/en/blog'
   const reviewLabel = lang === 'es' ? 'Déjanos tu reseña' : 'Leave us a review'
 
   return (
@@ -20,6 +21,9 @@ export default function Footer() {
         <div className="flex gap-4">
           <Link to={faqHref} className="transition-colors hover:text-white">
             {faqLabel}
+          </Link>
+          <Link to={blogHref} className="transition-colors hover:text-white">
+            Blog
           </Link>
           <Link to={policiesHref} className="transition-colors hover:text-white">
             {policiesLabel}

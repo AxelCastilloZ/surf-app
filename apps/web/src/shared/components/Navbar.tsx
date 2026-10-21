@@ -14,10 +14,12 @@ const links = {
   es: [
     { label: 'Inicio', href: '/' },
     { label: 'Galería', href: '/galeria' },
+    { label: 'Blog', href: '/blog' },
   ],
   en: [
     { label: 'Home', href: '/en' },
     { label: 'Gallery', href: '/en/gallery' },
+    { label: 'Blog', href: '/en/blog' },
   ],
 }
 
