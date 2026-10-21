@@ -184,214 +184,226 @@ VALUES
   now() - interval '4 days'
 ),
 
--- Article 3: Beginner surf guide
+-- Article 3: Why take surf lessons (replaces beginner guide)
 (
-  'beginner-surf-guide-nosara',
-  'Guía de Surf para Principiantes en Nosara, Costa Rica',
-  'Beginner Surf Guide — Nosara, Costa Rica',
-  'Guía completa para aprender a surfear en Nosara. Tips, técnicas básicas, seguridad en el agua y todo lo que necesitas saber antes de tu primera ola.',
-  'Complete guide to learning to surf in Nosara. Tips, basic techniques, water safety, and everything you need to know before your first wave.',
-  '<h2>Aprender a surfear en Nosara</h2>
-<p>Si estás pensando en aprender a surfear, Nosara es uno de los mejores lugares del mundo para hacerlo. Esta guía te va a preparar para tu primera experiencia en el agua.</p>
+  'why-take-surf-lessons-nosara',
+  '5 Razones para Tomar Clases de Surf en Nosara',
+  '5 Reasons to Take Surf Lessons in Nosara',
+  'Descubre por qué tomar clases de surf con un instructor certificado en Nosara hace toda la diferencia. Seguridad, progreso rápido y la mejor experiencia.',
+  'Discover why taking surf lessons with a certified instructor in Nosara makes all the difference. Safety, fast progress, and the best experience.',
+  '<h2>¿Por qué tomar clases de surf en Nosara?</h2>
+<p>Nosara es uno de los destinos de surf más populares del mundo, y miles de viajeros llegan cada año con la ilusión de pararse en una tabla por primera vez. Pero hay una gran diferencia entre intentarlo solo y hacerlo con un instructor profesional. Estas son las 5 razones por las que tomar clases de surf transforma tu experiencia.</p>
 
-<h2>Antes de entrar al agua</h2>
-<h3>Elige la tabla correcta</h3>
-<p>Como principiante, vas a usar una tabla larga (longboard) de espuma. Estas tablas son más estables, más fáciles de remar y más seguras que las tablas cortas. En Surfers Lab CR proporcionamos tablas de espuma de 8-9 pies, ideales para aprender.</p>
-
-<h3>Aprende el pop-up en tierra</h3>
-<p>El pop-up es el movimiento de pararte en la tabla. Antes de entrar al agua, practica este movimiento en la arena:</p>
-<ol>
-<li>Acuéstate boca abajo en la tabla</li>
-<li>Coloca las manos a la altura del pecho</li>
-<li>Empuja hacia arriba y lleva el pie trasero al centro de la tabla</li>
-<li>El pie delantero va adelante, con las rodillas flexionadas</li>
-<li>Mantén los ojos al frente, nunca mires tus pies</li>
-</ol>
-
-<h2>En el agua</h2>
-<h3>Cómo remar</h3>
-<p>Remar correctamente es fundamental. Acuéstate en el centro de la tabla (ni muy adelante ni muy atrás) y rema con brazadas largas y profundas, alternando los brazos como si nadaras crol.</p>
-
-<h3>Cómo atrapar una ola</h3>
-<p>Tu instructor te va a ayudar a elegir las olas correctas. Cuando veas que viene una ola:</p>
-<ol>
-<li>Apunta tu tabla hacia la playa</li>
-<li>Empieza a remar fuerte antes de que la ola te alcance</li>
-<li>Cuando sientas que la ola te empuja, haz el pop-up</li>
-<li>Mantén las rodillas flexionadas y los brazos extendidos para balance</li>
-</ol>
-
-<h2>Seguridad en el agua</h2>
+<h2>1. Seguridad en el océano</h2>
+<p>El océano es impredecible. Las corrientes, las mareas y el oleaje cambian constantemente. Un instructor certificado conoce las condiciones de Playa Guiones como la palma de su mano:</p>
 <ul>
-<li><strong>Nunca surfees solo</strong> — especialmente como principiante</li>
-<li><strong>Respeta las reglas de prioridad</strong> — el surfista más cerca del pico tiene prioridad</li>
-<li><strong>No sueltes tu tabla</strong> — tu tabla puede golpear a otros surfistas</li>
-<li><strong>Conoce las corrientes</strong> — tu instructor te va a enseñar a identificarlas</li>
-<li><strong>Usa protector solar biodegradable</strong> — protege tu piel y el océano</li>
+<li><strong>Identifica corrientes de resaca</strong> y te enseña cómo reaccionar si quedas atrapado</li>
+<li><strong>Elige el punto exacto</strong> donde las olas son seguras para tu nivel</li>
+<li><strong>Está contigo en el agua</strong> en todo momento, listo para ayudarte</li>
+<li><strong>Conoce los protocolos de emergencia</strong> — la seguridad siempre es prioridad</li>
+</ul>
+<p>Surfear sin experiencia y sin guía es un riesgo innecesario. Con un instructor, puedes concentrarte en disfrutar sabiendo que estás en buenas manos.</p>
+
+<h2>2. Progresas mucho más rápido</h2>
+<p>¿Sabías que la mayoría de personas que intentan surfear solas tardan semanas en lograr lo que un estudiante con instructor logra en una sola clase? La razón es simple:</p>
+<ul>
+<li>Tu instructor te da <strong>feedback en tiempo real</strong> — corrige tu postura, tu timing y tu técnica mientras surfeas</li>
+<li>Te enseña la <strong>técnica correcta desde el inicio</strong>, evitando malos hábitos que luego son difíciles de corregir</li>
+<li>Elige las <strong>olas perfectas para tu nivel</strong> — ni muy grandes ni muy pequeñas</li>
+</ul>
+<p>El resultado: la mayoría de nuestros estudiantes se paran en la tabla en su primera clase. Ese momento de euforia es algo que recordarás para siempre.</p>
+
+<h2>3. El equipo correcto marca la diferencia</h2>
+<p>No todas las tablas son iguales. Un principiante necesita una tabla específica para su peso, altura y nivel de experiencia. Cuando tomas clases:</p>
+<ul>
+<li>Recibes una <strong>tabla de espuma del tamaño ideal</strong> para aprender — estable, segura y fácil de manejar</li>
+<li>Te proporcionamos <strong>rash guard</strong> para protegerte del sol y la tabla</li>
+<li>No necesitas invertir en equipo costoso — nosotros lo tenemos todo</li>
 </ul>
 
-<h2>Errores comunes de principiantes</h2>
+<h2>4. Entiendes y respetas el océano</h2>
+<p>Surfear no es solo pararse en una tabla. Es conectar con el océano. Un buen instructor te enseña:</p>
 <ul>
-<li>Mirar los pies en vez de al frente</li>
-<li>Pararse demasiado recto (mantén las rodillas flexionadas)</li>
-<li>Remar demasiado suave (rema con fuerza)</li>
-<li>Elegir olas demasiado grandes</li>
-<li>Rendirse después de la primera caída (todos se caen, eso es parte de surfear)</li>
+<li>Las <strong>reglas de etiqueta del surf</strong> — quién tiene prioridad, cómo compartir las olas</li>
+<li>Cómo <strong>leer las olas y las corrientes</strong> — un conocimiento que te sirve para toda la vida</li>
+<li>La importancia de <strong>proteger el medio ambiente</strong> — usar protector solar biodegradable y respetar la vida marina</li>
+</ul>
+<p>Este conocimiento no lo encuentras en un video de YouTube. Se aprende en el agua, con alguien que tiene años de experiencia.</p>
+
+<h2>5. Es la experiencia completa de Nosara</h2>
+<p>Tomar una clase de surf en Nosara no es solo aprender un deporte — es vivir una experiencia. Es sentir la arena bajo tus pies en Playa Guiones, ver el atardecer desde el lineup, y compartir el stoke con tu instructor y otros estudiantes.</p>
+<p>Nuestros instructores son locales que aman lo que hacen. Conocen cada rincón de esta playa y te van a hacer sentir como en casa desde el primer momento.</p>
+
+<h2>Reserva tu clase hoy</h2>
+<p>No dejes la mejor experiencia de tu viaje al azar. Reserva tu clase de surf en Surfers Lab CR y descubre por qué Nosara es el mejor lugar del mundo para aprender a surfear. ¡Te esperamos en el agua!</p>',
+
+  '<h2>Why take surf lessons in Nosara?</h2>
+<p>Nosara is one of the world''s most popular surf destinations, and thousands of travelers arrive each year dreaming of standing on a surfboard for the first time. But there''s a huge difference between trying it alone and doing it with a professional instructor. Here are 5 reasons why taking surf lessons transforms your experience.</p>
+
+<h2>1. Ocean safety</h2>
+<p>The ocean is unpredictable. Currents, tides, and swell change constantly. A certified instructor knows Playa Guiones conditions like the back of their hand:</p>
+<ul>
+<li><strong>Identifies rip currents</strong> and teaches you how to react if caught in one</li>
+<li><strong>Chooses the exact spot</strong> where waves are safe for your level</li>
+<li><strong>Is with you in the water</strong> at all times, ready to help</li>
+<li><strong>Knows emergency protocols</strong> — safety is always the priority</li>
+</ul>
+<p>Surfing without experience and without guidance is an unnecessary risk. With an instructor, you can focus on having fun knowing you''re in good hands.</p>
+
+<h2>2. You progress much faster</h2>
+<p>Did you know that most people who try surfing alone take weeks to achieve what a student with an instructor achieves in a single lesson? The reason is simple:</p>
+<ul>
+<li>Your instructor gives you <strong>real-time feedback</strong> — correcting your posture, timing, and technique as you surf</li>
+<li>Teaches you the <strong>correct technique from the start</strong>, avoiding bad habits that are hard to fix later</li>
+<li>Chooses the <strong>perfect waves for your level</strong> — not too big, not too small</li>
+</ul>
+<p>The result: most of our students stand up on the board in their first lesson. That moment of pure joy is something you''ll remember forever.</p>
+
+<h2>3. The right equipment makes all the difference</h2>
+<p>Not all surfboards are the same. A beginner needs a specific board for their weight, height, and experience level. When you take lessons:</p>
+<ul>
+<li>You get an <strong>ideal-sized foam board</strong> for learning — stable, safe, and easy to handle</li>
+<li>We provide a <strong>rash guard</strong> to protect you from the sun and board</li>
+<li>No need to invest in expensive gear — we have everything</li>
 </ul>
 
-<h2>¿Listo para surfear?</h2>
-<p>La mejor forma de aprender es con un instructor certificado que te guíe paso a paso. En Surfers Lab CR nuestros instructores adaptan cada clase a tu nivel y te dan feedback personalizado para que progreses rápido. ¡Nos vemos en el agua!</p>',
-
-  '<h2>Learning to surf in Nosara</h2>
-<p>If you''re thinking about learning to surf, Nosara is one of the best places in the world to do it. This guide will prepare you for your first experience in the water.</p>
-
-<h2>Before entering the water</h2>
-<h3>Choose the right board</h3>
-<p>As a beginner, you''ll use a foam longboard. These boards are more stable, easier to paddle, and safer than shortboards. At Surfers Lab CR we provide 8-9 foot foam boards, ideal for learning.</p>
-
-<h3>Learn the pop-up on land</h3>
-<p>The pop-up is the movement of standing up on the board. Before entering the water, practice this movement on the sand:</p>
-<ol>
-<li>Lie face down on the board</li>
-<li>Place your hands at chest level</li>
-<li>Push up and bring your back foot to the center of the board</li>
-<li>Front foot goes forward, knees bent</li>
-<li>Keep your eyes forward, never look at your feet</li>
-</ol>
-
-<h2>In the water</h2>
-<h3>How to paddle</h3>
-<p>Paddling correctly is fundamental. Lie in the center of the board (not too far forward or back) and paddle with long, deep strokes, alternating arms as if swimming freestyle.</p>
-
-<h3>How to catch a wave</h3>
-<p>Your instructor will help you choose the right waves. When you see a wave coming:</p>
-<ol>
-<li>Point your board toward the beach</li>
-<li>Start paddling hard before the wave reaches you</li>
-<li>When you feel the wave pushing you, do the pop-up</li>
-<li>Keep your knees bent and arms extended for balance</li>
-</ol>
-
-<h2>Water safety</h2>
+<h2>4. You understand and respect the ocean</h2>
+<p>Surfing isn''t just about standing on a board. It''s about connecting with the ocean. A good instructor teaches you:</p>
 <ul>
-<li><strong>Never surf alone</strong> — especially as a beginner</li>
-<li><strong>Respect priority rules</strong> — the surfer closest to the peak has priority</li>
-<li><strong>Don''t let go of your board</strong> — your board can hit other surfers</li>
-<li><strong>Know the currents</strong> — your instructor will teach you to identify them</li>
-<li><strong>Use biodegradable sunscreen</strong> — protect your skin and the ocean</li>
+<li><strong>Surf etiquette rules</strong> — who has priority, how to share waves</li>
+<li>How to <strong>read waves and currents</strong> — knowledge that serves you for life</li>
+<li>The importance of <strong>protecting the environment</strong> — using biodegradable sunscreen and respecting marine life</li>
 </ul>
+<p>This knowledge isn''t found in a YouTube video. It''s learned in the water, with someone who has years of experience.</p>
 
-<h2>Common beginner mistakes</h2>
-<ul>
-<li>Looking at your feet instead of forward</li>
-<li>Standing too straight (keep your knees bent)</li>
-<li>Paddling too softly (paddle hard)</li>
-<li>Choosing waves that are too big</li>
-<li>Giving up after the first wipeout (everyone falls, that''s part of surfing)</li>
-</ul>
+<h2>5. It''s the complete Nosara experience</h2>
+<p>Taking a surf lesson in Nosara isn''t just learning a sport — it''s living an experience. It''s feeling the sand under your feet at Playa Guiones, watching the sunset from the lineup, and sharing the stoke with your instructor and other students.</p>
+<p>Our instructors are locals who love what they do. They know every corner of this beach and will make you feel at home from the very first moment.</p>
 
-<h2>Ready to surf?</h2>
-<p>The best way to learn is with a certified instructor who guides you step by step. At Surfers Lab CR our instructors adapt each lesson to your level and give you personalized feedback so you progress quickly. See you in the water!</p>',
+<h2>Book your lesson today</h2>
+<p>Don''t leave the best experience of your trip to chance. Book your surf lesson at Surfers Lab CR and discover why Nosara is the best place in the world to learn to surf. We''ll see you in the water!</p>',
 
-  'Guía de surf para principiantes en Nosara, Costa Rica. Tips, técnica del pop-up, seguridad en el agua y errores comunes al aprender a surfear en Playa Guiones.',
-  'Beginner surf guide for Nosara, Costa Rica. Tips, pop-up technique, water safety, and common mistakes when learning to surf at Playa Guiones.',
-  'beginner surf guide, learn to surf Nosara, aprender a surfear Nosara, surf tips Costa Rica, Playa Guiones beginners, surf techniques, guia surf principiantes',
-  'Principiante aprendiendo a surfear en Playa Guiones, Nosara',
-  'Beginner learning to surf at Playa Guiones, Nosara',
+  '5 razones para tomar clases de surf en Nosara con un instructor certificado. Seguridad, progreso rápido, equipo profesional y la experiencia completa en Playa Guiones.',
+  '5 reasons to take surf lessons in Nosara with a certified instructor. Safety, fast progress, professional equipment, and the complete experience at Playa Guiones.',
+  'surf lessons Nosara, why take surf lessons, clases de surf Nosara, surf instructor Nosara, learn to surf Costa Rica, surf school Playa Guiones, Nosara surf experience',
+  'Instructor de surf enseñando en Playa Guiones, Nosara — Surfers Lab CR',
+  'Surf instructor teaching at Playa Guiones, Nosara — Surfers Lab CR',
   true,
   now() - interval '6 days'
 ),
 
--- Article 4: Top surf spots in Guanacaste
+-- Article 4: Things to do in Nosara (replaces Guanacaste spots comparison)
 (
-  'top-surf-spots-guanacaste',
-  'Mejores Playas para Surfear en Guanacaste, Costa Rica',
-  'Top Surf Spots in Guanacaste, Costa Rica',
-  'Las mejores playas para surfear en Guanacaste: Playa Guiones, Tamarindo, Santa Teresa y más. Nivel recomendado, tipo de ola y cómo llegar.',
-  'The best beaches for surfing in Guanacaste: Playa Guiones, Tamarindo, Santa Teresa, and more. Recommended level, wave type, and how to get there.',
-  '<h2>Surfear en Guanacaste</h2>
-<p>Guanacaste, la provincia más al noroeste de Costa Rica, es un paraíso para surfistas. Con más de 100 kilómetros de costa en el Pacífico, ofrece playas para todos los niveles — desde principiantes hasta expertos.</p>
+  'things-to-do-nosara-costa-rica',
+  'Qué Hacer en Nosara, Costa Rica — Surf, Naturaleza y Aventura',
+  'Things to Do in Nosara, Costa Rica — Surf, Nature & Adventure',
+  'Guía completa de actividades en Nosara: surf, yoga, vida silvestre, playas y aventura. Todo lo que necesitas para planear tu viaje a este paraíso de Guanacaste.',
+  'Complete guide to activities in Nosara: surfing, yoga, wildlife, beaches, and adventure. Everything you need to plan your trip to this Guanacaste paradise.',
+  '<h2>Nosara: mucho más que surf</h2>
+<p>Nosara, ubicada en la costa del Pacífico de Guanacaste, Costa Rica, es conocida mundialmente por sus olas. Pero este pueblo tiene mucho más que ofrecer. Ya sea que vengas a surfear, a relajarte o a explorar la naturaleza, aquí vas a encontrar algo que te enamore.</p>
 
-<h2>1. Playa Guiones, Nosara</h2>
-<p><strong>Nivel:</strong> Principiante a intermedio<br>
-<strong>Tipo de ola:</strong> Beach break, olas largas y consistentes<br>
-<strong>Mejor época:</strong> Todo el año</p>
-<p>Playa Guiones es considerada una de las mejores playas para aprender surf en toda Centroamérica. Su fondo de arena, olas consistentes y ambiente relajado la hacen perfecta para principiantes. También ofrece olas de calidad para surfistas intermedios que quieren mejorar su técnica.</p>
+<h2>Surf en Playa Guiones</h2>
+<p>Obviamente, el surf es la actividad estrella de Nosara. Playa Guiones ofrece olas consistentes todo el año, fondo de arena seguro y condiciones ideales para todos los niveles. Es una de las playas más respetadas de Centroamérica para aprender y mejorar tu surf.</p>
+<p>Si es tu primera vez, tomar una clase con un instructor local es la mejor forma de empezar. No solo aprendes la técnica correcta desde el día uno, sino que también conoces el océano de la mano de alguien que lleva años surfeando estas olas.</p>
 
-<h2>2. Playa Tamarindo</h2>
-<p><strong>Nivel:</strong> Principiante a intermedio<br>
-<strong>Tipo de ola:</strong> Beach break<br>
-<strong>Mejor época:</strong> Diciembre a abril</p>
-<p>Tamarindo es la playa de surf más conocida de Guanacaste. Tiene buena infraestructura turística, muchas escuelas de surf y olas suaves para principiantes. Sin embargo, puede estar muy concurrida en temporada alta.</p>
+<h2>Yoga y bienestar</h2>
+<p>Nosara es uno de los centros de yoga más reconocidos de Latinoamérica. Encontrarás:</p>
+<ul>
+<li><strong>Estudios de yoga</strong> con clases diarias para todos los niveles</li>
+<li><strong>Retiros de bienestar</strong> que combinan yoga, meditación y surf</li>
+<li><strong>Terapias holísticas</strong> — masajes, acupuntura y medicina natural</li>
+</ul>
+<p>La combinación de surf por la mañana y yoga por la tarde es la rutina clásica de Nosara. Tu cuerpo y tu mente te lo van a agradecer.</p>
 
-<h2>3. Playa Grande</h2>
-<p><strong>Nivel:</strong> Intermedio a avanzado<br>
-<strong>Tipo de ola:</strong> Beach break potente<br>
-<strong>Mejor época:</strong> Septiembre a marzo</p>
-<p>Justo al norte de Tamarindo, Playa Grande ofrece olas más grandes y potentes. Es parte del Parque Nacional Las Baulas, así que el ambiente es más salvaje y natural. No recomendada para principiantes.</p>
+<h2>Naturaleza y vida silvestre</h2>
+<p>Nosara está rodeada de reservas biológicas y bosques tropicales. Las experiencias que no te puedes perder:</p>
+<ul>
+<li><strong>Refugio Nacional de Vida Silvestre Ostional</strong> — Uno de los pocos lugares del mundo donde puedes ver la arribada masiva de tortugas lora (julio a noviembre)</li>
+<li><strong>Reserva Biológica Nosara</strong> — Senderos entre manglares con monos aulladores, iguanas y más de 250 especies de aves</li>
+<li><strong>Playa Pelada</strong> — Una playa más tranquila y rocosa, perfecta para atardeceres y pozas de marea</li>
+</ul>
 
-<h2>4. Witch''s Rock (Playa Naranjo)</h2>
-<p><strong>Nivel:</strong> Intermedio a avanzado<br>
-<strong>Tipo de ola:</strong> Beach break con picos definidos<br>
-<strong>Mejor época:</strong> Mayo a noviembre</p>
-<p>Dentro del Parque Nacional Santa Rosa, Witch''s Rock es una de las olas más famosas de Costa Rica. Solo se accede en bote desde Playas del Coco. Las olas pueden alcanzar los 10 pies y la experiencia es de surf en estado puro.</p>
+<h2>Aventura y actividades al aire libre</h2>
+<p>Si buscas adrenalina más allá del surf, Nosara tiene opciones:</p>
+<ul>
+<li><strong>Kayak y paddleboard</strong> en el río Nosara y la costa</li>
+<li><strong>Canopy y tirolesas</strong> sobre el bosque tropical</li>
+<li><strong>Horseback riding</strong> por la playa al atardecer</li>
+<li><strong>Snorkeling</strong> en las pozas de Playa Pelada</li>
+<li><strong>Mountain biking</strong> por los senderos de montaña</li>
+</ul>
 
-<h2>5. Playa Avellanas</h2>
-<p><strong>Nivel:</strong> Intermedio<br>
-<strong>Tipo de ola:</strong> Beach break y point break<br>
-<strong>Mejor época:</strong> Todo el año</p>
-<p>Conocida por "Little Hawaii", Playa Avellanas tiene olas de calidad con menos gente que Tamarindo. El point break ofrece olas largas que son un placer para surfistas intermedios.</p>
+<h2>Gastronomía local</h2>
+<p>Nosara tiene una escena gastronómica sorprendente para un pueblo pequeño:</p>
+<ul>
+<li>Restaurantes con cocina internacional y fusión</li>
+<li>Sodas locales con el mejor casado y gallo pinto de Guanacaste</li>
+<li>Cafeterías con café costarricense de altura</li>
+<li>Ferias de productores locales con frutas tropicales frescas</li>
+</ul>
 
-<h2>¿Cuál playa elegir?</h2>
-<p>Si eres <strong>principiante</strong>, Playa Guiones en Nosara es tu mejor opción: olas consistentes, fondo de arena seguro, y un pueblo con la vibra perfecta para un viaje de surf. Si eres <strong>intermedio o avanzado</strong>, Playa Grande y Witch''s Rock te van a dar las olas que buscas.</p>
+<h2>Planea tu viaje a Nosara</h2>
+<p>Nosara está a unas 5 horas en carro desde San José, o puedes tomar un vuelo local de 35 minutos al aeródromo de Nosara. La mejor época para visitar depende de lo que busques — la temporada seca (diciembre a abril) tiene sol garantizado, mientras que la temporada verde (mayo a noviembre) trae las mejores olas y menos turistas.</p>
+<p>Lo que hace especial a Nosara es su equilibrio: naturaleza virgen, comunidad acogedora y un ritmo de vida que te invita a desconectarte. Ven a descubrirlo por ti mismo.</p>
 
-<h2>Surfea con nosotros en Nosara</h2>
-<p>En Surfers Lab CR te ofrecemos clases de surf, video análisis y surf trips en Playa Guiones, Nosara. Ya sea tu primera ola o tu ola número mil, estamos aquí para ayudarte a mejorar. ¡Reserva tu clase hoy!</p>',
+<h2>Empieza por el surf</h2>
+<p>Si el surf está en tu lista, empieza tu viaje con una clase en Playa Guiones. En Surfers Lab CR te recibimos con los brazos abiertos y te ayudamos a vivir la experiencia completa de Nosara. ¡Reserva tu clase y nos vemos en el agua!</p>',
 
-  '<h2>Surfing in Guanacaste</h2>
-<p>Guanacaste, Costa Rica''s northwesternmost province, is a surfer''s paradise. With over 100 kilometers of Pacific coastline, it offers beaches for all levels — from beginners to experts.</p>
+  '<h2>Nosara: much more than surfing</h2>
+<p>Nosara, located on the Pacific coast of Guanacaste, Costa Rica, is known worldwide for its waves. But this town has much more to offer. Whether you come to surf, relax, or explore nature, you''ll find something to fall in love with here.</p>
 
-<h2>1. Playa Guiones, Nosara</h2>
-<p><strong>Level:</strong> Beginner to intermediate<br>
-<strong>Wave type:</strong> Beach break, long and consistent waves<br>
-<strong>Best time:</strong> Year-round</p>
-<p>Playa Guiones is considered one of the best beaches to learn surfing in all of Central America. Its sandy bottom, consistent waves, and relaxed vibe make it perfect for beginners. It also offers quality waves for intermediate surfers looking to improve their technique.</p>
+<h2>Surfing at Playa Guiones</h2>
+<p>Obviously, surfing is Nosara''s star activity. Playa Guiones offers consistent waves year-round, a safe sandy bottom, and ideal conditions for all levels. It''s one of the most respected beaches in Central America for learning and improving your surfing.</p>
+<p>If it''s your first time, taking a lesson with a local instructor is the best way to start. You''ll not only learn proper technique from day one, but you''ll also get to know the ocean guided by someone who has been surfing these waves for years.</p>
 
-<h2>2. Playa Tamarindo</h2>
-<p><strong>Level:</strong> Beginner to intermediate<br>
-<strong>Wave type:</strong> Beach break<br>
-<strong>Best time:</strong> December to April</p>
-<p>Tamarindo is Guanacaste''s most famous surf beach. It has good tourist infrastructure, many surf schools, and gentle waves for beginners. However, it can get very crowded during high season.</p>
+<h2>Yoga and wellness</h2>
+<p>Nosara is one of the most recognized yoga centers in Latin America. You''ll find:</p>
+<ul>
+<li><strong>Yoga studios</strong> with daily classes for all levels</li>
+<li><strong>Wellness retreats</strong> combining yoga, meditation, and surfing</li>
+<li><strong>Holistic therapies</strong> — massages, acupuncture, and natural medicine</li>
+</ul>
+<p>The combination of surfing in the morning and yoga in the afternoon is the classic Nosara routine. Your body and mind will thank you.</p>
 
-<h2>3. Playa Grande</h2>
-<p><strong>Level:</strong> Intermediate to advanced<br>
-<strong>Wave type:</strong> Powerful beach break<br>
-<strong>Best time:</strong> September to March</p>
-<p>Just north of Tamarindo, Playa Grande offers bigger and more powerful waves. It''s part of Las Baulas National Park, so the environment is wilder and more natural. Not recommended for beginners.</p>
+<h2>Nature and wildlife</h2>
+<p>Nosara is surrounded by biological reserves and tropical forests. Must-do experiences:</p>
+<ul>
+<li><strong>Ostional National Wildlife Refuge</strong> — One of the few places in the world where you can witness the massive olive ridley sea turtle arrival (July to November)</li>
+<li><strong>Nosara Biological Reserve</strong> — Trails through mangroves with howler monkeys, iguanas, and over 250 bird species</li>
+<li><strong>Playa Pelada</strong> — A quieter, rocky beach perfect for sunsets and tide pools</li>
+</ul>
 
-<h2>4. Witch''s Rock (Playa Naranjo)</h2>
-<p><strong>Level:</strong> Intermediate to advanced<br>
-<strong>Wave type:</strong> Beach break with defined peaks<br>
-<strong>Best time:</strong> May to November</p>
-<p>Inside Santa Rosa National Park, Witch''s Rock is one of the most famous waves in Costa Rica. It''s only accessible by boat from Playas del Coco. Waves can reach 10 feet and the experience is surfing at its purest.</p>
+<h2>Adventure and outdoor activities</h2>
+<p>If you''re looking for adrenaline beyond surfing, Nosara has options:</p>
+<ul>
+<li><strong>Kayaking and paddleboarding</strong> on the Nosara River and coast</li>
+<li><strong>Canopy and ziplines</strong> over the tropical forest</li>
+<li><strong>Horseback riding</strong> on the beach at sunset</li>
+<li><strong>Snorkeling</strong> in the tide pools at Playa Pelada</li>
+<li><strong>Mountain biking</strong> on mountain trails</li>
+</ul>
 
-<h2>5. Playa Avellanas</h2>
-<p><strong>Level:</strong> Intermediate<br>
-<strong>Wave type:</strong> Beach break and point break<br>
-<strong>Best time:</strong> Year-round</p>
-<p>Known for "Little Hawaii," Playa Avellanas has quality waves with fewer crowds than Tamarindo. The point break offers long waves that are a pleasure for intermediate surfers.</p>
+<h2>Local cuisine</h2>
+<p>Nosara has a surprisingly good food scene for a small town:</p>
+<ul>
+<li>Restaurants with international and fusion cuisine</li>
+<li>Local sodas with the best casado and gallo pinto in Guanacaste</li>
+<li>Coffee shops with Costa Rican highland coffee</li>
+<li>Local farmers'' markets with fresh tropical fruits</li>
+</ul>
 
-<h2>Which beach to choose?</h2>
-<p>If you''re a <strong>beginner</strong>, Playa Guiones in Nosara is your best bet: consistent waves, safe sandy bottom, and a town with the perfect vibe for a surf trip. If you''re <strong>intermediate or advanced</strong>, Playa Grande and Witch''s Rock will give you the waves you''re looking for.</p>
+<h2>Plan your trip to Nosara</h2>
+<p>Nosara is about a 5-hour drive from San José, or you can take a 35-minute local flight to the Nosara airstrip. The best time to visit depends on what you''re looking for — the dry season (December to April) has guaranteed sunshine, while the green season (May to November) brings the best waves and fewer tourists.</p>
+<p>What makes Nosara special is its balance: pristine nature, welcoming community, and a pace of life that invites you to disconnect. Come discover it for yourself.</p>
 
-<h2>Surf with us in Nosara</h2>
-<p>At Surfers Lab CR we offer surf lessons, video analysis, and surf trips at Playa Guiones, Nosara. Whether it''s your first wave or your thousandth, we''re here to help you improve. Book your lesson today!</p>',
+<h2>Start with surfing</h2>
+<p>If surfing is on your list, start your trip with a lesson at Playa Guiones. At Surfers Lab CR we welcome you with open arms and help you live the complete Nosara experience. Book your lesson and we''ll see you in the water!</p>',
 
-  'Mejores playas para surfear en Guanacaste, Costa Rica. Guía de Playa Guiones, Tamarindo, Playa Grande, Witch''s Rock y Avellanas con nivel y tipo de ola.',
-  'Best surf beaches in Guanacaste, Costa Rica. Guide to Playa Guiones, Tamarindo, Playa Grande, Witch''s Rock, and Avellanas with level and wave type.',
-  'surf spots Guanacaste, best surf beaches Costa Rica, Playa Guiones surf, Tamarindo surf, mejores playas surf Costa Rica, surf Guanacaste, where to surf Costa Rica',
-  'Vista aérea de Playa Guiones, Nosara — Guanacaste, Costa Rica',
-  'Aerial view of Playa Guiones, Nosara — Guanacaste, Costa Rica',
+  'Qué hacer en Nosara, Costa Rica. Guía de actividades: surf, yoga, naturaleza, vida silvestre, aventura y gastronomía en este paraíso de Guanacaste.',
+  'Things to do in Nosara, Costa Rica. Activity guide: surfing, yoga, nature, wildlife, adventure, and cuisine in this Guanacaste paradise.',
+  'things to do Nosara, Nosara Costa Rica activities, Nosara travel guide, que hacer en Nosara, surf Nosara, yoga Nosara, Playa Guiones, Nosara wildlife, Nosara adventure',
+  'Atardecer en Playa Guiones, Nosara — Costa Rica',
+  'Sunset at Playa Guiones, Nosara — Costa Rica',
   true,
   now() - interval '8 days'
 );
