@@ -17,12 +17,6 @@
   ],
   "rewrites": [
     { "source": "/robots.txt", "destination": "/robots.txt" },
-    { "source": "/sitemap.xml", "destination": "/api/sitemap.xml" },
-    {
-      "source": "/:path+",
-      "has": [{ "type": "header", "key": "user-agent", "value": ".*(Googlebot|Googlebot-Image|AdsBot-Google|googleweblight|Storebot-Google|Google-InspectionTool|facebookexternalhit|Facebot|Twitterbot|LinkedInBot|WhatsApp|Slackbot|TelegramBot|Discordbot|Pinterest|Embedly|bingbot|Baiduspider|YandexBot).*" }],
-      "destination": "/api/prerender?path=/:path+"
-    },
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/sitemap.xml", "destination": "/api/sitemap.xml" }
   ]
 }

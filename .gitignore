@@ -9,6 +9,9 @@ dist
 # Build outputs
 build
 out
+.react-router
+.vercel
+*.tsbuildinfo
 
 # IDE
 .vscode
