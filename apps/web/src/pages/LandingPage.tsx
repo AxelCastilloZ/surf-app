@@ -329,6 +329,7 @@ export default function LandingPage({ lang }: { lang: Lang }) {
     path: lang === 'es' ? '/' : '/en',
     schemas: [localBusinessSchema, ...courseSchemas, faqSchema],
   })
+  const HERO_DEFAULT_URL = 'https://uwvnrmjhjlzdnggljkoo.supabase.co/storage/v1/object/public/gallery/site/hero-1600.webp'
   const { data: heroImageUrl } = useSiteSetting('hero_image_url')
   const { data: heroImagePos } = useSiteSetting('hero_image_position')
   const preview = galleryItems?.slice(0, 6) ?? []
@@ -345,12 +346,12 @@ export default function LandingPage({ lang }: { lang: Lang }) {
       >
         {/* Full-color background image */}
         <img
-          src={heroImageUrl ?? 'https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=1600'}
+          src={heroImageUrl ?? HERO_DEFAULT_URL}
           alt={t.heroAlt}
           width={1600}
           height={1067}
           fetchPriority="high"
-          decoding="async"
+          decoding="sync"
           className="absolute inset-0 h-full w-full object-cover"
           style={{ objectPosition: `center ${heroImagePos ?? 'center'}` }}
         />

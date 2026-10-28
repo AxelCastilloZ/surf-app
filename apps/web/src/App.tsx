@@ -1,7 +1,7 @@
 import { lazy, Suspense, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import LandingPage from './pages/LandingPage'
 
-const LandingPage        = lazy(() => import('./pages/LandingPage'))
 const GalleryPage        = lazy(() => import('./pages/GalleryPage'))
 const PoliciesPage       = lazy(() => import('./pages/PoliciesPage'))
 const BookingFormPage    = lazy(() => import('./pages/BookingFormPage'))
