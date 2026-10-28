@@ -15,10 +15,10 @@ VALUES
   'Discover accessible tropical destinations off the beaten path to escape the cold this winter. From Costa Rica to Southeast Asia.',
 
   '<h2>¿Cansado del invierno? Estos destinos tropicales te esperan</h2>
-<p>Cada año, millones de personas en Estados Unidos y Canadá buscan lo mismo cuando llega el invierno: sol, playa y temperaturas agradables. Mientras que Cancún y Hawaii siguen siendo los destinos más populares, hay opciones increíbles que ofrecen mejor valor, menos turistas y experiencias más auténticas.</p>
+<p>Cada año, millones de personas en Estados Unidos y Canadá buscan lo mismo cuando llega el invierno: sol, playa y temperaturas agradables. Mientras que Cancún y Hawaii siguen siendo los destinos más populares, hay opciones increíbles que ofrecen gran valor y experiencias únicas.</p>
 
 <h2>1. Nosara, Costa Rica — Surf, naturaleza y tranquilidad</h2>
-<p>Nosara es un pueblo costero en la Península de Nicoya, Costa Rica, que ha sido reconocido como una de las <strong>Zonas Azules del mundo</strong> — lugares donde las personas viven más tiempo y con mejor calidad de vida. A diferencia de destinos más comerciales como Tamarindo o Jacó, Nosara mantiene un ambiente relajado y natural.</p>
+<p>Nosara es un pueblo costero en la Península de Nicoya, Costa Rica, que ha sido reconocido como una de las <strong>Zonas Azules del mundo</strong> — lugares donde las personas viven más tiempo y con mejor calidad de vida. Al igual que destinos populares como Tamarindo y Jacó, Nosara es un excelente destino de playa, pero con un ambiente especialmente relajado y natural.</p>
 <p><strong>Por qué ir en invierno:</strong> Mientras Norteamérica está bajo cero, Nosara tiene temperaturas de 28-33°C, cielos despejados y olas perfectas. Es la temporada seca, ideal para surfear, hacer yoga y explorar la selva.</p>
 <p><strong>Lo que lo hace especial:</strong> Playa Guiones tiene 7 km de arena blanca sin edificios altos, con olas consistentes para surfear todo el año. Puedes tomar clases de surf con instructores certificados, hacer senderismo en la Reserva Biológica Nosara o simplemente desconectar.</p>
 <p><strong>Costo aproximado:</strong> Un viaje de una semana puede costar entre $1,200 y $2,500 USD por persona, incluyendo vuelos, hospedaje y actividades — significativamente menos que Hawaii o las Islas Vírgenes.</p>
@@ -35,8 +35,8 @@ VALUES
 <h2>5. Bali, Indonesia — El clásico reinventado</h2>
 <p>Bali sigue siendo un destino top por una razón: templos, arrozales, surf y yoga a precios accesibles. La temporada seca (abril-octubre) es la más popular, pero el invierno norteamericano coincide con la temporada verde de Bali — menos turistas y precios más bajos.</p>
 
-<h2>6. Bocas del Toro, Panamá — El Caribe sin multitudes</h2>
-<p>Este archipiélago panameño ofrece aguas cristalinas, snorkeling y un ambiente caribeño relajado. Mucho más accesible que las islas del Caribe oriental y con vuelos directos desde varias ciudades de Estados Unidos.</p>
+<h2>6. Bocas del Toro, Panamá — Paraíso caribeño</h2>
+<p>Este archipiélago panameño ofrece aguas cristalinas, snorkeling y un ambiente caribeño relajado. Accesible y con vuelos directos desde varias ciudades de Estados Unidos.</p>
 
 <h2>7. Santa Teresa, Costa Rica — El hermano bohemio de Nosara</h2>
 <p>Si buscas algo más animado con vida nocturna y surf, Santa Teresa es otra excelente opción en Costa Rica. Olas potentes, restaurantes internacionales y un ambiente joven.</p>
@@ -48,17 +48,17 @@ VALUES
 <p>Vietnam ofrece playas hermosas, comida increíble y precios bajísimos. Da Nang tiene playas de arena blanca y está cerca de Hoi An, una de las ciudades más encantadoras de Asia.</p>
 
 <h2>10. Tulum, México — El favorito del momento</h2>
-<p>Tulum sigue atrayendo viajeros con sus ruinas mayas frente al mar, cenotes y ambiente bohemio. Más caro que antes, pero sigue siendo una opción popular por una razón.</p>
+<p>Tulum sigue atrayendo viajeros con sus ruinas mayas frente al mar, cenotes y ambiente bohemio. Un destino que sigue siendo popular por una excelente razón.</p>
 
 <h2>¿Cuál es el mejor destino para ti?</h2>
 <p>Si buscas la combinación perfecta de <strong>aventura, naturaleza, precio accesible y experiencia auténtica</strong>, Costa Rica — y específicamente Nosara — ofrece todo en un solo lugar. Puedes aprender a surfear en la mañana, hacer yoga al atardecer y cenar en un restaurante local viendo las estrellas.</p>
 <p>En <strong>Surfers Lab CR</strong>, ofrecemos clases de surf profesionales con instructores certificados ISA en Playa Guiones. Ya sea tu primera vez en una tabla o quieras mejorar tu técnica, estamos listos para recibirte.</p>',
 
   '<h2>Tired of winter? These tropical destinations are waiting for you</h2>
-<p>Every year, millions of people in the United States and Canada search for the same thing when winter hits: sunshine, beaches, and warm temperatures. While Cancún and Hawaii remain the most popular choices, there are incredible destinations that offer better value, fewer crowds, and more authentic experiences.</p>
+<p>Every year, millions of people in the United States and Canada search for the same thing when winter hits: sunshine, beaches, and warm temperatures. While Cancún and Hawaii remain the most popular choices, there are incredible destinations that offer great value and unique experiences.</p>
 
 <h2>1. Nosara, Costa Rica — Surf, nature, and tranquility</h2>
-<p>Nosara is a coastal town on Costa Rica''s Nicoya Peninsula, recognized as one of the world''s <strong>Blue Zones</strong> — places where people live longer, healthier lives. Unlike more commercial destinations like Tamarindo or Jacó, Nosara maintains a laid-back, natural atmosphere.</p>
+<p>Nosara is a coastal town on Costa Rica''s Nicoya Peninsula, recognized as one of the world''s <strong>Blue Zones</strong> — places where people live longer, healthier lives. Like popular destinations such as Tamarindo and Jacó, Nosara is an excellent beach destination, but with an especially laid-back, natural atmosphere.</p>
 <p><strong>Why visit in winter:</strong> While North America is below freezing, Nosara enjoys temperatures of 82-91°F (28-33°C), clear skies, and perfect waves. It''s the dry season — ideal for surfing, yoga, and exploring the jungle.</p>
 <p><strong>What makes it special:</strong> Playa Guiones has 7 km of white sand beach with no high-rise buildings and consistent waves year-round. You can take surf lessons with certified instructors, hike through the Nosara Biological Reserve, or simply disconnect.</p>
 <p><strong>Approximate cost:</strong> A one-week trip can cost between $1,200 and $2,500 USD per person, including flights, accommodation, and activities — significantly less than Hawaii or the Virgin Islands.</p>
@@ -75,8 +75,8 @@ VALUES
 <h2>5. Bali, Indonesia — The reinvented classic</h2>
 <p>Bali remains a top destination for a reason: temples, rice paddies, surfing, and yoga at accessible prices. The dry season (April-October) is most popular, but the North American winter coincides with Bali''s green season — fewer tourists and lower prices.</p>
 
-<h2>6. Bocas del Toro, Panama — The Caribbean without the crowds</h2>
-<p>This Panamanian archipelago offers crystal-clear waters, snorkeling, and a relaxed Caribbean vibe. Much more accessible than the eastern Caribbean islands, with direct flights from several U.S. cities.</p>
+<h2>6. Bocas del Toro, Panama — Caribbean paradise</h2>
+<p>This Panamanian archipelago offers crystal-clear waters, snorkeling, and a relaxed Caribbean vibe. Accessible and with direct flights from several U.S. cities.</p>
 
 <h2>7. Santa Teresa, Costa Rica — Nosara''s bohemian sibling</h2>
 <p>If you''re looking for something livelier with nightlife and surf, Santa Teresa is another excellent Costa Rica option. Powerful waves, international restaurants, and a youthful atmosphere.</p>
@@ -88,7 +88,7 @@ VALUES
 <p>Vietnam offers beautiful beaches, incredible food, and rock-bottom prices. Da Nang has white-sand beaches and is close to Hoi An, one of Asia''s most charming cities.</p>
 
 <h2>10. Tulum, Mexico — The current favorite</h2>
-<p>Tulum continues to attract travelers with its seaside Mayan ruins, cenotes, and bohemian atmosphere. Pricier than before, but still a popular choice for good reason.</p>
+<p>Tulum continues to attract travelers with its seaside Mayan ruins, cenotes, and bohemian atmosphere. A destination that remains popular for great reason.</p>
 
 <h2>Which destination is best for you?</h2>
 <p>If you''re looking for the perfect combination of <strong>adventure, nature, affordable prices, and authentic experiences</strong>, Costa Rica — and specifically Nosara — offers it all in one place. You can learn to surf in the morning, do yoga at sunset, and dine at a local restaurant under the stars.</p>
@@ -119,7 +119,7 @@ VALUES
 <ul>
 <li><strong>Aprender algo nuevo</strong> — surfear, bucear, escalar</li>
 <li><strong>Conectar con la naturaleza</strong> — selvas, volcanes, vida silvestre</li>
-<li><strong>Experiencias culturales reales</strong> — no versiones turistificadas</li>
+<li><strong>Experiencias culturales auténticas</strong> — inmersión real en la cultura local</li>
 <li><strong>Desconexión digital</strong> — lugares donde el WiFi no es lo principal</li>
 <li><strong>Bienestar</strong> — yoga, meditación, comida saludable</li>
 </ul>
@@ -170,7 +170,7 @@ VALUES
 <ul>
 <li><strong>Learn something new</strong> — surfing, diving, climbing</li>
 <li><strong>Connect with nature</strong> — jungles, volcanoes, wildlife</li>
-<li><strong>Real cultural experiences</strong> — not touristy versions</li>
+<li><strong>Authentic cultural experiences</strong> — real immersion in local culture</li>
 <li><strong>Digital detox</strong> — places where WiFi isn''t the main attraction</li>
 <li><strong>Wellness</strong> — yoga, meditation, healthy food</li>
 </ul>
