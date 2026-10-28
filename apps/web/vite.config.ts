@@ -10,6 +10,9 @@ export default defineConfig({
       '@': resolve(__dirname, './src'),
     },
   },
+  ssr: {
+    noExternal: true,
+  },
   build: {
     rollupOptions: {
       output: {
