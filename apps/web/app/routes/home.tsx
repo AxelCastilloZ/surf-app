@@ -6,6 +6,12 @@ import LandingPage from '../../src/pages/LandingPage'
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string
 
+export function headers() {
+  return {
+    'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=3600',
+  }
+}
+
 export async function loader() {
   const supabase = createSupabaseClient(supabaseUrl, supabaseAnonKey)
   const queryClient = new QueryClient()
@@ -29,17 +35,6 @@ export async function loader() {
           .from('packages')
           .select('*')
           .eq('is_active', true)
-          .order('sort_order', { ascending: true })
-        return data ?? []
-      },
-    }),
-    queryClient.prefetchQuery({
-      queryKey: ['gallery', 'all'],
-      queryFn: async () => {
-        const { data } = await supabase
-          .from('gallery_items')
-          .select('*')
-          .eq('is_visible', true)
           .order('sort_order', { ascending: true })
         return data ?? []
       },
