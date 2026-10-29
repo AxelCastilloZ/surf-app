@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { useInView } from 'react-intersection-observer'
 import { useSEO, buildBreadcrumbs } from '../shared/hooks/useSEO'
 import { useBlogPosts, type BlogPost } from '../shared/hooks/useBlog'

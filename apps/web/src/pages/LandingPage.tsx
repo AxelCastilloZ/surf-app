@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { Link } from 'react-router'
 import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
 import { useInView } from 'react-intersection-observer'
@@ -244,14 +243,13 @@ const i18n = {
 function FadeIn({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 })
   return (
-    <motion.div
+    <div
       ref={ref}
-      initial={{ opacity: 0, y: 24 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay }}
+      className={`transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+      style={delay ? { transitionDelay: `${delay}s` } : undefined}
     >
       {children}
-    </motion.div>
+    </div>
   )
 }
 
@@ -359,35 +357,24 @@ export default function LandingPage({ lang }: { lang: Lang }) {
         <div className="absolute inset-0 bg-gradient-to-b from-slate-900/0 via-slate-900/20 to-slate-900/80" />
 
         <div className="relative z-10 mx-auto max-w-4xl px-6 pb-20 pt-40 text-center">
-          <motion.p
-            className="text-sm font-semibold uppercase tracking-[0.2em] text-white/80 drop-shadow-md"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.4 }}
-          >
+          <p className="animate-fade-in text-sm font-semibold uppercase tracking-[0.2em] text-white/80 drop-shadow-md">
             Surfers Lab CR
-          </motion.p>
-          <motion.h1
-            className="mt-3 font-display text-4xl font-bold leading-tight text-white drop-shadow-lg sm:text-6xl lg:text-7xl"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+          </p>
+          <h1
+            className="mt-3 animate-fade-up font-display text-4xl font-bold leading-tight text-white drop-shadow-lg sm:text-6xl lg:text-7xl"
+            style={{ animationDelay: '0.1s' }}
           >
             {t.hero.title}
-          </motion.h1>
-          <motion.p
-            className="mt-6 text-lg text-white/90 drop-shadow-md sm:text-xl"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+          </h1>
+          <p
+            className="mt-6 animate-fade-up text-lg text-white/90 drop-shadow-md sm:text-xl"
+            style={{ animationDelay: '0.2s' }}
           >
             {t.hero.subtitle}
-          </motion.p>
-          <motion.div
-            className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
+          </p>
+          <div
+            className="mt-10 animate-fade-up flex flex-col items-center gap-4 sm:flex-row sm:justify-center"
+            style={{ animationDelay: '0.3s' }}
           >
             <a
               href={waHref}
@@ -405,7 +392,7 @@ export default function LandingPage({ lang }: { lang: Lang }) {
               <Mail size={20} />
               {t.hero.ctaEmail}
             </a>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -955,12 +942,10 @@ function GalleryPreviewItem({
   const alt = (lang === 'en' ? item.alt_text_en || item.alt_text : item.alt_text) || fallback
 
   return (
-    <motion.div
+    <div
       ref={ref}
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={inView ? { opacity: 1, scale: 1 } : {}}
-      transition={{ duration: 0.5, delay: index * 0.05 }}
-      className="group relative aspect-[4/3] overflow-hidden rounded-xl bg-slate-100"
+      className={`group relative aspect-[4/3] overflow-hidden rounded-xl bg-slate-100 transition-all duration-500 ease-out ${inView ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
+      style={index ? { transitionDelay: `${index * 0.05}s` } : undefined}
     >
       <img
         src={item.url}
@@ -987,6 +972,6 @@ function GalleryPreviewItem({
           </div>
         </div>
       )}
-    </motion.div>
+    </div>
   )
 }

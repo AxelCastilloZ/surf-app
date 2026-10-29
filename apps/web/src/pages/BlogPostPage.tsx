@@ -1,4 +1,4 @@
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link } from 'react-router'
 import { useSEO, buildBreadcrumbs } from '../shared/hooks/useSEO'
 import { useBlogPost } from '../shared/hooks/useBlog'
 import Navbar from '../shared/components/Navbar'

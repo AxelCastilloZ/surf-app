@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { useLanguageStore } from '../shared/store/languageStore'
 import { useSEO } from '../shared/hooks/useSEO'
 import Navbar from '../shared/components/Navbar'

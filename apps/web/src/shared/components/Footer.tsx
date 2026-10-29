@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { useLanguageStore } from '../store/languageStore'
 
 export default function Footer() {

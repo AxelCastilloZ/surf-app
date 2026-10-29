@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import useEmblaCarousel from 'embla-carousel-react'

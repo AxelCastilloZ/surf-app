@@ -1,4 +1,4 @@
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router'
 import { useLanguageStore } from '../store/languageStore'
 
 const ROUTE_MAP: Record<string, string> = {

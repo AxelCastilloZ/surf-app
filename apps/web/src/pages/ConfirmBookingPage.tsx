@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link } from 'react-router'
 import { CheckCircle, XCircle, Loader2, MessageCircle, Mail } from 'lucide-react'
 import { useSEO, buildBreadcrumbs } from '../shared/hooks/useSEO'
 import Navbar from '../shared/components/Navbar'
