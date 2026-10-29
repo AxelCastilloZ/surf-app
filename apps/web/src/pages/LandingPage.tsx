@@ -327,7 +327,9 @@ export default function LandingPage({ lang }: { lang: Lang }) {
     path: lang === 'es' ? '/' : '/en',
     schemas: [localBusinessSchema, ...courseSchemas, faqSchema],
   })
-  const HERO_DEFAULT_URL = 'https://uwvnrmjhjlzdnggljkoo.supabase.co/storage/v1/object/public/gallery/site/hero-1600.webp'
+  const HERO_STORAGE = 'https://uwvnrmjhjlzdnggljkoo.supabase.co/storage/v1/object/public/gallery/site'
+  const HERO_DEFAULT_URL = `${HERO_STORAGE}/hero-1600.webp`
+  const HERO_SRCSET = `${HERO_STORAGE}/hero-800.webp 800w, ${HERO_STORAGE}/hero-1600.webp 1600w`
   const { data: heroImageUrl } = useSiteSetting('hero_image_url')
   const { data: heroImagePos } = useSiteSetting('hero_image_position')
   const preview = galleryItems?.slice(0, 6) ?? []
@@ -345,6 +347,8 @@ export default function LandingPage({ lang }: { lang: Lang }) {
         {/* Full-color background image */}
         <img
           src={heroImageUrl ?? HERO_DEFAULT_URL}
+          srcSet={heroImageUrl ? undefined : HERO_SRCSET}
+          sizes="100vw"
           alt={t.heroAlt}
           width={1600}
           height={1067}

@@ -16,8 +16,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <link
           rel="preload"
           as="image"
+          href="https://uwvnrmjhjlzdnggljkoo.supabase.co/storage/v1/object/public/gallery/site/hero-800.webp"
+          type="image/webp"
+          media="(max-width: 799px)"
+        />
+        <link
+          rel="preload"
+          as="image"
           href="https://uwvnrmjhjlzdnggljkoo.supabase.co/storage/v1/object/public/gallery/site/hero-1600.webp"
           type="image/webp"
+          media="(min-width: 800px)"
         />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
