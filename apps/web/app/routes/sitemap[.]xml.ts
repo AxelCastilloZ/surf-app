@@ -22,7 +22,7 @@ function buildUrlEntry(esPath: string, enPath: string, changefreq: string, prior
     <loc>${esUrl}</loc>
     <xhtml:link rel="alternate" hreflang="es" href="${esUrl}"/>
     <xhtml:link rel="alternate" hreflang="en" href="${enUrl}"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="${esUrl}"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="${enUrl}"/>
     <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>
   </url>
@@ -30,7 +30,7 @@ function buildUrlEntry(esPath: string, enPath: string, changefreq: string, prior
     <loc>${enUrl}</loc>
     <xhtml:link rel="alternate" hreflang="es" href="${esUrl}"/>
     <xhtml:link rel="alternate" hreflang="en" href="${enUrl}"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="${esUrl}"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="${enUrl}"/>
     <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>
   </url>`

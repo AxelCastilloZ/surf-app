@@ -188,7 +188,7 @@ export function useSEO({ title, description, lang, path = '', ogImage, noindex, 
       xDefault.setAttribute('hreflang', 'x-default')
       document.head.appendChild(xDefault)
     }
-    xDefault.href = `${SITE_URL}/`
+    xDefault.href = lang === 'en' ? canonical : `${SITE_URL}${altPath}`
 
     // JSON-LD schemas
     document.querySelectorAll('script[type="application/ld+json"]').forEach(el => el.remove())
