@@ -16,5 +16,6 @@ export default {
     '/en/policies',
     '/blog',
     '/en/blog',
+    '/sitemap.xml',
   ],
 } satisfies Config

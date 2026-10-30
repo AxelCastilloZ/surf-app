@@ -37,6 +37,9 @@ export default [
   route('/blog/:slug', 'routes/blog-post.tsx', { id: 'blog-post-es' }),
   route('/en/blog/:slug', 'routes/blog-post.tsx', { id: 'blog-post-en' }),
 
+  // Sitemap
+  route('/sitemap.xml', 'routes/sitemap[.]xml.ts'),
+
   // Catch-all 404
   route('*', 'routes/not-found.tsx'),
 ] satisfies RouteConfig
