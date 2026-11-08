@@ -2,10 +2,30 @@ import { useLoaderData, useLocation } from 'react-router'
 import { QueryClient, dehydrate, HydrationBoundary } from '@tanstack/react-query'
 import { createSupabaseClient } from '@surf-app/supabase'
 import InstructorProfilePage from '../../src/pages/InstructorProfilePage'
+import { buildRouteMeta, buildBreadcrumbs, getLang } from '../seo'
 import type { Route } from './+types/instructor-profile'
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string
+
+export function meta({ data, location }: Route.MetaArgs) {
+  const lang = getLang(location.pathname)
+  const instructor = data?.instructor
+  const name = instructor?.full_name ?? (lang === 'es' ? 'Instructor' : 'Instructor')
+  const bio = instructor
+    ? (lang === 'en' ? instructor.bio_en || instructor.bio : instructor.bio) || ''
+    : ''
+  const path = lang === 'en'
+    ? `/en/instructors/${data?.instructorId ?? ''}`
+    : `/instructores/${data?.instructorId ?? ''}`
+  return buildRouteMeta({
+    title: name,
+    description: bio.substring(0, 160),
+    lang,
+    path,
+    schemas: [buildBreadcrumbs(path, lang, name)],
+  })
+}
 
 export function headers() {
   return { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=3600' }
@@ -51,7 +71,9 @@ export async function loader({ params }: Route.LoaderArgs) {
     }),
   ])
 
-  return { dehydratedState: dehydrate(queryClient) }
+  const instructorData = queryClient.getQueryData<{ id: string; full_name: string; bio: string; bio_en: string | null }>(['instructors', 'public', id])
+
+  return { dehydratedState: dehydrate(queryClient), instructor: instructorData ?? null, instructorId: id }
 }
 
 export default function InstructorProfile() {

@@ -6,7 +6,7 @@ Public-facing website for Surfers Lab CR. Deployed to Vercel at surferlabscr.com
 
 React 19 + Vite 6 + Tailwind CSS v4 + React Router 7 + TanStack Query + Zustand + framer-motion
 
-## Routes (all lazy-loaded via `React.lazy`)
+## Routes (React Router 7 framework mode with SSR)
 
 | Path | Component | Description |
 |------|-----------|-------------|
@@ -23,6 +23,34 @@ React 19 + Vite 6 + Tailwind CSS v4 + React Router 7 + TanStack Query + Zustand 
 | `/politicas` | `PoliciesPage` | Cancellation/privacy policies |
 | `/en/policies` | `PoliciesPage` | English policies |
 
+## SSR SEO (CRITICAL)
+
+This app uses React Router 7 framework mode with SSR. Every route MUST export a `meta` function for Google to see SEO tags.
+
+**Architecture:**
+- `app/seo.ts` — Central SSR meta helper (`buildRouteMeta`, `buildLocalBusinessSchema`, `buildBreadcrumbs`, `getLang`)
+- `app/routes/*.tsx` — Each exports `meta()` returning `buildRouteMeta(...)` with title, description, lang, path, schemas
+- `app/root.tsx` — `<html lang>` is dynamic based on pathname (not hardcoded)
+- `src/shared/hooks/useSEO.ts` — Client-side only (useEffect), handles SPA navigation updates
+
+**Rules:**
+1. Every new route MUST export `meta` using `buildRouteMeta()` from `../seo`
+2. NEVER rely on `useSEO` hook alone — `useEffect` does NOT run during SSR, Google cannot see it
+3. Dynamic routes must return data from `loader` that `meta` can access via `data` param
+4. After route/SEO changes, verify build output: `pnpm --filter @surf-app/web build` then check `build/client/*.html` for correct `<title>`, `<meta name="description">`, `<link rel="canonical">`, hreflang tags, and JSON-LD
+5. `<html lang>` must match the page language — English pages = `lang="en"`, Spanish = `lang="es"`
+
+**Checklist for new routes:**
+```tsx
+import { buildRouteMeta, getLang } from '../seo'
+import type { Route } from './+types/<route-name>'
+
+export function meta({ location }: Route.MetaArgs) {
+  const lang = getLang(location.pathname)
+  return buildRouteMeta({ title: '...', description: '...', lang, path: '...' })
+}
+```
+
 ## Data Fetching Pattern
 
 All hooks use TanStack Query wrapping `supabase-js` calls directly (no API layer):
@@ -35,8 +63,10 @@ src/shared/hooks/
   useInstructorReviews.ts — supabase.from('instructor_reviews').select().eq('instructor_id', id)
   useSiteSettings.ts   — supabase.from('site_settings').select().eq('key', key).single()
   useReviews.ts        — supabase.functions.invoke('google-reviews')
-  useSEO.ts            — Sets document title, meta tags, OG tags dynamically
+  useSEO.ts            — Client-side only (useEffect) for SPA navigations; NOT for SSR (see SSR SEO section)
 ```
+
+SSR routes use TanStack Query hydration: `loader → QueryClient.prefetchQuery → dehydrate → HydrationBoundary`.
 
 Booking creation calls `supabase.functions.invoke('create-booking', { body })`.
 Booking confirmation calls `supabase.functions.invoke('confirm-booking', { body: { token } })`.

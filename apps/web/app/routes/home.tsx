@@ -2,9 +2,35 @@ import { useLoaderData, useLocation } from 'react-router'
 import { QueryClient, dehydrate, HydrationBoundary } from '@tanstack/react-query'
 import { createSupabaseClient } from '@surf-app/supabase'
 import LandingPage from '../../src/pages/LandingPage'
+import { buildRouteMeta, buildLocalBusinessSchema, getLang } from '../seo'
+import type { Route } from './+types/home'
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string
+
+const SEO = {
+  es: {
+    title: 'Escuela de Surf en Playa Guiones, Nosara',
+    description: 'Clases de surf en Playa Guiones, Nosara, Costa Rica. Instructores certificados ISA, video análisis y surf trips por Guanacaste. Reserva tu lección hoy.',
+  },
+  en: {
+    title: 'Surf School in Playa Guiones, Nosara',
+    description: 'Surf lessons at Playa Guiones, Nosara, Costa Rica. ISA certified instructors, video analysis and surf trips across Guanacaste. Book your lesson today.',
+  },
+}
+
+export function meta({ location }: Route.MetaArgs) {
+  const lang = getLang(location.pathname)
+  const path = lang === 'es' ? '/' : '/en'
+  const seo = SEO[lang]
+  return buildRouteMeta({
+    title: seo.title,
+    description: seo.description,
+    lang,
+    path,
+    schemas: [buildLocalBusinessSchema(seo.description, lang)],
+  })
+}
 
 export function headers() {
   return {

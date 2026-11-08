@@ -1,11 +1,20 @@
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router'
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLocation } from 'react-router'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useState } from 'react'
 import '../src/index.css'
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  let lang = 'es'
+  try {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const { pathname } = useLocation()
+    lang = pathname.startsWith('/en') ? 'en' : 'es'
+  } catch {
+    // Fallback for error boundaries where router context is unavailable
+  }
+
   return (
-    <html lang="es">
+    <html lang={lang}>
       <head>
         <meta charSet="UTF-8" />
         <link rel="icon" type="image/png" href="/assets/icons/favicon-32.png" sizes="32x32" />
