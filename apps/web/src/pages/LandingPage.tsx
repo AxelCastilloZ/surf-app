@@ -4,7 +4,7 @@ import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
 import { useInView } from 'react-intersection-observer'
 import { Mail, MessageCircle, Waves, Video, MapPin, Star, ArrowRight, ChevronLeft, ChevronRight, CalendarCheck, Users, Check, ExternalLink } from 'lucide-react'
-import { useSEO, buildLocalBusinessSchema } from '../shared/hooks/useSEO'
+import { buildLocalBusinessSchema } from '../shared/hooks/useSEO'
 import { useGallery } from '../shared/hooks/useGallery'
 import { usePackages } from '../shared/hooks/usePackages'
 import { useReviews } from '../shared/hooks/useReviews'
@@ -320,13 +320,6 @@ export default function LandingPage({ lang }: { lang: Lang }) {
     })),
   }
 
-  useSEO({
-    title: t.seo.title,
-    description: t.seo.description,
-    lang,
-    path: lang === 'es' ? '/' : '/en',
-    schemas: [localBusinessSchema, ...courseSchemas, faqSchema],
-  })
   const HERO_STORAGE = 'https://uwvnrmjhjlzdnggljkoo.supabase.co/storage/v1/object/public/gallery/site'
   const HERO_DEFAULT_URL = `${HERO_STORAGE}/hero-1600.webp`
   const HERO_SRCSET = `${HERO_STORAGE}/hero-800.webp 800w, ${HERO_STORAGE}/hero-1600.webp 1600w`

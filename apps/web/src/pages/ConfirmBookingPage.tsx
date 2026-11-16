@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router'
 import { CheckCircle, XCircle, Loader2, MessageCircle, Mail } from 'lucide-react'
-import { useSEO, buildBreadcrumbs } from '../shared/hooks/useSEO'
+import { buildBreadcrumbs } from '../shared/hooks/useSEO'
 import Navbar from '../shared/components/Navbar'
 import Footer from '../shared/components/Footer'
 import { supabase } from '@/lib/supabase'
@@ -70,7 +70,6 @@ export default function ConfirmBookingPage({ lang }: { lang: Lang }) {
   const homeHref = lang === 'es' ? '/' : '/en'
 
   const confirmPath = lang === 'es' ? `/confirmar-reserva/${token}` : `/en/confirm-booking/${token}`
-  useSEO({ title: t.seo.title, description: t.seo.description, lang, path: confirmPath, schemas: [buildBreadcrumbs(confirmPath, lang, t.seo.title)] })
 
   useEffect(() => {
     if (!token) {

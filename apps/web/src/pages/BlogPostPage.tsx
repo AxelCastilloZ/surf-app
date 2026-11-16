@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router'
-import { useSEO, buildBreadcrumbs } from '../shared/hooks/useSEO'
+import { buildBreadcrumbs } from '../shared/hooks/useSEO'
 import { useBlogPost } from '../shared/hooks/useBlog'
 import Navbar from '../shared/components/Navbar'
 import Footer from '../shared/components/Footer'
@@ -86,14 +86,6 @@ export default function BlogPostPage({ lang }: { lang: Lang }) {
       ]
     : []
 
-  useSEO({
-    title,
-    description,
-    lang,
-    path,
-    schemas,
-    noindex: false,
-  })
 
   if (isLoading) {
     return (

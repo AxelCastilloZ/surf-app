@@ -1,6 +1,6 @@
 import { Link } from 'react-router'
 import { useInView } from 'react-intersection-observer'
-import { useSEO, buildBreadcrumbs } from '../shared/hooks/useSEO'
+import { buildBreadcrumbs } from '../shared/hooks/useSEO'
 import { useBlogPosts, type BlogPost } from '../shared/hooks/useBlog'
 import Navbar from '../shared/components/Navbar'
 import Footer from '../shared/components/Footer'
@@ -85,13 +85,6 @@ export default function BlogListPage({ lang }: { lang: Lang }) {
   const path = lang === 'es' ? '/blog' : '/en/blog'
   const { data: posts, isLoading } = useBlogPosts()
 
-  useSEO({
-    title: t.seoTitle,
-    description: t.description,
-    lang,
-    path,
-    schemas: [buildBreadcrumbs(path, lang, t.title)],
-  })
 
   return (
     <div className="flex min-h-screen flex-col bg-slate-900">

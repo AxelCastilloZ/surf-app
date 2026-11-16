@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import useEmblaCarousel from 'embla-carousel-react'
 import { Star, ArrowLeft, Send, MessageSquarePlus } from 'lucide-react'
-import { useSEO, buildBreadcrumbs } from '../shared/hooks/useSEO'
+import { buildBreadcrumbs } from '../shared/hooks/useSEO'
 import { usePublicInstructor } from '../shared/hooks/useInstructors'
 import { useInstructorReviews } from '../shared/hooks/useInstructorReviews'
 import Navbar from '../shared/components/Navbar'
@@ -355,13 +355,6 @@ export default function InstructorProfilePage({ lang }: { lang: Lang }) {
     return list
   }, [instructorPath, lang, instructor, reviews, meta, t.loading])
 
-  useSEO({
-    title: instructor?.full_name ?? t.loading,
-    description: ((lang === 'en' ? instructor?.bio_en || instructor?.bio : instructor?.bio) ?? '') + locationSuffix,
-    lang,
-    path: instructorPath,
-    schemas,
-  })
   const useCarousel = reviews.length >= CAROUSEL_THRESHOLD
 
   const [emblaRef] = useEmblaCarousel({ loop: true, align: 'start' })

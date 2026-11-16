@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { useSEO, buildBreadcrumbs } from '../shared/hooks/useSEO'
+import { buildBreadcrumbs } from '../shared/hooks/useSEO'
 import Navbar from '../shared/components/Navbar'
 import Footer from '../shared/components/Footer'
 
@@ -110,13 +110,6 @@ export default function FaqPage({ lang }: { lang: Lang }) {
     return [buildBreadcrumbs(faqPath, lang, t.title), faqSchema]
   }, [faqPath, lang, t])
 
-  useSEO({
-    title: t.seo.title,
-    description: t.seo.description,
-    lang,
-    path: faqPath,
-    schemas,
-  })
 
   return (
     <div className="min-h-screen bg-white font-body text-slate-900">
