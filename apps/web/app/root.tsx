@@ -49,21 +49,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
         {children}
         <ScrollRestoration />
         <Scripts />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-C3JG0F1W66" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              window.addEventListener('load', function() {
-                var s = document.createElement('script');
-                s.src = 'https://www.googletagmanager.com/gtag/js?id=G-C3JG0F1W66';
-                s.async = true;
-                document.head.appendChild(s);
-                s.onload = function() {
-                  window.dataLayer = window.dataLayer || [];
-                  function gtag(){dataLayer.push(arguments);}
-                  gtag('js', new Date());
-                  gtag('config', 'G-C3JG0F1W66');
-                };
-              });
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-C3JG0F1W66');
             `,
           }}
         />
