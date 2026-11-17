@@ -1,8 +1,10 @@
-import { Link } from 'react-router'
-import { useLanguageStore } from '../store/languageStore'
+import { Link, useLocation } from 'react-router'
 
 export default function Footer() {
-  const { lang } = useLanguageStore()
+  const { pathname } = useLocation()
+  // Language is derived from the URL (not the client store) so that SSR/Googlebot
+  // render links in the correct language on every page. See seo.ts getLang().
+  const lang: 'es' | 'en' = pathname.startsWith('/en') ? 'en' : 'es'
   const year = new Date().getFullYear()
 
   const policiesHref = lang === 'es' ? '/politicas' : '/en/policies'
@@ -16,7 +18,8 @@ export default function Footer() {
     <footer className="border-t border-slate-800 bg-slate-900 py-8">
       <div className="mx-auto flex max-w-7xl flex-col items-center gap-4 px-4 text-sm text-slate-400 sm:flex-row sm:justify-between">
         <p>
-          © {year} {import.meta.env.VITE_BRAND_NAME}. Todos los derechos reservados.
+          © {year} {import.meta.env.VITE_BRAND_NAME}.{' '}
+          {lang === 'es' ? 'Todos los derechos reservados.' : 'All rights reserved.'}
         </p>
         <div className="flex gap-4">
           <Link to={faqHref} className="transition-colors hover:text-white">

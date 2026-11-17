@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router'
 import { Menu } from 'lucide-react'
-import { useLanguageStore } from '../store/languageStore'
 import LanguageSwitcher from './LanguageSwitcher'
 import {
   Sheet,
@@ -24,8 +23,10 @@ const links = {
 }
 
 export default function Navbar() {
-  const { lang } = useLanguageStore()
   const location = useLocation()
+  // Language is derived from the URL (not the client store) so that SSR/Googlebot
+  // render links in the correct language on every page. See seo.ts getLang().
+  const lang: 'es' | 'en' = location.pathname.startsWith('/en') ? 'en' : 'es'
   const [open, setOpen] = useState(false)
 
   const navLinks = links[lang]
