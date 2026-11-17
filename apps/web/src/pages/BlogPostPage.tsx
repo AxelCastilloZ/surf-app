@@ -3,6 +3,7 @@ import { buildBreadcrumbs } from '../shared/hooks/useSEO'
 import { useBlogPost } from '../shared/hooks/useBlog'
 import Navbar from '../shared/components/Navbar'
 import Footer from '../shared/components/Footer'
+import BlogCTA from '../shared/components/BlogCTA'
 
 type Lang = 'es' | 'en'
 
@@ -79,6 +80,14 @@ export default function BlogPostPage({ lang }: { lang: Lang }) {
   const coverAlt = post ? (lang === 'en' ? post.cover_image_alt_en || post.cover_image_alt : post.cover_image_alt) : ''
   const path = lang === 'es' ? `/blog/${slug}` : `/en/blog/${slug}`
 
+  // Split the article so a slim CTA can sit mid-way (after the 3rd <h2> section).
+  const contentParts = content.split('</h2>')
+  const canSplitContent = contentParts.length >= 6
+  const contentBefore = canSplitContent
+    ? contentParts.slice(0, 3).join('</h2>') + '</h2>'
+    : content
+  const contentAfter = canSplitContent ? contentParts.slice(3).join('</h2>') : ''
+
   const schemas = post
     ? [
         buildBreadcrumbs(path, lang, title),
@@ -146,8 +155,19 @@ export default function BlogPostPage({ lang }: { lang: Lang }) {
 
           <div
             className="blog-content mt-10 text-lg leading-relaxed text-slate-300"
-            dangerouslySetInnerHTML={{ __html: content }}
+            dangerouslySetInnerHTML={{ __html: contentBefore }}
           />
+
+          {contentAfter && <BlogCTA variant="inline" />}
+
+          {contentAfter && (
+            <div
+              className="blog-content text-lg leading-relaxed text-slate-300"
+              dangerouslySetInnerHTML={{ __html: contentAfter }}
+            />
+          )}
+
+          <BlogCTA variant="final" />
         </article>
       </main>
       <Footer />
